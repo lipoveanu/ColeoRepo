@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1B0DC33C-C7BF-4188-95DD-E1E4B8C4B157}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ColeoDataLayer</RootNamespace>
+    <AssemblyName>ColeoDataLayer</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ModelColeo\AspNetRole.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\AspNetUser.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\AspNetUserClaim.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\AspNetUserLogin.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\ColeoEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ColeoEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\ColeoEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\ColeoEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ColeoEntities.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\C__MigrationHistory.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\File.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\History.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\Issue.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\IssueFile.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\IssueLabel.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\IssueStatu.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\Label.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\Note.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\Priority.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\Project.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\ProjectStatu.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\RelatedIssue.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\Reproducibility.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\Severity.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelColeo\UserProject.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ModelColeo\ColeoEntities.edmx.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="ModelColeo\ColeoEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ColeoEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ModelColeo\ColeoEntities.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ColeoEntities.edmx</DependentUpon>
+      <LastGenOutput>ColeoEntities.Context.cs</LastGenOutput>
+    </None>
+    <None Include="ModelColeo\ColeoEntities.edmx.diagram">
+      <DependentUpon>ColeoEntities.edmx</DependentUpon>
+    </None>
+    <None Include="ModelColeo\ColeoEntities.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ColeoEntities.edmx</DependentUpon>
+      <LastGenOutput>ColeoEntities.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

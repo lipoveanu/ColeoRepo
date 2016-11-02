@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c977208658db4fc1b3bccd86c524391d" Name="Diagram1">
+        <EntityTypeShape EntityType="ColeoModel.C__MigrationHistory" Width="1.5" PointX="8.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.AspNetRole" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.AspNetUser" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.File" Width="1.5" PointX="0.75" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.History" Width="1.5" PointX="10.5" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.Issue" Width="1.5" PointX="8.25" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.IssueFile" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.IssueLabel" Width="1.5" PointX="10.5" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.IssueStatu" Width="1.5" PointX="6" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.Label" Width="1.5" PointX="8.25" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.Note" Width="1.5" PointX="13.5" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.Priority" Width="1.5" PointX="6" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.Project" Width="1.5" PointX="6" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.ProjectStatu" Width="1.5" PointX="3.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.RelatedIssue" Width="1.5" PointX="10.5" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.Reproducibility" Width="1.5" PointX="6" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.Severity" Width="1.5" PointX="6" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ColeoModel.UserProject" Width="1.5" PointX="11.25" PointY="11.875" IsExpanded="true" />
+        <AssociationConnector Association="ColeoModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_History_IdUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Issue_IdUserAssigned" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Issue_IdUserReporter" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_IssueFile_IdUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Note_IdUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Project_IdUserCreated" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_UserProject_IdUser" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_IssueFile_IdFile" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Project_IdFile" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_History_IdIssue" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Issue_IdPriority" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Issue_IdProject" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Issue_IdReproducibility" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Issue_IdSeverity" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Issue_IdStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_IssueFile_IdIssue" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_IssueLabel_IdIssue" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Note_IdIssue" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_RelatedIssue_IdIssue" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_RelatedIssue_IdIssueRelated" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_IssueFile_IdNote" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_IssueLabel_IdLabel" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Label_IdProject" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Project_IdParentProject" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_Project_IdStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.FK_UserProject_IdProject" ManuallyRouted="false" />
+        <AssociationConnector Association="ColeoModel.AspNetUserRoles" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
