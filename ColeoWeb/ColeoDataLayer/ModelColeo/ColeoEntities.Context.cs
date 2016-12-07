@@ -40,10 +40,11 @@ namespace ColeoDataLayer.ModelColeo
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Priority> Priorities { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<ProjectStatu> ProjectStatus { get; set; }
         public virtual DbSet<RelatedIssue> RelatedIssues { get; set; }
         public virtual DbSet<Reproducibility> Reproducibilities { get; set; }
         public virtual DbSet<Severity> Severities { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UserProject> UserProjects { get; set; }
+        public virtual DbSet<ProjectStatu> ProjectStatus { get; set; }
     }
 }

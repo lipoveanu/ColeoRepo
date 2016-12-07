@@ -122,13 +122,19 @@
     <Compile Include="ModelColeo\Severity.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelColeo\sysdiagram.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelColeo\UserProject.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Partials\Project.cs" />
+    <Compile Include="Partials\ProjectStatu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ModelColeo\ColeoEntities.edmx.sql" />
+    <Content Include="Scripts\001.sql" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ModelColeo\ColeoEntities.edmx">
@@ -157,6 +163,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

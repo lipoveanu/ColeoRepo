@@ -22,3 +22,14 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.cnavbar {
+    background-color: #E8A13F;
+    filter: brightness(85%);
+    min-height: 30px;
+    padding: 5px;
+}
+
+.cbody {
+    background-color: #E8A13F;
+}

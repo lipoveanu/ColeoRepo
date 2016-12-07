@@ -23,6 +23,7 @@ namespace ColeoDataLayer.ModelColeo
         public int Id { get; set; }
         public string Name { get; set; }
         public string Color { get; set; }
+        public bool IsDefault { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Projects { get; set; }

@@ -42,8 +42,8 @@ namespace ColeoDataLayer.ModelColeo
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Project1 { get; set; }
         public virtual Project Project2 { get; set; }
-        public virtual ProjectStatu ProjectStatu { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProject> UserProjects { get; set; }
+        public virtual ProjectStatu ProjectStatu { get; set; }
     }
 }
