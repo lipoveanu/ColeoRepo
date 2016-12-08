@@ -186,6 +186,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Color" Type="nvarchar" MaxLength="7" Nullable="false" />
           <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="RelatedIssue">
           <Key>
@@ -1488,6 +1489,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Color" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
           <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Projects" Relationship="ColeoModel.FK_Project_IdStatus" FromRole="ProjectStatu" ToRole="Project" />
         </EntityType>
         <Association Name="FK_Project_IdStatus">
@@ -1743,6 +1745,7 @@
           <EntitySetMapping Name="ProjectStatus">
             <EntityTypeMapping TypeName="ColeoModel.ProjectStatu">
               <MappingFragment StoreEntitySet="ProjectStatus">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

@@ -1,0 +1,45 @@
+﻿@model ColeoWeb.Models.ProjectStatusViewModel
+
+@{
+    ViewBag.Title = "Project Status";
+}
+
+<h2>Edit Project Status</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.Id);
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <div class="col-md-2">
+                    @Html.LabelFor(m => m.Name)
+                </div>
+                <div class="col-md-5">
+                    @Html.TextBoxFor(m => m.Name)
+                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-2">
+                    @Html.LabelFor(m => m.IsDefault);
+                </div>
+                <div class="col-md-5">
+                    @Html.CheckBoxFor(m => m.IsDefault);
+                    @Html.ValidationMessageFor(m => m.IsDefault, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-2">
+                    <input type="submit" class="btn-default" value="Save" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+

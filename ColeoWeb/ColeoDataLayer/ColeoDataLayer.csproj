@@ -135,6 +135,8 @@
   <ItemGroup>
     <Content Include="ModelColeo\ColeoEntities.edmx.sql" />
     <Content Include="Scripts\001.sql" />
+    <Content Include="Scripts\002.sql" />
+    <Content Include="Scripts\003.sql" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="ModelColeo\ColeoEntities.edmx">

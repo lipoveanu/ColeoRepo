@@ -1,0 +1,64 @@
+﻿@model IList<ColeoWeb.Models.ProjectStatusViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h2>Project Statuses</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            @Html.HiddenFor(m => m[i].Id)
+                            @Html.HiddenFor(m => m[i].Name)
+                            @Html.HiddenFor(m => m[i].Color)
+                            @Html.HiddenFor(m => m[i].IsDefault)
+                            @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
+                            @Html.DisplayFor(m => m[i].Name)
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-2">
+            <input type="submit" class="btn-default" value="Save" />
+        </div>
+    </div>
+}
+@section scripts{
+    <script src="~/Scripts/jquery-ui.js"></script>
+
+    <script>
+        window.onload = function () {
+            $('.row').sortable({
+                connectWith: ".panel",
+                handle: ".panel-body",
+                placeholder: "panel-placeholder"
+            });
+
+            $('.panel').on('mousedown', function () {
+
+                $(this).css('cursor', 'move');
+
+            }).on('mouseup', function () {
+                $(this).css('cursor', 'auto');
+
+                var positionIndex = 1;
+                $('.panel-body').each(function () {
+                    $(this).find('.position').val(positionIndex++);
+                });
+
+            });;
+        };
+
+    </script>
+}

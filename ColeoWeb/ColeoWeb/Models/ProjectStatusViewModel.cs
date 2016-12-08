@@ -16,7 +16,9 @@ namespace ColeoWeb.Models
 
         #region Properties
 
-        public int Id { get; set; }
+        public ProjectStatu Model { get; set; }
+
+        public int? Id { get; set; }
 
         [DisplayName("Name")]
         public string Name { get; set; }
@@ -24,6 +26,53 @@ namespace ColeoWeb.Models
         [DisplayName("Color")]
         public string Color { get; set; }
 
+        [DisplayName("Default stauts")]
+        public bool IsDefault { get; set; }
+
+        [DisplayName("Order")]
+        public int Order { get; set; }
+
         #endregion Properties
+
+        #region Methods
+
+        public void SetDataToModel()
+        {
+            Model = new ProjectStatu();
+
+            if (Id != null)
+            {
+                Model.Id = Id.Value;
+            }
+
+            Model.Name = Name;
+            Model.Color = Color;
+            Model.IsDefault = IsDefault;
+            Model.DisplayOrder = Order;
+        }
+
+        public void SetDataFromModel()
+        {
+            Model = ProjectStatu.GetById(Id.Value);
+
+            Name = Model.Name;
+            Color = Model.Color;
+            IsDefault = Model.IsDefault;
+            Order = Model.DisplayOrder;
+        }
+
+        public void Save()
+        {
+            if (Id == null)
+            {
+                Id = ProjectStatu.Save(Model);
+            }
+            else
+            {
+                ProjectStatu.Update(Model);
+            }
+        }
+
+        #endregion Methods
     }
 }

@@ -24,6 +24,7 @@ namespace ColeoDataLayer.ModelColeo
         public string Name { get; set; }
         public string Color { get; set; }
         public bool IsDefault { get; set; }
+        public int DisplayOrder { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Projects { get; set; }

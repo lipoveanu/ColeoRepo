@@ -13,12 +13,18 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities() )
             {
-                return context.ProjectStatus.ToList().Select(d => new ProjectStatu()
-                {
-                    Id = d.Id,
-                    Name = d.Name,
-                    Color = d.Color
-                }).ToList();
+                List<ProjectStatu> projectStatusList = context.ProjectStatus.OrderBy(d => d.DisplayOrder).ToList();
+
+                return projectStatusList
+                    .Select(d => new ProjectStatu()
+                    {
+                        Id = d.Id,
+                        Name = d.Name,
+                        Color = d.Color,
+                        DisplayOrder = d.DisplayOrder
+                    })
+                    .OrderBy(x=>x.DisplayOrder)
+                    .ToList();
             }
         }
 
@@ -29,11 +35,60 @@ namespace ColeoDataLayer.ModelColeo
                 ProjectStatu defaultProjStatus = context.ProjectStatus.FirstOrDefault(x => x.IsDefault == true);
                 if (defaultProjStatus == null)
                 {
-                    //TODO : implement column for order 
-                    defaultProjStatus = context.ProjectStatus.OrderBy(x => x.Id).FirstOrDefault();
+                    defaultProjStatus = context.ProjectStatus.OrderBy(x => x.DisplayOrder).FirstOrDefault();
                 }
                 return defaultProjStatus;
             }
+        }
+
+        public static ProjectStatu GetById(int id)
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                ProjectStatu projectStatus = context.ProjectStatus
+                                                    .FirstOrDefault(x => x.Id == id);
+
+                return projectStatus;
+            }
+        }
+
+        public static int Save(ProjectStatu entity)
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                context.ProjectStatus.Add(entity);
+
+                context.SaveChanges();
+
+                return entity.Id;
+            }
+        }
+
+        public static void Update(ProjectStatu entity)
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                ProjectStatu projectStatus = context.ProjectStatus.FirstOrDefault(x => x.Id == entity.Id);
+
+                if (projectStatus == null)
+                {
+                    return;
+                }
+
+                // set properties
+                projectStatus.Name = entity.Name;
+                projectStatus.Color = entity.Color;
+                projectStatus.DisplayOrder = entity.DisplayOrder;
+                projectStatus.IsDefault = entity.IsDefault;
+
+                context.SaveChanges();
+
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0};  {1};  {2};", Name, DisplayOrder.ToString(), IsDefault.ToString());
         }
     }
 }
