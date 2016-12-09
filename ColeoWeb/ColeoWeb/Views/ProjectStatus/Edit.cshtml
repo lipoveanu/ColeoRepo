@@ -24,22 +24,33 @@
 
             <div class="form-group row">
                 <div class="col-md-2">
-                    @Html.LabelFor(m => m.IsDefault);
+                    @Html.LabelFor(m => m.IsDefault)
                 </div>
                 <div class="col-md-5">
-                    @Html.CheckBoxFor(m => m.IsDefault);
-                    @Html.ValidationMessageFor(m => m.IsDefault, "", new { @class = "text-danger" })
+                    @{
+                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                        dic.Add("data-toggle", "toggle");
+                        dic.Add("data-onstyle", "default");
+
+                        @Html.CheckBoxFor(m => m.IsDefault, dic);
+                    }
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-2">
-                    <input type="submit" class="btn-default" value="Save" />
+                    <button type="submit" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-floppy-save"></span> Save
+                    </button>
                 </div>
             </div>
 
         </div>
     </div>
+}
+
+@section scripts{
+    <script src="~/Scripts/bootstrap-toggle.min.js"></script>
 }
 
 

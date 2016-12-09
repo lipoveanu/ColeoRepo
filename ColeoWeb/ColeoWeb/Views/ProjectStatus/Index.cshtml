@@ -21,16 +21,30 @@
                             @Html.HiddenFor(m => m[i].Color)
                             @Html.HiddenFor(m => m[i].IsDefault)
                             @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
+
                             @Html.DisplayFor(m => m[i].Name)
+
+                            <button type="button" class="btn btn-default btn-sm pull-right" onclick="location.href = '@Url.Action("Edit", new { id = Model[i].Id })'">
+                                <span class="glyphicon glyphicon-edit" onclick=""></span> Edit
+                            </button>
                         </div>
                     </div>
                 </div>
             }
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-body add">
+                        <button type="button" class="btn btn-default btn-sm">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-group row">
         <div class="col-md-2">
-            <input type="submit" class="btn-default" value="Save" />
+            <input type="submit" id="btn-save" class="hidden" value="Save">
         </div>
     </div>
 }
@@ -38,27 +52,38 @@
     <script src="~/Scripts/jquery-ui.js"></script>
 
     <script>
-        window.onload = function () {
+        //window.onload = function () {
+        $(document).ready(function ($) {
             $('.row').sortable({
                 connectWith: ".panel",
                 handle: ".panel-body",
-                placeholder: "panel-placeholder"
+                placeholder: "panel-placeholder",
+                update: function () {
+
+                    // reposition all components
+                    var positionIndex = 1;
+                    $('.panel-body').each(function () {
+
+                        $(this).find('.position').val(positionIndex++);
+                    });
+                    //save in db
+                    ChangeOrder();
+                }
             });
 
             $('.panel').on('mousedown', function () {
-
                 $(this).css('cursor', 'move');
-
             }).on('mouseup', function () {
                 $(this).css('cursor', 'auto');
-
-                var positionIndex = 1;
-                $('.panel-body').each(function () {
-                    $(this).find('.position').val(positionIndex++);
-                });
-
             });;
-        };
+
+
+        });
+
+        function ChangeOrder() {
+            $('#btn-save').trigger('click');
+        }
+
 
     </script>
 }
