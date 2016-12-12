@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -20,6 +21,7 @@ namespace ColeoWeb.Models
 
         public int? Id { get; set; }
 
+        [Required]
         [DisplayName("Name")]
         public string Name { get; set; }
 
@@ -31,6 +33,8 @@ namespace ColeoWeb.Models
 
         [DisplayName("Order")]
         public int Order { get; set; }
+
+        public bool IsInvalid { get; set; }
 
         #endregion Properties
 
@@ -59,6 +63,7 @@ namespace ColeoWeb.Models
             Color = Model.Color;
             IsDefault = Model.IsDefault;
             Order = Model.DisplayOrder;
+            IsInvalid = false;
         }
 
         public void Save()

@@ -56,7 +56,7 @@
                     @Html.LabelFor(m => m.Status)
                 </div>
                 <div class="col-md-5">
-                    @Html.DropDownListFor(m => m.IdStatus, Model.Status, new { @class = "selectpicker"})
+                    @Html.DropDownListFor(m => m.IdStatus, Model.Status, new { })
                     @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
                 </div>
             </div>
