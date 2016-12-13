@@ -11,36 +11,33 @@ namespace ColeoWeb.Controllers
     public class ProjectStatusController : Controller
     {
         // GET: ProjectStatus
-        public ActionResult Index(ProjectStatusViewModel model)
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public PartialViewResult List()
         {
             List<ProjectStatusViewModel> projectStatusList = ProjectStatu.All()
                 .Select(x => new ProjectStatusViewModel()
-                    {
-                        Id = x.Id,
-                        Name = x.Name,
-                        Color = x.Color,
-                        IsDefault = x.IsDefault,
-                        Order = x.DisplayOrder,
-                        IsInvalid = false
-                    })
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Color = x.Color,
+                    IsDefault = x.IsDefault,
+                    Order = x.DisplayOrder
+
+                })
                     .ToList();
 
-            if (model != null)
-            {
-                projectStatusList.ForEach(x =>
-                {
-                    if (x.Id == model.Id)
-                    {
-                        x.IsInvalid = model.IsInvalid;
-                    }
-                });
-            }
-            
-            return View(projectStatusList);
+            return PartialView(projectStatusList);
+
         }
 
         [HttpPost]
-        public ActionResult Index(List<ProjectStatusViewModel> model)
+        public ActionResult List(List<ProjectStatusViewModel> model)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +89,6 @@ namespace ColeoWeb.Controllers
             else
             {
                 return PartialView(model);
-                //return RedirectToAction("Index");
             }
         }
     }

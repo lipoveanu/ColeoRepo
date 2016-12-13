@@ -263,6 +263,7 @@
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\ProjectStatus\Edit.cshtml" />
     <Content Include="Views\ProjectStatus\Index.cshtml" />
+    <Content Include="Views\ProjectStatus\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

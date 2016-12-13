@@ -1,117 +1,14 @@
-﻿@model IList<ColeoWeb.Models.ProjectStatusViewModel>
-
-@{
-    ViewBag.Title = "Index";
+﻿@{
+    ViewBag.Title = "List";
 }
 
-
-<h2>Project Statuses</h2>
 <div class="col-md-5">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        <div class="row">
-            @for (var i = 0; i < Model.Count; i++)
-            {
-                <div class="col-md-7">
-                    <div class="panel panel-primary">
-                        <div class="panel-body">
-                            @Html.HiddenFor(m => m[i].Id)
-                            @Html.HiddenFor(m => m[i].Name)
-                            @Html.HiddenFor(m => m[i].Color)
-                            @Html.HiddenFor(m => m[i].IsDefault)
-                            @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
-                            @Html.HiddenFor(m => m[i].IsInvalid, new { @class = "invalid" })
-                            @Html.DisplayFor(m => m[i].Name)
-
-
-                            @Ajax.ActionLink("Edit",
-                                                "Edit",
-                                                new { id = Model[i].Id },
-                                                new AjaxOptions { UpdateTargetId = "editor", HttpMethod = "Get", InsertionMode = InsertionMode.Replace },
-                                                new { @id = "edit-project-status", @class = "btn btn-default btn-sm pull-right glyphicon glyphicon-edit" })
-
-
-
-
-                        </div>
-                    </div>
-                </div>
-            }
-            <div class="col-md-7">
-                <div class="panel panel-primary">
-                    <div class="panel-body add">
-                        @Ajax.ActionLink("Add",
-                                         "Edit",
-                                         new { },
-                                         new AjaxOptions { UpdateTargetId = "editor", HttpMethod = "Get", InsertionMode = InsertionMode.Replace },
-                                         new { @class = "btn btn-default btn-sm pull-right glyphicon glyphicon-plus" })                        
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-md-2">
-                <input type="submit" id="btn-save" class="hidden" value="Save">
-            </div>
-        </div>
-
-    }
+    <div id="index-projectstatus">
+        @{Html.RenderAction("List");}
+    </div>
 </div>
 
 <div class="col-md-7">
-    <div class="form-group row">
-        
-            @using (Ajax.BeginForm("Edit", new AjaxOptions { UpdateTargetId = "editor", HttpMethod = "Post", InsertionMode = InsertionMode.Replace }))
-            {
-                <div id="editor">
-                    
-                </div>
-            }
+    <div id="edit-projectstatus">
     </div>
 </div>
-@section scripts{
-    <script src="~/Scripts/jquery-ui.js"></script>
-    @*<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
-
-    @Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
-    @Scripts.Render("~/Scripts/jquery.unobtrusive-ajax.min.js")
-
-    <script>
-        //window.onload = function () {
-        $(document).ready(function ($) {
-            $('.row').sortable({
-                connectWith: ".panel",
-                handle: ".panel-body",
-                placeholder: "panel-placeholder",
-                update: function () {
-
-                    // reposition all components
-                    var positionIndex = 1;
-                    $('.panel-body').each(function () {
-
-                        $(this).find('.position').val(positionIndex++);
-                    });
-                    //save in db
-                    ChangeOrder();
-                }
-            });
-
-            $('.panel').on('mousedown', function () {
-                $(this).css('cursor', 'move');
-            }).on('mouseup', function () {
-                $(this).css('cursor', 'auto');
-            });;
-
-
-            //$('.glyphicon-edit').click();
-
-        });
-
-        function ChangeOrder() {
-            $('#btn-save').trigger('click');
-        }
-
-
-    </script>
-}

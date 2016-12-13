@@ -2,67 +2,83 @@
 
 @{
     ViewBag.Title = "Project Status";
+
 }
 
 <h2>Edit Project Status</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(m => m.Id);
-    @Html.HiddenFor(m => m.Order);
-    
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group row">
-                <div class="col-md-2">
-                    @Html.LabelFor(m => m.Name)
+<div class="col-md-12">
+    @using (Ajax.BeginForm("Edit",
+                        new AjaxOptions
+                        {
+                            UpdateTargetId = "edit-projectstatus",
+                            HttpMethod = "POST",
+                            InsertionMode = InsertionMode.Replace,
+                            OnSuccess = "ShowIndex();"
+                        }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(m => m.Id);
+        @Html.HiddenFor(m => m.Order);
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.Name)
+                    </div>
+                    <div class="col-md-5">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="col-md-5">
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control"})
-                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        @Html.LabelFor(m => m.IsDefault)
+                    </div>
+                    <div class="col-md-5">
+                        @{
+                                     Dictionary<string, object> dic = new Dictionary<string, object>();
+                                     dic.Add("data-toggle", "toggle");
+                                     dic.Add("data-onstyle", "default");
+
+                                    @Html.CheckBoxFor(m => m.IsDefault, dic);
+                        }
+                    </div>
                 </div>
+
+                <div class="form-group row">
+                    <div class="col-md-2">
+                        <button type="submit" id="save" class="btn btn-default btn-sm pull-right">
+                            <span class="glyphicon glyphicon-floppy-save"></span> Save
+                        </button>
+                    </div>
+                </div>
+
             </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    @Html.LabelFor(m => m.IsDefault)
-                </div>
-                <div class="col-md-5">
-                    @{
-                        Dictionary<string, object> dic = new Dictionary<string, object>();
-                        dic.Add("data-toggle", "toggle");
-                        dic.Add("data-onstyle", "default");
-
-                        @Html.CheckBoxFor(m => m.IsDefault, dic);
-                    }
-                </div>
-            </div>
-
-            <div class="form-group row">
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-default btn-sm">
-                        <span class="glyphicon glyphicon-floppy-save"></span> Save
-                    </button>
-                </div>
-            </div>
-
         </div>
-    </div>
-}
+    }
+</div>
 
-@section scripts{
-    
-    <script src="~/Scripts/bootstrap-toggle.min.js"></script>
+@Scripts.Render("~/Scripts/jquery-ui.js")
+@Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
+@Styles.Render("~/Content/bootstrap-toggle.min.css")
 
-    @Scripts.Render("~/bundles/bootstrap")
-
-    @Styles.Render("~/Content/bootstrap-toggle.min.css")
-
-    <script type="text/javascript">
-       
-    console.log("PARTIAAAAAAAL --------------------------->")
- 
-    </script>
-}
-
+<script>
+    function ShowIndex() {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("List", "ProjectStatus")',
+            success: function (response) {
+                console.log('showindex')
+                $("#index-projectstatus").html(response);
+            },
+            error: function () {
+                alert("error occured");
+            }
+        });
+    }
+</script>
 
