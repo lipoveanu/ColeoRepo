@@ -1,0 +1,100 @@
+﻿@model IList<ColeoWeb.Models.ProjectStatusViewModel>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>Project Statuses</h2>
+
+<div class="col-md-12">
+    @using (Html.BeginForm("List", "ProjectStatus", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-group row">
+            @for (var i = 0; i < Model.Count; i++)
+            {
+                <div class="col-md-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body item">
+                            @Html.HiddenFor(m => m[i].Id)
+                            @Html.HiddenFor(m => m[i].Name)
+                            @Html.HiddenFor(m => m[i].Color)
+                            @Html.HiddenFor(m => m[i].IsDefault)
+                            @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
+                            @Html.DisplayFor(m => m[i].Name)
+
+                            <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit(@Model[i].Id);">
+                                <span class="glyphicon glyphicon-edit"></span> Edit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-body add">
+                        <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit();">
+                            <span class="glyphicon glyphicon-plus"></span> Add
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-2">
+                <input type="submit" id="btn-save" class="hidden" value="Save">
+            </div>
+        </div>
+
+    }
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $('.row').sortable({
+            connectWith: ".panel",
+            handle: ".item",
+            placeholder: "panel-placeholder",
+            update: function () {
+                // reposition all components
+                var positionIndex = 1;
+                $('.panel-body').each(function () {
+                    $(this).find('.position').val(positionIndex++);
+                });
+                //save in db
+                ChangeOrder();
+            }
+        });
+
+        $('.panel').on('mousedown', function () {
+            $(this).css('cursor', 'move');
+        }).on('mouseup', function () {
+            $(this).css('cursor', 'auto');
+        });;
+
+    });
+
+    function ChangeOrder() {
+        $('#btn-save').trigger('click');
+    }
+
+    function ShowEdit(id) {
+
+        event.preventDefault();
+        $.ajax({
+            type: "GET",
+            remote: true,
+            url: '@Url.Action("Edit", "ProjectStatus")',
+            data: { 'id': id },
+            success: function (response) {
+                $("#edit-projectstatus").html(response);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+        return false;
+    }
+
+</script>

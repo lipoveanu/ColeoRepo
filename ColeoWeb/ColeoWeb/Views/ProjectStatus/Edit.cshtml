@@ -1,10 +1,12 @@
 ﻿@model ColeoWeb.Models.ProjectStatusViewModel
 
 @{
-    ViewBag.Title = "Project Status";
+    ViewBag.Title = "Edit";
 
 }
-
+@Scripts.Render("~/Scripts/jquery-ui.js")
+@Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
+@Styles.Render("~/Content/bootstrap-toggle.min.css")
 <h2>Edit Project Status</h2>
 
 <div class="col-md-12">
@@ -62,9 +64,7 @@
     }
 </div>
 
-@Scripts.Render("~/Scripts/jquery-ui.js")
-@Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
-@Styles.Render("~/Content/bootstrap-toggle.min.css")
+
 
 <script>
     function ShowIndex() {

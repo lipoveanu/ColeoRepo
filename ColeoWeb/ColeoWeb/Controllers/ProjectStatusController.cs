@@ -51,11 +51,11 @@ namespace ColeoWeb.Controllers
             }
             else
             {
-                return View(model);
+                return PartialView(model);
             }
         }
 
-        public ActionResult Edit(int? id)
+        public PartialViewResult Edit(int? id)
         {
             // creation of project status not allowed if not logged in 
             if (!User.Identity.IsAuthenticated)
@@ -83,13 +83,10 @@ namespace ColeoWeb.Controllers
             {
                 model.SetDataToModel();
                 model.Save();
+            }
 
-                return PartialView(model);
-            }
-            else
-            {
-                return PartialView(model);
-            }
+            return PartialView(model);
+
         }
     }
 }
