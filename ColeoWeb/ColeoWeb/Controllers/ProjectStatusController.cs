@@ -88,5 +88,14 @@ namespace ColeoWeb.Controllers
             return PartialView(model);
 
         }
+
+        public ActionResult Delete(int id)
+        {
+            ProjectStatusViewModel vm = new ProjectStatusViewModel();
+
+            vm.Delete(id);
+
+            return RedirectToAction("Index");
+        }
     }
 }

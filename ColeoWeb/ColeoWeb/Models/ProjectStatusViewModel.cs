@@ -78,6 +78,11 @@ namespace ColeoWeb.Models
             }
         }
 
+        public void Delete(int id)
+        {
+            ProjectStatu.Delete(id);
+        }
+
         #endregion Methods
     }
 }

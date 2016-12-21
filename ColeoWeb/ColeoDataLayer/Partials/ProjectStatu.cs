@@ -86,6 +86,23 @@ namespace ColeoDataLayer.ModelColeo
             }
         }
 
+        public static void Delete(int id)
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                ProjectStatu projectStatus = context.ProjectStatus.FirstOrDefault(x => x.Id == id);
+
+                if (projectStatus == null)
+                {
+                    return;
+                }
+
+                context.ProjectStatus.Remove(projectStatus);
+
+                context.SaveChanges();
+            }
+        }
+
         public override string ToString()
         {
             return string.Format("{0};  {1};  {2};", Name, DisplayOrder.ToString(), IsDefault.ToString());
