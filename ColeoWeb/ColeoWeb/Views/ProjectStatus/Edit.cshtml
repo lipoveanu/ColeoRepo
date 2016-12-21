@@ -6,10 +6,6 @@
 
 }
 
-@Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
-@Styles.Render("~/Content/bootstrap-toggle.min.css")
-
-
 @Scripts.Render("~/Scripts/pick-a-color-1.2.3.min.js")
 @Scripts.Render("~/Scripts/tinycolor-0.9.15.min.js")
 @Styles.Render("~/Content/pick-a-color-1.2.3.min.css")
@@ -49,11 +45,11 @@
                     </div>
                     <div class="col-md-5">
                         @{
-                                     Dictionary<string, object> dic = new Dictionary<string, object>();
-                                     dic.Add("data-toggle", "toggle");
-                                     dic.Add("data-onstyle", "default");
+                                     //Dictionary<string, object> dic = new Dictionary<string, object>();
+                                     //dic.Add("data-toggle", "toggle");
+                                     //dic.Add("data-onstyle", "default");
 
-                                    @Html.CheckBoxFor(m => m.IsDefault, dic);
+                                    @Html.CheckBoxFor(m => m.IsDefault, new { @id="is-default"});
                         }
                     </div>
                 </div>
@@ -106,5 +102,9 @@
             inlineDropdown: false
         });
     });
+
+    $(function () {
+        $('#is-default').bootstrapToggle();
+    })
 </script>
 
