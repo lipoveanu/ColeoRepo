@@ -15,7 +15,7 @@
             {
                 <div class="col-md-12">
                     <div class="panel panel-primary">
-                        <div class="panel-body item">
+                        <div class="panel-body item" style="background-color: #@Model[i].Color;">
                             @Html.HiddenFor(m => m[i].Id)
                             @Html.HiddenFor(m => m[i].Name)
                             @Html.HiddenFor(m => m[i].Color)
@@ -82,11 +82,12 @@
     function ShowEdit(id) {
 
         event.preventDefault();
+
         $.ajax({
             type: "GET",
             remote: true,
             url: '@Url.Action("Edit", "ProjectStatus")',
-            data: { 'id': id },
+            data: { 'id': id},
             success: function (response) {
                 $("#edit-projectstatus").html(response);
             },
