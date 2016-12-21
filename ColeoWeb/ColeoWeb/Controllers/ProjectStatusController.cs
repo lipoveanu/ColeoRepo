@@ -84,6 +84,7 @@ namespace ColeoWeb.Controllers
                 model.SetDataToModel();
                 model.Save();
             }
+            ViewBag.IsValid = ModelState.IsValid;
 
             return PartialView(model);
 

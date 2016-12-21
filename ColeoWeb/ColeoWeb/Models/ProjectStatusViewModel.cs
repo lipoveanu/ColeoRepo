@@ -19,6 +19,7 @@ namespace ColeoWeb.Models
 
         public ProjectStatu Model { get; set; }
 
+        [Key]
         public int? Id { get; set; }
 
         [Required]
