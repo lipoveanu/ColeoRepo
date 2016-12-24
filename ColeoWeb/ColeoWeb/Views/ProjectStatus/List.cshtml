@@ -20,9 +20,9 @@
         @Html.AntiForgeryToken()
         
         <div class="col-md-12">
-            @for (var i = 0; i < Model.Count; i++)
-            {
-                <div class="form-group row">
+            <div class="form-group row">
+                @for (var i = 0; i < Model.Count; i++)
+                {
                     <div class="panel panel-primary">
                         <div class="panel-body item" style="background-color: #@Model[i].Color;">
                             @Html.HiddenFor(m => m[i].Id)
@@ -40,9 +40,9 @@
                             </button>
                         </div>
                     </div>
-                </div>
-            }
 
+                }
+            </div>
         </div>
         <div class="col-md-12">
             <div class="form-group row">
@@ -57,8 +57,7 @@
         </div>
         <div class="form-group row">
             <div class="col-md-2">
-                <input type="submit" id="btn-save" class="hidden" value="Save" command="save">
-                <input type="submit" id="btn-delete" class="hidden" value="Save" command="delete">
+                <input type="submit" id="btn-save" class="hidden" value="Save">
             </div>
         </div>
 
