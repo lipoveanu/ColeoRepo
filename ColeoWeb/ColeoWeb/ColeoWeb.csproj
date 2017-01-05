@@ -178,6 +178,7 @@
     <Compile Include="Utils\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\animate.css" />
     <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.css" />
     <Content Include="Content\bootstrap-switch\bootstrap2\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap-switch\bootstrap3\bootstrap-switch.css" />
@@ -227,6 +228,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\notify.js" />
     <Content Include="Scripts\pick-a-color-1.2.3.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
