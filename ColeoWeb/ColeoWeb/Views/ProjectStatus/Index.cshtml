@@ -3,6 +3,9 @@
 }
 @Styles.Render("~/Content/bootstrap-toggle.min.css")
 @Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
+@Scripts.Render("~/Scripts/notify.js")
+@Styles.Render("~/Content/animate.css")
+
 
 
 
@@ -17,22 +20,31 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group row">
-            <div class="col-md-12">
-                <div id="success-alert" class="alert alert-success alert-dismissible fade in" role="alert">
-                    <strong>Saved</strong>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<style>
+    [data-notify="container"]{
+        width: 15%;
+    }
+
+</style>
 
 <script>
-    $(document).ready(function () {
-        $(".alert").hide();
-    });
+    function ShowList() {
+        // re post the list with the updated item
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("List", "ProjectStatus")',
+            success: function (response) {
+                $("#index-projectstatus").html(response);
+            },
+            error: function () {
+                alert("error occured");
+            }
+        });
+
+        // validate form for alert
+        $.validator.unobtrusive.parse($("#edit-projectstatus"));
+    }
+
 </script>
 
 

@@ -90,13 +90,14 @@ namespace ColeoWeb.Controllers
 
         }
 
-        public ActionResult Delete(int id)
+        public Action Delete(int id)
         {
             ProjectStatusViewModel vm = new ProjectStatusViewModel();
 
             vm.Delete(id);
 
-            return RedirectToAction("Index");
+            return null;
+
         }
     }
 }

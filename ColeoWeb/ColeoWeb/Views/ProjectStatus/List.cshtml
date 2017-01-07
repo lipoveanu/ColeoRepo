@@ -18,7 +18,7 @@
     @using (Html.BeginForm("List", "ProjectStatus", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
-        
+
         <div class="col-md-12">
             <div class="form-group row">
                 @for (var i = 0; i < Model.Count; i++)
@@ -35,7 +35,8 @@
                             <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit(@Model[i].Id);">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
                             </button>
-                            <button type="button" id="delete-btn" class="btn btn-default btn-sm pull-right" onclick="location.href='@Url.Action("Delete","ProjectStatus",new {@id = @Model[i].Id})'">
+                            @*<button type="button" id="delete-btn" class="btn btn-default btn-sm pull-right" onclick="location.href='@Url.Action("Delete","ProjectStatus",new {@id = @Model[i].Id})'">*@
+                            <button type="button" id="delete-btn" class="btn btn-default btn-sm pull-right" onclick="DeleteItem(@Model[i].Id)">
                                 <span class="glyphicon glyphicon-floppy-remove"></span> Delete
                             </button>
                         </div>
@@ -113,6 +114,31 @@
             }
         });
         return false;
+    }
+
+    function AlertDeleted() {
+        $.notify('Project status deleted!', {
+            type: "danger"
+        });
+    }
+
+    function DeleteItem(item)
+    {
+        $.ajax({
+            type: "POST",
+            data: {id : item},
+            url: '@Url.Action("Delete", "ProjectStatus")',
+            success: function () {
+                $('#edit-projectstatus').empty();
+                ShowList();
+                AlertDeleted();
+            },
+            error: function () {
+                alert("error occured");
+            }
+        });
+
+        
     }
 
 </script>
