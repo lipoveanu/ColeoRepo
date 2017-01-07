@@ -19,7 +19,7 @@ namespace ColeoDataLayer.ModelColeo
         {
             this.Issues = new HashSet<Issue>();
             this.Labels = new HashSet<Label>();
-            this.Project1 = new HashSet<Project>();
+            this.Projects1 = new HashSet<Project>();
             this.UserProjects = new HashSet<UserProject>();
         }
     
@@ -40,10 +40,10 @@ namespace ColeoDataLayer.ModelColeo
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Label> Labels { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Project1 { get; set; }
-        public virtual Project Project2 { get; set; }
+        public virtual ICollection<Project> Projects1 { get; set; }
+        public virtual Project Project1 { get; set; }
+        public virtual ProjectStatus ProjectStatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProject> UserProjects { get; set; }
-        public virtual ProjectStatu ProjectStatu { get; set; }
     }
 }

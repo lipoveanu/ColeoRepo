@@ -110,7 +110,7 @@
     <Compile Include="ModelColeo\Project.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelColeo\ProjectStatu.cs">
+    <Compile Include="ModelColeo\ProjectStatus.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelColeo\RelatedIssue.cs">
@@ -122,14 +122,11 @@
     <Compile Include="ModelColeo\Severity.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelColeo\sysdiagram.cs">
-      <DependentUpon>ColeoEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="ModelColeo\UserProject.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Partials\Project.cs" />
-    <Compile Include="Partials\ProjectStatu.cs" />
+    <Compile Include="Partials\ProjectStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

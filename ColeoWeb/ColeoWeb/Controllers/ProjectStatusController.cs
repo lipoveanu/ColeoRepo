@@ -20,7 +20,7 @@ namespace ColeoWeb.Controllers
         [HttpGet]
         public PartialViewResult List()
         {
-            List<ProjectStatusViewModel> projectStatusList = ProjectStatu.All()
+            List<ProjectStatusViewModel> projectStatusList = ProjectStatus.All()
                 .Select(x => new ProjectStatusViewModel()
                 {
                     Id = x.Id,

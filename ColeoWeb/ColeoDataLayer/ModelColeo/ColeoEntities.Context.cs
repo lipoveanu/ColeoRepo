@@ -25,26 +25,25 @@ namespace ColeoDataLayer.ModelColeo
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<History> Histories { get; set; }
-        public virtual DbSet<Issue> Issues { get; set; }
         public virtual DbSet<IssueFile> IssueFiles { get; set; }
         public virtual DbSet<IssueLabel> IssueLabels { get; set; }
+        public virtual DbSet<Issue> Issues { get; set; }
         public virtual DbSet<IssueStatu> IssueStatus { get; set; }
         public virtual DbSet<Label> Labels { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Priority> Priorities { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectStatus> ProjectStatuses { get; set; }
         public virtual DbSet<RelatedIssue> RelatedIssues { get; set; }
         public virtual DbSet<Reproducibility> Reproducibilities { get; set; }
         public virtual DbSet<Severity> Severities { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<UserProject> UserProjects { get; set; }
-        public virtual DbSet<ProjectStatu> ProjectStatus { get; set; }
     }
 }

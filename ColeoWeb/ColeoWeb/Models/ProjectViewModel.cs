@@ -18,7 +18,7 @@ namespace ColeoWeb.Models
             UserCreated = HttpContext.Current.User.Identity.GetUserId();
             NameUserCreated = HttpContext.Current.User.Identity.Name;
             Color = "#E8A13F";
-            IdStatus = ProjectStatu.GetDefault().Id;
+            IdStatus = ProjectStatus.GetDefault().Id;
         }
 
         #region Properties 
@@ -55,7 +55,7 @@ namespace ColeoWeb.Models
 
         public void InitializeData()
         {
-            Status = ProjectStatu.All().Select(d => new SelectListItem()
+            Status = ProjectStatus.All().Select(d => new SelectListItem()
                 {
                     Text = d.Name,
                     Value = d.Id.ToString()

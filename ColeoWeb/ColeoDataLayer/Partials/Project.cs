@@ -9,7 +9,15 @@ namespace ColeoDataLayer.ModelColeo
 {
     public partial class Project
     {
-        public List<Project> AllByUser(string userName)
+        public static List<Project> All()
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                return context.Projects.ToList();
+            }
+        }
+
+        public static List<Project> AllByUser(string userName)
         {
             using (ColeoEntities context = new ColeoEntities())
             {
@@ -21,7 +29,7 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                return context.Projects.Where(d => d.AspNetUser.Id == userName && d.ProjectStatu.Id == idStatus).ToList();
+                return context.Projects.Where(d => d.AspNetUser.Id == userName && d.ProjectStatus.Id == idStatus).ToList();
             }
         }
 
@@ -45,10 +53,10 @@ namespace ColeoDataLayer.ModelColeo
                 context.Projects.Add(entity);
 
                 //Project status
-                ProjectStatu projectStatus = context.ProjectStatus.FirstOrDefault(x => x.Id == entity.IdStatus);
+                ProjectStatus projectStatus = context.ProjectStatuses.FirstOrDefault(x => x.Id == entity.IdStatus);
                 if (projectStatus != null)
                 {
-                    entity.ProjectStatu = projectStatus;
+                    entity.ProjectStatus = projectStatus;
                 }
 
                 //User created
@@ -78,10 +86,10 @@ namespace ColeoDataLayer.ModelColeo
                 }
 
                 //Project status
-                ProjectStatu projectStatus = context.ProjectStatus.FirstOrDefault(x => x.Id == entity.IdStatus);
+                ProjectStatus projectStatus = context.ProjectStatuses.FirstOrDefault(x => x.Id == entity.IdStatus);
                 if (projectStatus != null)
                 {
-                    project.ProjectStatu = projectStatus;
+                    project.ProjectStatus = projectStatus;
                 }
 
                 //User created

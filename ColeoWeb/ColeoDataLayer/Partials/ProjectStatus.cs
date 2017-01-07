@@ -7,56 +7,56 @@ using ColeoDataLayer.ModelColeo;
 
 namespace ColeoDataLayer.ModelColeo
 {
-    public partial class ProjectStatu
+    public partial class ProjectStatus
     {
-        public static List<ProjectStatu> All()
+        public static List<ProjectStatus> All()
         {
-            using (ColeoEntities context = new ColeoEntities() )
+            using (ColeoEntities context = new ColeoEntities())
             {
-                List<ProjectStatu> projectStatusList = context.ProjectStatus.OrderBy(d => d.DisplayOrder).ToList();
+                List<ProjectStatus> projectStatusList = context.ProjectStatuses.OrderBy(d => d.DisplayOrder).ToList();
 
                 return projectStatusList
-                    .Select(d => new ProjectStatu()
+                    .Select(d => new ProjectStatus()
                     {
                         Id = d.Id,
                         Name = d.Name,
                         Color = d.Color,
                         DisplayOrder = d.DisplayOrder
                     })
-                    .OrderBy(x=>x.DisplayOrder)
+                    .OrderBy(x => x.DisplayOrder)
                     .ToList();
             }
         }
 
-        public static ProjectStatu GetDefault()
+        public static ProjectStatus GetDefault()
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                ProjectStatu defaultProjStatus = context.ProjectStatus.FirstOrDefault(x => x.IsDefault == true);
+                ProjectStatus defaultProjStatus = context.ProjectStatuses.FirstOrDefault(x => x.IsDefault == true);
                 if (defaultProjStatus == null)
                 {
-                    defaultProjStatus = context.ProjectStatus.OrderBy(x => x.DisplayOrder).FirstOrDefault();
+                    defaultProjStatus = context.ProjectStatuses.OrderBy(x => x.DisplayOrder).FirstOrDefault();
                 }
                 return defaultProjStatus;
             }
         }
 
-        public static ProjectStatu GetById(int id)
+        public static ProjectStatus GetById(int id)
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                ProjectStatu projectStatus = context.ProjectStatus
+                ProjectStatus projectStatus = context.ProjectStatuses
                                                     .FirstOrDefault(x => x.Id == id);
 
                 return projectStatus;
             }
         }
 
-        public static int Save(ProjectStatu entity)
+        public static int Save(ProjectStatus entity)
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                context.ProjectStatus.Add(entity);
+                context.ProjectStatuses.Add(entity);
 
                 context.SaveChanges();
 
@@ -64,11 +64,11 @@ namespace ColeoDataLayer.ModelColeo
             }
         }
 
-        public static void Update(ProjectStatu entity)
+        public static void Update(ProjectStatus entity)
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                ProjectStatu projectStatus = context.ProjectStatus.FirstOrDefault(x => x.Id == entity.Id);
+                ProjectStatus projectStatus = context.ProjectStatuses.FirstOrDefault(x => x.Id == entity.Id);
 
                 if (projectStatus == null)
                 {
@@ -90,14 +90,21 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                ProjectStatu projectStatus = context.ProjectStatus.FirstOrDefault(x => x.Id == id);
+                ProjectStatus projectStatus = context.ProjectStatuses.FirstOrDefault(x => x.Id == id);
 
                 if (projectStatus == null)
                 {
                     return;
                 }
 
-                context.ProjectStatus.Remove(projectStatus);
+                var project = context.Projects.FirstOrDefault(x => x.IdStatus == id);
+
+                if (project != null)
+                {
+                    return;
+                }
+
+                context.ProjectStatuses.Remove(projectStatus);
 
                 context.SaveChanges();
             }

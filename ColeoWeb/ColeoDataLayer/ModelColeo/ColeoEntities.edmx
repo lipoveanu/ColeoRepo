@@ -5,16 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="ColeoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
-        </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -43,11 +33,11 @@
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="AspNetRoles_Id" />
+            <PropertyRef Name="AspNetUsers_Id" />
           </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AspNetRoles_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AspNetUsers_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
@@ -67,7 +57,17 @@
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Image" Type="nvarchar(max)" />
         </EntityType>
-        <EntityType Name="File">
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
+          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Files">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -76,18 +76,37 @@
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Extension" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="History">
+        <EntityType Name="Histories">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DateModified" Type="date" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" Nullable="false" />
           <Property Name="IdUser" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IdIssue" Type="int" Nullable="false" />
           <Property Name="Field" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Change" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="Issue">
+        <EntityType Name="IssueFiles">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="IdIssue" Type="int" />
+          <Property Name="IdNote" Type="int" />
+          <Property Name="IdFile" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IssueLabels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdIssue" Type="int" Nullable="false" />
+          <Property Name="IdLabel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Issues">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -100,8 +119,8 @@
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="AdditionalInformation" Type="nvarchar(max)" />
           <Property Name="StepsToReproduce" Type="nvarchar(max)" />
-          <Property Name="DateCreated" Type="date" Nullable="false" />
-          <Property Name="DateLastUpdate" Type="date" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateLastUpdate" Type="datetime" Nullable="false" />
           <Property Name="Platform" Type="nvarchar" MaxLength="250" />
           <Property Name="Os" Type="nvarchar" MaxLength="150" />
           <Property Name="OsVersion" Type="nvarchar" MaxLength="150" />
@@ -109,25 +128,6 @@
           <Property Name="IdSeverity" Type="int" Nullable="false" />
           <Property Name="IdReproducibility" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="IssueFile">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdUser" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="DateCreated" Type="date" Nullable="false" />
-          <Property Name="IdIssue" Type="int" />
-          <Property Name="IdNote" Type="int" />
-          <Property Name="IdFile" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="IssueLabel">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="IdIssue" Type="int" Nullable="false" />
-          <Property Name="IdLabel" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IssueStatus">
           <Key>
@@ -137,7 +137,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Color" Type="nvarchar" MaxLength="7" Nullable="false" />
         </EntityType>
-        <EntityType Name="Label">
+        <EntityType Name="Labels">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -146,17 +146,17 @@
           <Property Name="Color" Type="nvarchar" MaxLength="7" Nullable="false" />
           <Property Name="IdProject" Type="int" />
         </EntityType>
-        <EntityType Name="Note">
+        <EntityType Name="Notes">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="DateCreated" Type="date" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="IdIssue" Type="int" Nullable="false" />
           <Property Name="IdUser" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <EntityType Name="Priority">
+        <EntityType Name="Priorities">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -164,21 +164,21 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Color" Type="nvarchar" MaxLength="7" Nullable="false" />
         </EntityType>
-        <EntityType Name="Project">
+        <EntityType Name="Projects">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="DateCreated" Type="date" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="Color" Type="nvarchar" MaxLength="7" Nullable="false" />
           <Property Name="IdUserCreated" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IdParentProject" Type="int" />
           <Property Name="IdStatus" Type="int" Nullable="false" />
           <Property Name="IdFile" Type="int" />
         </EntityType>
-        <EntityType Name="ProjectStatus">
+        <EntityType Name="ProjectStatuses">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -188,7 +188,7 @@
           <Property Name="IsDefault" Type="bit" Nullable="false" />
           <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="RelatedIssue">
+        <EntityType Name="RelatedIssues">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -196,7 +196,7 @@
           <Property Name="IdIssue" Type="int" Nullable="false" />
           <Property Name="IdIssueRelated" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Reproducibility">
+        <EntityType Name="Reproducibilities">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -204,7 +204,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Color" Type="nvarchar" MaxLength="7" Nullable="false" />
         </EntityType>
-        <EntityType Name="Severity">
+        <EntityType Name="Severities">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -212,17 +212,7 @@
           <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
           <Property Name="Color" Type="nvarchar" MaxLength="7" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
-        <EntityType Name="UserProject">
+        <EntityType Name="UserProjects">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -230,6 +220,30 @@
           <Property Name="IdProject" Type="int" Nullable="false" />
           <Property Name="IdUser" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <Association Name="FK_AspNetUserRoles_AspNetRoles">
+          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetRoles">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="AspNetRoles_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AspNetUserRoles_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUserRoles">
+              <PropertyRef Name="AspNetUsers_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -258,369 +272,348 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetRoles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_History_IdIssue">
-          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
-          <End Role="History" Type="Self.History" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="1" />
+          <End Role="Histories" Type="Self.Histories" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Issue">
+            <Principal Role="Issues">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="History">
+            <Dependent Role="Histories">
               <PropertyRef Name="IdIssue" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_History_IdUser">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="History" Type="Self.History" Multiplicity="*" />
+          <End Role="Histories" Type="Self.Histories" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="History">
+            <Dependent Role="Histories">
               <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdPriority">
-          <End Role="Priority" Type="Self.Priority" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <End Role="Priorities" Type="Self.Priorities" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Priority">
+            <Principal Role="Priorities">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Issue">
+            <Dependent Role="Issues">
               <PropertyRef Name="IdPriority" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdProject">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Project">
+            <Principal Role="Projects">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Issue">
+            <Dependent Role="Issues">
               <PropertyRef Name="IdProject" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdReproducibility">
-          <End Role="Reproducibility" Type="Self.Reproducibility" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <End Role="Reproducibilities" Type="Self.Reproducibilities" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Reproducibility">
+            <Principal Role="Reproducibilities">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Issue">
+            <Dependent Role="Issues">
               <PropertyRef Name="IdReproducibility" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdSeverity">
-          <End Role="Severity" Type="Self.Severity" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <End Role="Severities" Type="Self.Severities" Multiplicity="1" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Severity">
+            <Principal Role="Severities">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Issue">
+            <Dependent Role="Issues">
               <PropertyRef Name="IdSeverity" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdStatus">
           <End Role="IssueStatus" Type="Self.IssueStatus" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="IssueStatus">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Issue">
+            <Dependent Role="Issues">
               <PropertyRef Name="IdStatus" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdUserAssigned">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Issue">
+            <Dependent Role="Issues">
               <PropertyRef Name="IdUserAssigned" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdUserReporter">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Issue" Type="Self.Issue" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Issue">
+            <Dependent Role="Issues">
               <PropertyRef Name="IdUserReporter" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IssueFile_IdFile">
-          <End Role="File" Type="Self.File" Multiplicity="1" />
-          <End Role="IssueFile" Type="Self.IssueFile" Multiplicity="*" />
+          <End Role="Files" Type="Self.Files" Multiplicity="1" />
+          <End Role="IssueFiles" Type="Self.IssueFiles" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="File">
+            <Principal Role="Files">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="IssueFile">
+            <Dependent Role="IssueFiles">
               <PropertyRef Name="IdFile" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IssueFile_IdIssue">
-          <End Role="Issue" Type="Self.Issue" Multiplicity="0..1" />
-          <End Role="IssueFile" Type="Self.IssueFile" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="0..1" />
+          <End Role="IssueFiles" Type="Self.IssueFiles" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Issue">
+            <Principal Role="Issues">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="IssueFile">
+            <Dependent Role="IssueFiles">
               <PropertyRef Name="IdIssue" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IssueFile_IdNote">
-          <End Role="Note" Type="Self.Note" Multiplicity="0..1" />
-          <End Role="IssueFile" Type="Self.IssueFile" Multiplicity="*" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="0..1" />
+          <End Role="IssueFiles" Type="Self.IssueFiles" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Note">
+            <Principal Role="Notes">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="IssueFile">
+            <Dependent Role="IssueFiles">
               <PropertyRef Name="IdNote" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IssueFile_IdUser">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="IssueFile" Type="Self.IssueFile" Multiplicity="*" />
+          <End Role="IssueFiles" Type="Self.IssueFiles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="IssueFile">
+            <Dependent Role="IssueFiles">
               <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IssueLabel_IdIssue">
-          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
-          <End Role="IssueLabel" Type="Self.IssueLabel" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="1" />
+          <End Role="IssueLabels" Type="Self.IssueLabels" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Issue">
+            <Principal Role="Issues">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="IssueLabel">
+            <Dependent Role="IssueLabels">
               <PropertyRef Name="IdIssue" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_IssueLabel_IdLabel">
-          <End Role="Label" Type="Self.Label" Multiplicity="1" />
-          <End Role="IssueLabel" Type="Self.IssueLabel" Multiplicity="*" />
+          <End Role="Labels" Type="Self.Labels" Multiplicity="1" />
+          <End Role="IssueLabels" Type="Self.IssueLabels" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Label">
+            <Principal Role="Labels">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="IssueLabel">
+            <Dependent Role="IssueLabels">
               <PropertyRef Name="IdLabel" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Label_IdProject">
-          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
-          <End Role="Label" Type="Self.Label" Multiplicity="*" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="Labels" Type="Self.Labels" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Project">
+            <Principal Role="Projects">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Label">
+            <Dependent Role="Labels">
               <PropertyRef Name="IdProject" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Note_IdIssue">
-          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
-          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="1" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Issue">
+            <Principal Role="Issues">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Note">
+            <Dependent Role="Notes">
               <PropertyRef Name="IdIssue" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Note_IdUser">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Note" Type="Self.Note" Multiplicity="*" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Note">
+            <Dependent Role="Notes">
               <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Project_IdFile">
-          <End Role="File" Type="Self.File" Multiplicity="0..1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <End Role="Files" Type="Self.Files" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="File">
+            <Principal Role="Files">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Project">
+            <Dependent Role="Projects">
               <PropertyRef Name="IdFile" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Project_IdParentProject">
-          <End Role="Project" Type="Self.Project" Multiplicity="0..1" />
-          <End Role="Project1" Type="Self.Project" Multiplicity="*" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="0..1" />
+          <End Role="Projects1" Type="Self.Projects" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Project">
+            <Principal Role="Projects">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Project1">
+            <Dependent Role="Projects1">
               <PropertyRef Name="IdParentProject" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Project_IdStatus">
-          <End Role="ProjectStatus" Type="Self.ProjectStatus" Multiplicity="1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <End Role="ProjectStatuses" Type="Self.ProjectStatuses" Multiplicity="1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ProjectStatus">
+            <Principal Role="ProjectStatuses">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Project">
+            <Dependent Role="Projects">
               <PropertyRef Name="IdStatus" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Project_IdUserCreated">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Project">
+            <Dependent Role="Projects">
               <PropertyRef Name="IdUserCreated" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RelatedIssue_IdIssue">
-          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
-          <End Role="RelatedIssue" Type="Self.RelatedIssue" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="1" />
+          <End Role="RelatedIssues" Type="Self.RelatedIssues" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Issue">
+            <Principal Role="Issues">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RelatedIssue">
+            <Dependent Role="RelatedIssues">
               <PropertyRef Name="IdIssue" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RelatedIssue_IdIssueRelated">
-          <End Role="Issue" Type="Self.Issue" Multiplicity="1" />
-          <End Role="RelatedIssue" Type="Self.RelatedIssue" Multiplicity="*" />
+          <End Role="Issues" Type="Self.Issues" Multiplicity="1" />
+          <End Role="RelatedIssues" Type="Self.RelatedIssues" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Issue">
+            <Principal Role="Issues">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="RelatedIssue">
+            <Dependent Role="RelatedIssues">
               <PropertyRef Name="IdIssueRelated" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserProject_IdProject">
-          <End Role="Project" Type="Self.Project" Multiplicity="1" />
-          <End Role="UserProject" Type="Self.UserProject" Multiplicity="*" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
+          <End Role="UserProjects" Type="Self.UserProjects" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Project">
+            <Principal Role="Projects">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserProject">
+            <Dependent Role="UserProjects">
               <PropertyRef Name="IdProject" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserProject_IdUser">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
-          <End Role="UserProject" Type="Self.UserProject" Multiplicity="*" />
+          <End Role="UserProjects" Type="Self.UserProjects" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AspNetUsers">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="UserProject">
+            <Dependent Role="UserProjects">
               <PropertyRef Name="IdUser" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="ColeoModelStoreContainer">
-          <EntitySet Name="__MigrationHistory" EntityType="Self.__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="File" EntityType="Self.File" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="History" EntityType="Self.History" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Issue" EntityType="Self.Issue" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IssueFile" EntityType="Self.IssueFile" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IssueLabel" EntityType="Self.IssueLabel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Histories" EntityType="Self.Histories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IssueFiles" EntityType="Self.IssueFiles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IssueLabels" EntityType="Self.IssueLabels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Issues" EntityType="Self.Issues" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IssueStatus" EntityType="Self.IssueStatus" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Label" EntityType="Self.Label" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Note" EntityType="Self.Note" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Priority" EntityType="Self.Priority" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProjectStatus" EntityType="Self.ProjectStatus" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RelatedIssue" EntityType="Self.RelatedIssue" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Reproducibility" EntityType="Self.Reproducibility" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Severity" EntityType="Self.Severity" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserProject" EntityType="Self.UserProject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Labels" EntityType="Self.Labels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Priorities" EntityType="Self.Priorities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectStatuses" EntityType="Self.ProjectStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RelatedIssues" EntityType="Self.RelatedIssues" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reproducibilities" EntityType="Self.Reproducibilities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Severities" EntityType="Self.Severities" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserProjects" EntityType="Self.UserProjects" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetRoles" Association="Self.FK_AspNetUserRoles_AspNetRoles">
+            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AspNetUserRoles_AspNetUsers" Association="Self.FK_AspNetUserRoles_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -629,117 +622,109 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
           </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
           <AssociationSet Name="FK_History_IdIssue" Association="Self.FK_History_IdIssue">
-            <End Role="Issue" EntitySet="Issue" />
-            <End Role="History" EntitySet="History" />
+            <End Role="Issues" EntitySet="Issues" />
+            <End Role="Histories" EntitySet="Histories" />
           </AssociationSet>
           <AssociationSet Name="FK_History_IdUser" Association="Self.FK_History_IdUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="History" EntitySet="History" />
+            <End Role="Histories" EntitySet="Histories" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdPriority" Association="Self.FK_Issue_IdPriority">
-            <End Role="Priority" EntitySet="Priority" />
-            <End Role="Issue" EntitySet="Issue" />
+            <End Role="Priorities" EntitySet="Priorities" />
+            <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdProject" Association="Self.FK_Issue_IdProject">
-            <End Role="Project" EntitySet="Project" />
-            <End Role="Issue" EntitySet="Issue" />
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdReproducibility" Association="Self.FK_Issue_IdReproducibility">
-            <End Role="Reproducibility" EntitySet="Reproducibility" />
-            <End Role="Issue" EntitySet="Issue" />
+            <End Role="Reproducibilities" EntitySet="Reproducibilities" />
+            <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdSeverity" Association="Self.FK_Issue_IdSeverity">
-            <End Role="Severity" EntitySet="Severity" />
-            <End Role="Issue" EntitySet="Issue" />
+            <End Role="Severities" EntitySet="Severities" />
+            <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdStatus" Association="Self.FK_Issue_IdStatus">
             <End Role="IssueStatus" EntitySet="IssueStatus" />
-            <End Role="Issue" EntitySet="Issue" />
+            <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdUserAssigned" Association="Self.FK_Issue_IdUserAssigned">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Issue" EntitySet="Issue" />
+            <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdUserReporter" Association="Self.FK_Issue_IdUserReporter">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Issue" EntitySet="Issue" />
+            <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_IssueFile_IdFile" Association="Self.FK_IssueFile_IdFile">
-            <End Role="File" EntitySet="File" />
-            <End Role="IssueFile" EntitySet="IssueFile" />
+            <End Role="Files" EntitySet="Files" />
+            <End Role="IssueFiles" EntitySet="IssueFiles" />
           </AssociationSet>
           <AssociationSet Name="FK_IssueFile_IdIssue" Association="Self.FK_IssueFile_IdIssue">
-            <End Role="Issue" EntitySet="Issue" />
-            <End Role="IssueFile" EntitySet="IssueFile" />
+            <End Role="Issues" EntitySet="Issues" />
+            <End Role="IssueFiles" EntitySet="IssueFiles" />
           </AssociationSet>
           <AssociationSet Name="FK_IssueFile_IdNote" Association="Self.FK_IssueFile_IdNote">
-            <End Role="Note" EntitySet="Note" />
-            <End Role="IssueFile" EntitySet="IssueFile" />
+            <End Role="Notes" EntitySet="Notes" />
+            <End Role="IssueFiles" EntitySet="IssueFiles" />
           </AssociationSet>
           <AssociationSet Name="FK_IssueFile_IdUser" Association="Self.FK_IssueFile_IdUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="IssueFile" EntitySet="IssueFile" />
+            <End Role="IssueFiles" EntitySet="IssueFiles" />
           </AssociationSet>
           <AssociationSet Name="FK_IssueLabel_IdIssue" Association="Self.FK_IssueLabel_IdIssue">
-            <End Role="Issue" EntitySet="Issue" />
-            <End Role="IssueLabel" EntitySet="IssueLabel" />
+            <End Role="Issues" EntitySet="Issues" />
+            <End Role="IssueLabels" EntitySet="IssueLabels" />
           </AssociationSet>
           <AssociationSet Name="FK_IssueLabel_IdLabel" Association="Self.FK_IssueLabel_IdLabel">
-            <End Role="Label" EntitySet="Label" />
-            <End Role="IssueLabel" EntitySet="IssueLabel" />
+            <End Role="Labels" EntitySet="Labels" />
+            <End Role="IssueLabels" EntitySet="IssueLabels" />
           </AssociationSet>
           <AssociationSet Name="FK_Label_IdProject" Association="Self.FK_Label_IdProject">
-            <End Role="Project" EntitySet="Project" />
-            <End Role="Label" EntitySet="Label" />
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Labels" EntitySet="Labels" />
           </AssociationSet>
           <AssociationSet Name="FK_Note_IdIssue" Association="Self.FK_Note_IdIssue">
-            <End Role="Issue" EntitySet="Issue" />
-            <End Role="Note" EntitySet="Note" />
+            <End Role="Issues" EntitySet="Issues" />
+            <End Role="Notes" EntitySet="Notes" />
           </AssociationSet>
           <AssociationSet Name="FK_Note_IdUser" Association="Self.FK_Note_IdUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Note" EntitySet="Note" />
+            <End Role="Notes" EntitySet="Notes" />
           </AssociationSet>
           <AssociationSet Name="FK_Project_IdFile" Association="Self.FK_Project_IdFile">
-            <End Role="File" EntitySet="File" />
-            <End Role="Project" EntitySet="Project" />
+            <End Role="Files" EntitySet="Files" />
+            <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="FK_Project_IdParentProject" Association="Self.FK_Project_IdParentProject">
-            <End Role="Project" EntitySet="Project" />
-            <End Role="Project1" EntitySet="Project" />
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="Projects1" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="FK_Project_IdStatus" Association="Self.FK_Project_IdStatus">
-            <End Role="ProjectStatus" EntitySet="ProjectStatus" />
-            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectStatuses" EntitySet="ProjectStatuses" />
+            <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="FK_Project_IdUserCreated" Association="Self.FK_Project_IdUserCreated">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="Project" EntitySet="Project" />
+            <End Role="Projects" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="FK_RelatedIssue_IdIssue" Association="Self.FK_RelatedIssue_IdIssue">
-            <End Role="Issue" EntitySet="Issue" />
-            <End Role="RelatedIssue" EntitySet="RelatedIssue" />
+            <End Role="Issues" EntitySet="Issues" />
+            <End Role="RelatedIssues" EntitySet="RelatedIssues" />
           </AssociationSet>
           <AssociationSet Name="FK_RelatedIssue_IdIssueRelated" Association="Self.FK_RelatedIssue_IdIssueRelated">
-            <End Role="Issue" EntitySet="Issue" />
-            <End Role="RelatedIssue" EntitySet="RelatedIssue" />
+            <End Role="Issues" EntitySet="Issues" />
+            <End Role="RelatedIssues" EntitySet="RelatedIssues" />
           </AssociationSet>
           <AssociationSet Name="FK_UserProject_IdProject" Association="Self.FK_UserProject_IdProject">
-            <End Role="Project" EntitySet="Project" />
-            <End Role="UserProject" EntitySet="UserProject" />
+            <End Role="Projects" EntitySet="Projects" />
+            <End Role="UserProjects" EntitySet="UserProjects" />
           </AssociationSet>
           <AssociationSet Name="FK_UserProject_IdUser" Association="Self.FK_UserProject_IdUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="UserProject" EntitySet="UserProject" />
+            <End Role="UserProjects" EntitySet="UserProjects" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -747,25 +732,25 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ColeoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="ColeoEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="C__MigrationHistory" EntityType="ColeoModel.C__MigrationHistory" />
           <EntitySet Name="AspNetRoles" EntityType="ColeoModel.AspNetRole" />
           <EntitySet Name="AspNetUserClaims" EntityType="ColeoModel.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="ColeoModel.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="ColeoModel.AspNetUser" />
+          <EntitySet Name="C__MigrationHistory" EntityType="ColeoModel.C__MigrationHistory" />
           <EntitySet Name="Files" EntityType="ColeoModel.File" />
           <EntitySet Name="Histories" EntityType="ColeoModel.History" />
-          <EntitySet Name="Issues" EntityType="ColeoModel.Issue" />
           <EntitySet Name="IssueFiles" EntityType="ColeoModel.IssueFile" />
           <EntitySet Name="IssueLabels" EntityType="ColeoModel.IssueLabel" />
+          <EntitySet Name="Issues" EntityType="ColeoModel.Issue" />
           <EntitySet Name="IssueStatus" EntityType="ColeoModel.IssueStatu" />
           <EntitySet Name="Labels" EntityType="ColeoModel.Label" />
           <EntitySet Name="Notes" EntityType="ColeoModel.Note" />
           <EntitySet Name="Priorities" EntityType="ColeoModel.Priority" />
           <EntitySet Name="Projects" EntityType="ColeoModel.Project" />
+          <EntitySet Name="ProjectStatuses" EntityType="ColeoModel.ProjectStatus" />
           <EntitySet Name="RelatedIssues" EntityType="ColeoModel.RelatedIssue" />
           <EntitySet Name="Reproducibilities" EntityType="ColeoModel.Reproducibility" />
           <EntitySet Name="Severities" EntityType="ColeoModel.Severity" />
-          <EntitySet Name="sysdiagrams" EntityType="ColeoModel.sysdiagram" />
           <EntitySet Name="UserProjects" EntityType="ColeoModel.UserProject" />
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="ColeoModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -815,6 +800,22 @@
             <End Role="Issue" EntitySet="Issues" />
             <End Role="History" EntitySet="Histories" />
           </AssociationSet>
+          <AssociationSet Name="FK_IssueFile_IdIssue" Association="ColeoModel.FK_IssueFile_IdIssue">
+            <End Role="Issue" EntitySet="Issues" />
+            <End Role="IssueFile" EntitySet="IssueFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueFile_IdNote" Association="ColeoModel.FK_IssueFile_IdNote">
+            <End Role="Note" EntitySet="Notes" />
+            <End Role="IssueFile" EntitySet="IssueFiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueLabel_IdIssue" Association="ColeoModel.FK_IssueLabel_IdIssue">
+            <End Role="Issue" EntitySet="Issues" />
+            <End Role="IssueLabel" EntitySet="IssueLabels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IssueLabel_IdLabel" Association="ColeoModel.FK_IssueLabel_IdLabel">
+            <End Role="Label" EntitySet="Labels" />
+            <End Role="IssueLabel" EntitySet="IssueLabels" />
+          </AssociationSet>
           <AssociationSet Name="FK_Issue_IdPriority" Association="ColeoModel.FK_Issue_IdPriority">
             <End Role="Priority" EntitySet="Priorities" />
             <End Role="Issue" EntitySet="Issues" />
@@ -835,14 +836,6 @@
             <End Role="IssueStatu" EntitySet="IssueStatus" />
             <End Role="Issue" EntitySet="Issues" />
           </AssociationSet>
-          <AssociationSet Name="FK_IssueFile_IdIssue" Association="ColeoModel.FK_IssueFile_IdIssue">
-            <End Role="Issue" EntitySet="Issues" />
-            <End Role="IssueFile" EntitySet="IssueFiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IssueLabel_IdIssue" Association="ColeoModel.FK_IssueLabel_IdIssue">
-            <End Role="Issue" EntitySet="Issues" />
-            <End Role="IssueLabel" EntitySet="IssueLabels" />
-          </AssociationSet>
           <AssociationSet Name="FK_Note_IdIssue" Association="ColeoModel.FK_Note_IdIssue">
             <End Role="Issue" EntitySet="Issues" />
             <End Role="Note" EntitySet="Notes" />
@@ -855,14 +848,6 @@
             <End Role="Issue" EntitySet="Issues" />
             <End Role="RelatedIssue" EntitySet="RelatedIssues" />
           </AssociationSet>
-          <AssociationSet Name="FK_IssueFile_IdNote" Association="ColeoModel.FK_IssueFile_IdNote">
-            <End Role="Note" EntitySet="Notes" />
-            <End Role="IssueFile" EntitySet="IssueFiles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_IssueLabel_IdLabel" Association="ColeoModel.FK_IssueLabel_IdLabel">
-            <End Role="Label" EntitySet="Labels" />
-            <End Role="IssueLabel" EntitySet="IssueLabels" />
-          </AssociationSet>
           <AssociationSet Name="FK_Label_IdProject" Association="ColeoModel.FK_Label_IdProject">
             <End Role="Project" EntitySet="Projects" />
             <End Role="Label" EntitySet="Labels" />
@@ -870,6 +855,10 @@
           <AssociationSet Name="FK_Project_IdParentProject" Association="ColeoModel.FK_Project_IdParentProject">
             <End Role="Project" EntitySet="Projects" />
             <End Role="Project1" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Project_IdStatus" Association="ColeoModel.FK_Project_IdStatus">
+            <End Role="ProjectStatus" EntitySet="ProjectStatuses" />
+            <End Role="Project" EntitySet="Projects" />
           </AssociationSet>
           <AssociationSet Name="FK_UserProject_IdProject" Association="ColeoModel.FK_UserProject_IdProject">
             <End Role="Project" EntitySet="Projects" />
@@ -879,22 +868,7 @@
             <End Role="AspNetRole" EntitySet="AspNetRoles" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
-          <EntitySet Name="ProjectStatus" EntityType="ColeoModel.ProjectStatu" />
-          <AssociationSet Name="FK_Project_IdStatus" Association="ColeoModel.FK_Project_IdStatus">
-            <End Role="ProjectStatu" EntitySet="ProjectStatus" />
-            <End Role="Project" EntitySet="Projects" />
-          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
             <PropertyRef Name="Id" />
@@ -952,6 +926,16 @@
           <NavigationProperty Name="UserProjects" Relationship="ColeoModel.FK_UserProject_IdUser" FromRole="AspNetUser" ToRole="UserProject" />
           <NavigationProperty Name="AspNetRoles" Relationship="ColeoModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
+        <EntityType Name="C__MigrationHistory">
+          <Key>
+            <PropertyRef Name="MigrationId" />
+            <PropertyRef Name="ContextKey" />
+          </Key>
+          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="File">
           <Key>
             <PropertyRef Name="Id" />
@@ -968,7 +952,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateModified" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="IdIssue" Type="Int32" Nullable="false" />
           <Property Name="Field" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
@@ -976,49 +960,13 @@
           <NavigationProperty Name="AspNetUser" Relationship="ColeoModel.FK_History_IdUser" FromRole="History" ToRole="AspNetUser" />
           <NavigationProperty Name="Issue" Relationship="ColeoModel.FK_History_IdIssue" FromRole="History" ToRole="Issue" />
         </EntityType>
-        <EntityType Name="Issue">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IdProject" Type="Int32" Nullable="false" />
-          <Property Name="IdUserReporter" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IdUserAssigned" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IdStatus" Type="Int32" Nullable="false" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="AdditionalInformation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="StepsToReproduce" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DateLastUpdate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="Platform" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Os" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="OsVersion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="IdPriority" Type="Int32" Nullable="false" />
-          <Property Name="IdSeverity" Type="Int32" Nullable="false" />
-          <Property Name="IdReproducibility" Type="Int32" Nullable="false" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AspNetUser" Relationship="ColeoModel.FK_Issue_IdUserAssigned" FromRole="Issue" ToRole="AspNetUser" />
-          <NavigationProperty Name="AspNetUser1" Relationship="ColeoModel.FK_Issue_IdUserReporter" FromRole="Issue" ToRole="AspNetUser" />
-          <NavigationProperty Name="Histories" Relationship="ColeoModel.FK_History_IdIssue" FromRole="Issue" ToRole="History" />
-          <NavigationProperty Name="Priority" Relationship="ColeoModel.FK_Issue_IdPriority" FromRole="Issue" ToRole="Priority" />
-          <NavigationProperty Name="Project" Relationship="ColeoModel.FK_Issue_IdProject" FromRole="Issue" ToRole="Project" />
-          <NavigationProperty Name="Reproducibility" Relationship="ColeoModel.FK_Issue_IdReproducibility" FromRole="Issue" ToRole="Reproducibility" />
-          <NavigationProperty Name="Severity" Relationship="ColeoModel.FK_Issue_IdSeverity" FromRole="Issue" ToRole="Severity" />
-          <NavigationProperty Name="IssueStatu" Relationship="ColeoModel.FK_Issue_IdStatus" FromRole="Issue" ToRole="IssueStatu" />
-          <NavigationProperty Name="IssueFiles" Relationship="ColeoModel.FK_IssueFile_IdIssue" FromRole="Issue" ToRole="IssueFile" />
-          <NavigationProperty Name="IssueLabels" Relationship="ColeoModel.FK_IssueLabel_IdIssue" FromRole="Issue" ToRole="IssueLabel" />
-          <NavigationProperty Name="Notes" Relationship="ColeoModel.FK_Note_IdIssue" FromRole="Issue" ToRole="Note" />
-          <NavigationProperty Name="RelatedIssues" Relationship="ColeoModel.FK_RelatedIssue_IdIssue" FromRole="Issue" ToRole="RelatedIssue" />
-          <NavigationProperty Name="RelatedIssues1" Relationship="ColeoModel.FK_RelatedIssue_IdIssueRelated" FromRole="Issue" ToRole="RelatedIssue" />
-        </EntityType>
         <EntityType Name="IssueFile">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdIssue" Type="Int32" />
           <Property Name="IdNote" Type="Int32" />
           <Property Name="IdFile" Type="Int32" Nullable="false" />
@@ -1036,6 +984,42 @@
           <Property Name="IdLabel" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Issue" Relationship="ColeoModel.FK_IssueLabel_IdIssue" FromRole="IssueLabel" ToRole="Issue" />
           <NavigationProperty Name="Label" Relationship="ColeoModel.FK_IssueLabel_IdLabel" FromRole="IssueLabel" ToRole="Label" />
+        </EntityType>
+        <EntityType Name="Issue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdProject" Type="Int32" Nullable="false" />
+          <Property Name="IdUserReporter" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IdUserAssigned" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="IdStatus" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AdditionalInformation" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StepsToReproduce" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateLastUpdate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Platform" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Os" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="OsVersion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="IdPriority" Type="Int32" Nullable="false" />
+          <Property Name="IdSeverity" Type="Int32" Nullable="false" />
+          <Property Name="IdReproducibility" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="ColeoModel.FK_Issue_IdUserAssigned" FromRole="Issue" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUser1" Relationship="ColeoModel.FK_Issue_IdUserReporter" FromRole="Issue" ToRole="AspNetUser" />
+          <NavigationProperty Name="Histories" Relationship="ColeoModel.FK_History_IdIssue" FromRole="Issue" ToRole="History" />
+          <NavigationProperty Name="IssueFiles" Relationship="ColeoModel.FK_IssueFile_IdIssue" FromRole="Issue" ToRole="IssueFile" />
+          <NavigationProperty Name="IssueLabels" Relationship="ColeoModel.FK_IssueLabel_IdIssue" FromRole="Issue" ToRole="IssueLabel" />
+          <NavigationProperty Name="Priority" Relationship="ColeoModel.FK_Issue_IdPriority" FromRole="Issue" ToRole="Priority" />
+          <NavigationProperty Name="Project" Relationship="ColeoModel.FK_Issue_IdProject" FromRole="Issue" ToRole="Project" />
+          <NavigationProperty Name="Reproducibility" Relationship="ColeoModel.FK_Issue_IdReproducibility" FromRole="Issue" ToRole="Reproducibility" />
+          <NavigationProperty Name="Severity" Relationship="ColeoModel.FK_Issue_IdSeverity" FromRole="Issue" ToRole="Severity" />
+          <NavigationProperty Name="IssueStatu" Relationship="ColeoModel.FK_Issue_IdStatus" FromRole="Issue" ToRole="IssueStatu" />
+          <NavigationProperty Name="Notes" Relationship="ColeoModel.FK_Note_IdIssue" FromRole="Issue" ToRole="Note" />
+          <NavigationProperty Name="RelatedIssues" Relationship="ColeoModel.FK_RelatedIssue_IdIssue" FromRole="Issue" ToRole="RelatedIssue" />
+          <NavigationProperty Name="RelatedIssues1" Relationship="ColeoModel.FK_RelatedIssue_IdIssueRelated" FromRole="Issue" ToRole="RelatedIssue" />
         </EntityType>
         <EntityType Name="IssueStatu">
           <Key>
@@ -1063,12 +1047,12 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdIssue" Type="Int32" Nullable="false" />
           <Property Name="IdUser" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="AspNetUser" Relationship="ColeoModel.FK_Note_IdUser" FromRole="Note" ToRole="AspNetUser" />
-          <NavigationProperty Name="Issue" Relationship="ColeoModel.FK_Note_IdIssue" FromRole="Note" ToRole="Issue" />
           <NavigationProperty Name="IssueFiles" Relationship="ColeoModel.FK_IssueFile_IdNote" FromRole="Note" ToRole="IssueFile" />
+          <NavigationProperty Name="Issue" Relationship="ColeoModel.FK_Note_IdIssue" FromRole="Note" ToRole="Issue" />
         </EntityType>
         <EntityType Name="Priority">
           <Key>
@@ -1086,7 +1070,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Color" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
           <Property Name="IdUserCreated" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="IdParentProject" Type="Int32" />
@@ -1096,10 +1080,21 @@
           <NavigationProperty Name="File" Relationship="ColeoModel.FK_Project_IdFile" FromRole="Project" ToRole="File" />
           <NavigationProperty Name="Issues" Relationship="ColeoModel.FK_Issue_IdProject" FromRole="Project" ToRole="Issue" />
           <NavigationProperty Name="Labels" Relationship="ColeoModel.FK_Label_IdProject" FromRole="Project" ToRole="Label" />
-          <NavigationProperty Name="Project1" Relationship="ColeoModel.FK_Project_IdParentProject" FromRole="Project" ToRole="Project1" />
-          <NavigationProperty Name="Project2" Relationship="ColeoModel.FK_Project_IdParentProject" FromRole="Project1" ToRole="Project" />
+          <NavigationProperty Name="Projects1" Relationship="ColeoModel.FK_Project_IdParentProject" FromRole="Project" ToRole="Project1" />
+          <NavigationProperty Name="Project1" Relationship="ColeoModel.FK_Project_IdParentProject" FromRole="Project1" ToRole="Project" />
+          <NavigationProperty Name="ProjectStatus" Relationship="ColeoModel.FK_Project_IdStatus" FromRole="Project" ToRole="ProjectStatus" />
           <NavigationProperty Name="UserProjects" Relationship="ColeoModel.FK_UserProject_IdProject" FromRole="Project" ToRole="UserProject" />
-          <NavigationProperty Name="ProjectStatu" Relationship="ColeoModel.FK_Project_IdStatus" FromRole="Project" ToRole="ProjectStatu" />
+        </EntityType>
+        <EntityType Name="ProjectStatus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Color" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Projects" Relationship="ColeoModel.FK_Project_IdStatus" FromRole="ProjectStatus" ToRole="Project" />
         </EntityType>
         <EntityType Name="RelatedIssue">
           <Key>
@@ -1128,16 +1123,6 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Color" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Issues" Relationship="ColeoModel.FK_Issue_IdSeverity" FromRole="Severity" ToRole="Issue" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="UserProject">
           <Key>
@@ -1297,6 +1282,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_IssueFile_IdIssue">
+          <End Type="ColeoModel.Issue" Role="Issue" Multiplicity="0..1" />
+          <End Type="ColeoModel.IssueFile" Role="IssueFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Issue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IssueFile">
+              <PropertyRef Name="IdIssue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueFile_IdNote">
+          <End Type="ColeoModel.Note" Role="Note" Multiplicity="0..1" />
+          <End Type="ColeoModel.IssueFile" Role="IssueFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Note">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IssueFile">
+              <PropertyRef Name="IdNote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueLabel_IdIssue">
+          <End Type="ColeoModel.Issue" Role="Issue" Multiplicity="1" />
+          <End Type="ColeoModel.IssueLabel" Role="IssueLabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Issue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IssueLabel">
+              <PropertyRef Name="IdIssue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IssueLabel_IdLabel">
+          <End Type="ColeoModel.Label" Role="Label" Multiplicity="1" />
+          <End Type="ColeoModel.IssueLabel" Role="IssueLabel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Label">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IssueLabel">
+              <PropertyRef Name="IdLabel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Issue_IdPriority">
           <End Type="ColeoModel.Priority" Role="Priority" Multiplicity="1" />
           <End Type="ColeoModel.Issue" Role="Issue" Multiplicity="*" />
@@ -1357,30 +1390,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_IssueFile_IdIssue">
-          <End Type="ColeoModel.Issue" Role="Issue" Multiplicity="0..1" />
-          <End Type="ColeoModel.IssueFile" Role="IssueFile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Issue">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="IssueFile">
-              <PropertyRef Name="IdIssue" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IssueLabel_IdIssue">
-          <End Type="ColeoModel.Issue" Role="Issue" Multiplicity="1" />
-          <End Type="ColeoModel.IssueLabel" Role="IssueLabel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Issue">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="IssueLabel">
-              <PropertyRef Name="IdIssue" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Note_IdIssue">
           <End Type="ColeoModel.Issue" Role="Issue" Multiplicity="1" />
           <End Type="ColeoModel.Note" Role="Note" Multiplicity="*" />
@@ -1417,30 +1426,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_IssueFile_IdNote">
-          <End Type="ColeoModel.Note" Role="Note" Multiplicity="0..1" />
-          <End Type="ColeoModel.IssueFile" Role="IssueFile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Note">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="IssueFile">
-              <PropertyRef Name="IdNote" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_IssueLabel_IdLabel">
-          <End Type="ColeoModel.Label" Role="Label" Multiplicity="1" />
-          <End Type="ColeoModel.IssueLabel" Role="IssueLabel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Label">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="IssueLabel">
-              <PropertyRef Name="IdLabel" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Label_IdProject">
           <End Type="ColeoModel.Project" Role="Project" Multiplicity="0..1" />
           <End Type="ColeoModel.Label" Role="Label" Multiplicity="*" />
@@ -1465,6 +1450,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Project_IdStatus">
+          <End Type="ColeoModel.ProjectStatus" Role="ProjectStatus" Multiplicity="1" />
+          <End Type="ColeoModel.Project" Role="Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProjectStatus">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Project">
+              <PropertyRef Name="IdStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserProject_IdProject">
           <End Type="ColeoModel.Project" Role="Project" Multiplicity="1" />
           <End Type="ColeoModel.UserProject" Role="UserProject" Multiplicity="*" />
@@ -1481,45 +1478,12 @@
           <End Type="ColeoModel.AspNetRole" Role="AspNetRole" Multiplicity="*" />
           <End Type="ColeoModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
         </Association>
-        <EntityType Name="ProjectStatu">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Color" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
-          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
-          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Projects" Relationship="ColeoModel.FK_Project_IdStatus" FromRole="ProjectStatu" ToRole="Project" />
-        </EntityType>
-        <Association Name="FK_Project_IdStatus">
-          <End Type="ColeoModel.ProjectStatu" Role="ProjectStatu" Multiplicity="1" />
-          <End Type="ColeoModel.Project" Role="Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProjectStatu">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Project">
-              <PropertyRef Name="IdStatus" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
     <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ColeoModelStoreContainer" CdmEntityContainer="ColeoEntities">
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="ColeoModel.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="__MigrationHistory">
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="ColeoModel.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
@@ -1566,9 +1530,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="C__MigrationHistory">
+            <EntityTypeMapping TypeName="ColeoModel.C__MigrationHistory">
+              <MappingFragment StoreEntitySet="C__MigrationHistory">
+                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
+                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Files">
             <EntityTypeMapping TypeName="ColeoModel.File">
-              <MappingFragment StoreEntitySet="File">
+              <MappingFragment StoreEntitySet="Files">
                 <ScalarProperty Name="Extension" ColumnName="Extension" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="LocalName" ColumnName="LocalName" />
@@ -1578,7 +1552,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Histories">
             <EntityTypeMapping TypeName="ColeoModel.History">
-              <MappingFragment StoreEntitySet="History">
+              <MappingFragment StoreEntitySet="Histories">
                 <ScalarProperty Name="Change" ColumnName="Change" />
                 <ScalarProperty Name="Field" ColumnName="Field" />
                 <ScalarProperty Name="IdIssue" ColumnName="IdIssue" />
@@ -1588,9 +1562,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="IssueFiles">
+            <EntityTypeMapping TypeName="ColeoModel.IssueFile">
+              <MappingFragment StoreEntitySet="IssueFiles">
+                <ScalarProperty Name="IdFile" ColumnName="IdFile" />
+                <ScalarProperty Name="IdNote" ColumnName="IdNote" />
+                <ScalarProperty Name="IdIssue" ColumnName="IdIssue" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IssueLabels">
+            <EntityTypeMapping TypeName="ColeoModel.IssueLabel">
+              <MappingFragment StoreEntitySet="IssueLabels">
+                <ScalarProperty Name="IdLabel" ColumnName="IdLabel" />
+                <ScalarProperty Name="IdIssue" ColumnName="IdIssue" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Issues">
             <EntityTypeMapping TypeName="ColeoModel.Issue">
-              <MappingFragment StoreEntitySet="Issue">
+              <MappingFragment StoreEntitySet="Issues">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="IdReproducibility" ColumnName="IdReproducibility" />
                 <ScalarProperty Name="IdSeverity" ColumnName="IdSeverity" />
@@ -1612,27 +1607,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IssueFiles">
-            <EntityTypeMapping TypeName="ColeoModel.IssueFile">
-              <MappingFragment StoreEntitySet="IssueFile">
-                <ScalarProperty Name="IdFile" ColumnName="IdFile" />
-                <ScalarProperty Name="IdNote" ColumnName="IdNote" />
-                <ScalarProperty Name="IdIssue" ColumnName="IdIssue" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="IssueLabels">
-            <EntityTypeMapping TypeName="ColeoModel.IssueLabel">
-              <MappingFragment StoreEntitySet="IssueLabel">
-                <ScalarProperty Name="IdLabel" ColumnName="IdLabel" />
-                <ScalarProperty Name="IdIssue" ColumnName="IdIssue" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="IssueStatus">
             <EntityTypeMapping TypeName="ColeoModel.IssueStatu">
               <MappingFragment StoreEntitySet="IssueStatus">
@@ -1644,7 +1618,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Labels">
             <EntityTypeMapping TypeName="ColeoModel.Label">
-              <MappingFragment StoreEntitySet="Label">
+              <MappingFragment StoreEntitySet="Labels">
                 <ScalarProperty Name="IdProject" ColumnName="IdProject" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -1654,7 +1628,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Notes">
             <EntityTypeMapping TypeName="ColeoModel.Note">
-              <MappingFragment StoreEntitySet="Note">
+              <MappingFragment StoreEntitySet="Notes">
                 <ScalarProperty Name="IdUser" ColumnName="IdUser" />
                 <ScalarProperty Name="IdIssue" ColumnName="IdIssue" />
                 <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
@@ -1665,7 +1639,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Priorities">
             <EntityTypeMapping TypeName="ColeoModel.Priority">
-              <MappingFragment StoreEntitySet="Priority">
+              <MappingFragment StoreEntitySet="Priorities">
                 <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1674,7 +1648,7 @@
           </EntitySetMapping>
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ColeoModel.Project">
-              <MappingFragment StoreEntitySet="Project">
+              <MappingFragment StoreEntitySet="Projects">
                 <ScalarProperty Name="IdFile" ColumnName="IdFile" />
                 <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="IdParentProject" ColumnName="IdParentProject" />
@@ -1687,64 +1661,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="RelatedIssues">
-            <EntityTypeMapping TypeName="ColeoModel.RelatedIssue">
-              <MappingFragment StoreEntitySet="RelatedIssue">
-                <ScalarProperty Name="IdIssueRelated" ColumnName="IdIssueRelated" />
-                <ScalarProperty Name="IdIssue" ColumnName="IdIssue" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Reproducibilities">
-            <EntityTypeMapping TypeName="ColeoModel.Reproducibility">
-              <MappingFragment StoreEntitySet="Reproducibility">
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Severities">
-            <EntityTypeMapping TypeName="ColeoModel.Severity">
-              <MappingFragment StoreEntitySet="Severity">
-                <ScalarProperty Name="Color" ColumnName="Color" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="ColeoModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserProjects">
-            <EntityTypeMapping TypeName="ColeoModel.UserProject">
-              <MappingFragment StoreEntitySet="UserProject">
-                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
-                <ScalarProperty Name="IdProject" ColumnName="IdProject" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ColeoModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="ProjectStatus">
-            <EntityTypeMapping TypeName="ColeoModel.ProjectStatu">
-              <MappingFragment StoreEntitySet="ProjectStatus">
+          <EntitySetMapping Name="ProjectStatuses">
+            <EntityTypeMapping TypeName="ColeoModel.ProjectStatus">
+              <MappingFragment StoreEntitySet="ProjectStatuses">
                 <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
                 <ScalarProperty Name="Color" ColumnName="Color" />
@@ -1753,6 +1672,50 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RelatedIssues">
+            <EntityTypeMapping TypeName="ColeoModel.RelatedIssue">
+              <MappingFragment StoreEntitySet="RelatedIssues">
+                <ScalarProperty Name="IdIssueRelated" ColumnName="IdIssueRelated" />
+                <ScalarProperty Name="IdIssue" ColumnName="IdIssue" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reproducibilities">
+            <EntityTypeMapping TypeName="ColeoModel.Reproducibility">
+              <MappingFragment StoreEntitySet="Reproducibilities">
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Severities">
+            <EntityTypeMapping TypeName="ColeoModel.Severity">
+              <MappingFragment StoreEntitySet="Severities">
+                <ScalarProperty Name="Color" ColumnName="Color" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserProjects">
+            <EntityTypeMapping TypeName="ColeoModel.UserProject">
+              <MappingFragment StoreEntitySet="UserProjects">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdProject" ColumnName="IdProject" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AspNetUserRoles" TypeName="ColeoModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+            </EndProperty>
+            <EndProperty Name="AspNetRole">
+              <ScalarProperty Name="Id" ColumnName="AspNetRoles_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>

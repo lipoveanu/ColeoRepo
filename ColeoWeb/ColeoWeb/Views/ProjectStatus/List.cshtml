@@ -118,7 +118,6 @@
 
     function AlertDeleted() {
         $.notify('Project status deleted!', {
-            type: "danger"
         });
     }
 
@@ -128,7 +127,8 @@
             type: "POST",
             data: {id : item},
             url: '@Url.Action("Delete", "ProjectStatus")',
-            success: function () {
+            success: function (response) {
+                console.log(response);
                 $('#edit-projectstatus').empty();
                 ShowList();
                 AlertDeleted();

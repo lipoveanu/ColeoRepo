@@ -17,7 +17,7 @@ namespace ColeoWeb.Models
 
         #region Properties
 
-        public ProjectStatu Model { get; set; }
+        public ProjectStatus Model { get; set; }
 
         [Key]
         public int? Id { get; set; }
@@ -43,7 +43,7 @@ namespace ColeoWeb.Models
 
         public void SetDataToModel()
         {
-            Model = new ProjectStatu();
+            Model = new ProjectStatus();
 
             if (Id != null)
             {
@@ -58,7 +58,7 @@ namespace ColeoWeb.Models
 
         public void SetDataFromModel()
         {
-            Model = ProjectStatu.GetById(Id.Value);
+            Model = ProjectStatus.GetById(Id.Value);
 
             Name = Model.Name;
             Color = Model.Color;
@@ -71,17 +71,33 @@ namespace ColeoWeb.Models
         {
             if (Id == null)
             {
-                Id = ProjectStatu.Save(Model);
+                Id = ProjectStatus.Save(Model);
             }
             else
             {
-                ProjectStatu.Update(Model);
+                ProjectStatus.Update(Model);
             }
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            ProjectStatu.Delete(id);
+            bool result = true;
+
+            ProjectStatus.Delete(id);
+
+            List<Project> projects = Project.All();
+
+            if (projects.Any())
+            {
+                Project project = projects.FirstOrDefault(x => x.ProjectStatus.Id == id);
+
+                if (project != null)
+                {
+                    result = false;
+                }
+            }
+
+            return result;
         }
 
         #endregion Methods
