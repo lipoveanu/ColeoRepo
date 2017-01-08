@@ -58,6 +58,11 @@ namespace ColeoDataLayer.ModelColeo
             {
                 context.ProjectStatuses.Add(entity);
 
+                ////get max order
+                //int maxOrder = 0;
+                //maxOrder = context.ProjectStatuses.Max(d => d.DisplayOrder);
+                //entity.DisplayOrder = maxOrder++;
+
                 context.SaveChanges();
 
                 return entity.Id;
@@ -86,7 +91,7 @@ namespace ColeoDataLayer.ModelColeo
             }
         }
 
-        public static void Delete(int id)
+        public static bool Delete(int id)
         {
             using (ColeoEntities context = new ColeoEntities())
             {
@@ -94,19 +99,21 @@ namespace ColeoDataLayer.ModelColeo
 
                 if (projectStatus == null)
                 {
-                    return;
+                    return false;
                 }
 
                 var project = context.Projects.FirstOrDefault(x => x.IdStatus == id);
 
                 if (project != null)
                 {
-                    return;
+                    return false;
                 }
 
                 context.ProjectStatuses.Remove(projectStatus);
 
                 context.SaveChanges();
+
+                return true;
             }
         }
 

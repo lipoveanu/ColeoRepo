@@ -56,7 +56,7 @@ namespace ColeoDataLayer.ModelColeo
         public virtual Project Project { get; set; }
         public virtual Reproducibility Reproducibility { get; set; }
         public virtual Severity Severity { get; set; }
-        public virtual IssueStatu IssueStatu { get; set; }
+        public virtual IssueStatus IssueStatus { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Note> Notes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -33,11 +33,11 @@
         </EntityType>
         <EntityType Name="AspNetUserRoles">
           <Key>
-            <PropertyRef Name="AspNetRoles_Id" />
-            <PropertyRef Name="AspNetUsers_Id" />
+            <PropertyRef Name="RoleId" />
+            <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="AspNetRoles_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="AspNetUsers_Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="AspNetUsers">
           <Key>
@@ -56,16 +56,6 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
           <Property Name="Image" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="ContextKey" Type="nvarchar" MaxLength="300" Nullable="false" />
-          <Property Name="Model" Type="varbinary(max)" Nullable="false" />
-          <Property Name="ProductVersion" Type="nvarchar" MaxLength="32" Nullable="false" />
         </EntityType>
         <EntityType Name="Files">
           <Key>
@@ -129,7 +119,7 @@
           <Property Name="IdReproducibility" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="IssueStatus">
+        <EntityType Name="IssueStatuses">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -228,7 +218,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="AspNetRoles_Id" />
+              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -240,7 +230,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="AspNetUsers_Id" />
+              <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -345,10 +335,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdStatus">
-          <End Role="IssueStatus" Type="Self.IssueStatus" Multiplicity="1" />
+          <End Role="IssueStatuses" Type="Self.IssueStatuses" Multiplicity="1" />
           <End Role="Issues" Type="Self.Issues" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="IssueStatus">
+            <Principal Role="IssueStatuses">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Issues">
@@ -590,13 +580,12 @@
           <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Files" EntityType="Self.Files" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Histories" EntityType="Self.Histories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IssueFiles" EntityType="Self.IssueFiles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IssueLabels" EntityType="Self.IssueLabels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Issues" EntityType="Self.Issues" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="IssueStatus" EntityType="Self.IssueStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IssueStatuses" EntityType="Self.IssueStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Labels" EntityType="Self.Labels" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Priorities" EntityType="Self.Priorities" Schema="dbo" store:Type="Tables" />
@@ -647,7 +636,7 @@
             <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdStatus" Association="Self.FK_Issue_IdStatus">
-            <End Role="IssueStatus" EntitySet="IssueStatus" />
+            <End Role="IssueStatuses" EntitySet="IssueStatuses" />
             <End Role="Issues" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdUserAssigned" Association="Self.FK_Issue_IdUserAssigned">
@@ -736,13 +725,12 @@
           <EntitySet Name="AspNetUserClaims" EntityType="ColeoModel.AspNetUserClaim" />
           <EntitySet Name="AspNetUserLogins" EntityType="ColeoModel.AspNetUserLogin" />
           <EntitySet Name="AspNetUsers" EntityType="ColeoModel.AspNetUser" />
-          <EntitySet Name="C__MigrationHistory" EntityType="ColeoModel.C__MigrationHistory" />
           <EntitySet Name="Files" EntityType="ColeoModel.File" />
           <EntitySet Name="Histories" EntityType="ColeoModel.History" />
           <EntitySet Name="IssueFiles" EntityType="ColeoModel.IssueFile" />
           <EntitySet Name="IssueLabels" EntityType="ColeoModel.IssueLabel" />
           <EntitySet Name="Issues" EntityType="ColeoModel.Issue" />
-          <EntitySet Name="IssueStatus" EntityType="ColeoModel.IssueStatu" />
+          <EntitySet Name="IssueStatuses" EntityType="ColeoModel.IssueStatus" />
           <EntitySet Name="Labels" EntityType="ColeoModel.Label" />
           <EntitySet Name="Notes" EntityType="ColeoModel.Note" />
           <EntitySet Name="Priorities" EntityType="ColeoModel.Priority" />
@@ -833,7 +821,7 @@
             <End Role="Issue" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Issue_IdStatus" Association="ColeoModel.FK_Issue_IdStatus">
-            <End Role="IssueStatu" EntitySet="IssueStatus" />
+            <End Role="IssueStatus" EntitySet="IssueStatuses" />
             <End Role="Issue" EntitySet="Issues" />
           </AssociationSet>
           <AssociationSet Name="FK_Note_IdIssue" Association="ColeoModel.FK_Note_IdIssue">
@@ -926,16 +914,6 @@
           <NavigationProperty Name="UserProjects" Relationship="ColeoModel.FK_UserProject_IdUser" FromRole="AspNetUser" ToRole="UserProject" />
           <NavigationProperty Name="AspNetRoles" Relationship="ColeoModel.AspNetUserRoles" FromRole="AspNetUser" ToRole="AspNetRole" />
         </EntityType>
-        <EntityType Name="C__MigrationHistory">
-          <Key>
-            <PropertyRef Name="MigrationId" />
-            <PropertyRef Name="ContextKey" />
-          </Key>
-          <Property Name="MigrationId" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ContextKey" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
-          <Property Name="Model" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
-          <Property Name="ProductVersion" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="File">
           <Key>
             <PropertyRef Name="Id" />
@@ -1016,19 +994,19 @@
           <NavigationProperty Name="Project" Relationship="ColeoModel.FK_Issue_IdProject" FromRole="Issue" ToRole="Project" />
           <NavigationProperty Name="Reproducibility" Relationship="ColeoModel.FK_Issue_IdReproducibility" FromRole="Issue" ToRole="Reproducibility" />
           <NavigationProperty Name="Severity" Relationship="ColeoModel.FK_Issue_IdSeverity" FromRole="Issue" ToRole="Severity" />
-          <NavigationProperty Name="IssueStatu" Relationship="ColeoModel.FK_Issue_IdStatus" FromRole="Issue" ToRole="IssueStatu" />
+          <NavigationProperty Name="IssueStatus" Relationship="ColeoModel.FK_Issue_IdStatus" FromRole="Issue" ToRole="IssueStatus" />
           <NavigationProperty Name="Notes" Relationship="ColeoModel.FK_Note_IdIssue" FromRole="Issue" ToRole="Note" />
           <NavigationProperty Name="RelatedIssues" Relationship="ColeoModel.FK_RelatedIssue_IdIssue" FromRole="Issue" ToRole="RelatedIssue" />
           <NavigationProperty Name="RelatedIssues1" Relationship="ColeoModel.FK_RelatedIssue_IdIssueRelated" FromRole="Issue" ToRole="RelatedIssue" />
         </EntityType>
-        <EntityType Name="IssueStatu">
+        <EntityType Name="IssueStatus">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="Color" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Issues" Relationship="ColeoModel.FK_Issue_IdStatus" FromRole="IssueStatu" ToRole="Issue" />
+          <NavigationProperty Name="Issues" Relationship="ColeoModel.FK_Issue_IdStatus" FromRole="IssueStatus" ToRole="Issue" />
         </EntityType>
         <EntityType Name="Label">
           <Key>
@@ -1379,10 +1357,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Issue_IdStatus">
-          <End Type="ColeoModel.IssueStatu" Role="IssueStatu" Multiplicity="1" />
+          <End Type="ColeoModel.IssueStatus" Role="IssueStatus" Multiplicity="1" />
           <End Type="ColeoModel.Issue" Role="Issue" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="IssueStatu">
+            <Principal Role="IssueStatus">
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Issue">
@@ -1530,16 +1508,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="C__MigrationHistory">
-            <EntityTypeMapping TypeName="ColeoModel.C__MigrationHistory">
-              <MappingFragment StoreEntitySet="C__MigrationHistory">
-                <ScalarProperty Name="ProductVersion" ColumnName="ProductVersion" />
-                <ScalarProperty Name="Model" ColumnName="Model" />
-                <ScalarProperty Name="ContextKey" ColumnName="ContextKey" />
-                <ScalarProperty Name="MigrationId" ColumnName="MigrationId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Files">
             <EntityTypeMapping TypeName="ColeoModel.File">
               <MappingFragment StoreEntitySet="Files">
@@ -1607,9 +1575,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="IssueStatus">
-            <EntityTypeMapping TypeName="ColeoModel.IssueStatu">
-              <MappingFragment StoreEntitySet="IssueStatus">
+          <EntitySetMapping Name="IssueStatuses">
+            <EntityTypeMapping TypeName="ColeoModel.IssueStatus">
+              <MappingFragment StoreEntitySet="IssueStatuses">
                 <ScalarProperty Name="Color" ColumnName="Color" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -1710,10 +1678,10 @@
           </EntitySetMapping>
           <AssociationSetMapping Name="AspNetUserRoles" TypeName="ColeoModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
             <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+              <ScalarProperty Name="Id" ColumnName="UserId" />
             </EndProperty>
             <EndProperty Name="AspNetRole">
-              <ScalarProperty Name="Id" ColumnName="AspNetRoles_Id" />
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

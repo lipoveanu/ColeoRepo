@@ -77,9 +77,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ColeoEntities.edmx</DependentUpon>
     </Compile>
-    <Compile Include="ModelColeo\C__MigrationHistory.cs">
-      <DependentUpon>ColeoEntities.tt</DependentUpon>
-    </Compile>
     <Compile Include="ModelColeo\File.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
@@ -95,7 +92,7 @@
     <Compile Include="ModelColeo\IssueLabel.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="ModelColeo\IssueStatu.cs">
+    <Compile Include="ModelColeo\IssueStatus.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="ModelColeo\Label.cs">

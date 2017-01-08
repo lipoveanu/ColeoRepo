@@ -81,23 +81,7 @@ namespace ColeoWeb.Models
 
         public bool Delete(int id)
         {
-            bool result = true;
-
-            ProjectStatus.Delete(id);
-
-            List<Project> projects = Project.All();
-
-            if (projects.Any())
-            {
-                Project project = projects.FirstOrDefault(x => x.ProjectStatus.Id == id);
-
-                if (project != null)
-                {
-                    result = false;
-                }
-            }
-
-            return result;
+            return ProjectStatus.Delete(id);
         }
 
         #endregion Methods
