@@ -17,7 +17,7 @@ function InitializePickColor() {
 function NotificationDefaults() {
     $.notifyDefaults({
         type: "success",
-        allow_dismiss: false,
+        allow_dismiss: true,
         newest_on_top: true,
         delay: 1000,
         placement: {
@@ -32,6 +32,29 @@ function NotificationDefaults() {
             x: 30,
             y: 65
         }
+    });
+}
+
+function NotificationAlert(message, type, allowDismiss, delay) {
+
+    var notifyDefault = $.notifyDefaults('');
+
+    if (type == null) {
+        type = notifyDefault.type;
+    }
+    
+    if (allowDismiss == null) {
+        allowDismiss = notifyDefault.allow_dismiss;
+    }
+
+    if (delay == null) {
+        delay = notifyDefault.delay;
+    }
+
+    $.notify(message, {
+        type: type,
+        allow_dismiss: allowDismiss,
+        delay: delay
     });
 }
 
@@ -61,3 +84,4 @@ function ChangeOrder() {
     //save in db
     $('#btn-save').trigger('click');
 }
+

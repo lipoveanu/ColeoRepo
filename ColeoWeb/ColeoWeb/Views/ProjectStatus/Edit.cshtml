@@ -113,18 +113,10 @@
     $(function () {
         $('#edit-project-status').submit(function () {
             if ($(this).valid()) {
-                AlertSave();
+                NotificationAlert('Project status saved!');
             }
         });
     });
-
-
-    function AlertSave() {
-        $.notify('Project status saved!', {
-        });
-    }
-
-
 
 </script>
 

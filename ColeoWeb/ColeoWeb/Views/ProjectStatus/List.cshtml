@@ -93,19 +93,6 @@
         return false;
     }
 
-    function AlertDeleted() {
-        $.notify('Project status deleted!', {
-        });
-    }
-
-    function AlertFail() {
-        $.notify('The project status that you attempted to delete it is attached to a project therefore it can not be deleted!', {
-            type: "danger",
-            allow_dismiss: false,
-            delay: 2000,
-        });
-    }
-
     function DeleteItem(item)
     {
         $.ajax({
@@ -113,12 +100,14 @@
             data: {id : item},
             url: '@Url.Action("Delete", "ProjectStatus")',
             success: function (response) {
+
                 $('#edit-projectstatus').empty();
                 ShowList();
+
                 if (response == 'True') {
-                    AlertDeleted();
+                    NotificationAlert('Project status deleted!');
                 } else {
-                    AlertFail();
+                    NotificationAlert('The project status that you attempted to delete it is attached to a project therefore it can not be deleted!', "danger", false, 2000);
                 }
                 
             },
