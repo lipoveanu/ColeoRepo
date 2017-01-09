@@ -1,6 +1,7 @@
 ﻿// Pick-up-color
 
 function InitializePickColor() {
+    console.log("initialize pick a color");
     //setting up pick up color
     $(".pick-a-color").pickAColor({
         showSpectrum: true,
@@ -15,6 +16,8 @@ function InitializePickColor() {
 }
 
 function NotificationDefaults() {
+    console.log("notification defaults");
+
     $.notifyDefaults({
         type: "success",
         allow_dismiss: true,
@@ -59,6 +62,7 @@ function NotificationAlert(message, type, allowDismiss, delay) {
 }
 
 function SetUpSortable() {
+    console.log("set up sortable");
     $('.row').sortable({
         connectWith: ".panel",
         handle: ".item",

@@ -7,7 +7,7 @@
 @Styles.Render("~/Content/animate.css")
 @Scripts.Render("~/Scripts/js-Utils.js")
 
-
+@Scripts.Render("~/Scripts/js-ProjectStatus.js")
 
 <div class="row">
     <div id="index-projectstatus" class="col-md-4">
@@ -28,25 +28,22 @@
 </style>
 
 <script>
-    function ShowList() {
-        // re post the list with the updated item
-        $.ajax({
-            type: "GET",
-            url: '@Url.Action("List", "ProjectStatus")',
-            success: function (response) {
-                $("#index-projectstatus").html(response);
-            },
-            error: function () {
-                alert("error occured");
-            }
-        });
 
-        // validate form for alert
-        $.validator.unobtrusive.parse($("#edit-projectstatus"));
-    }
 
-    //set up notifications defaults
-    NotificationDefaults();
+    $(document).ready(function () {
+        //set up notifications defaults
+        NotificationDefaults();
+
+        urlEdit = '@Url.Action("Edit", "ProjectStatus")';
+        urlIndex = '@Url.Action("Index", "ProjectStatus")';
+        urlList = '@Url.Action("List", "ProjectStatus")';
+        urlDelete = '@Url.Action("Delete", "ProjectStatus")';
+        
+
+    });
+
+
+    
 </script>
 
 

@@ -107,16 +107,18 @@
         $(function () {
             $('#is-default').bootstrapToggle();
         })
+
+        AlertOnSave();
     });
 
     
-    $(function () {
+    function AlertOnSave() {
         $('#edit-project-status').submit(function () {
             if ($(this).valid()) {
                 NotificationAlert('Project status saved!');
             }
         });
-    });
+    };
 
 </script>
 

@@ -69,54 +69,8 @@
 <script>
 
     $(document).ready(function () {
-        //set up sortable
         SetUpSortable();
-
     });
-
-    function ShowEdit(id) {
-
-        event.preventDefault();
-
-        $.ajax({
-            type: "GET",
-            remote: true,
-            url: '@Url.Action("Edit", "ProjectStatus")',
-            data: { 'id': id },
-            success: function (response) {
-                $("#edit-projectstatus").html(response);
-            },
-            error: function (response) {
-                console.log(response);
-            }
-        });
-        return false;
-    }
-
-    function DeleteItem(item)
-    {
-        $.ajax({
-            type: "POST",
-            data: {id : item},
-            url: '@Url.Action("Delete", "ProjectStatus")',
-            success: function (response) {
-
-                $('#edit-projectstatus').empty();
-                ShowList();
-
-                if (response == 'True') {
-                    NotificationAlert('Project status deleted!');
-                } else {
-                    NotificationAlert('The project status that you attempted to delete it is attached to a project therefore it can not be deleted!', "danger", false, 2000);
-                }
-                
-            },
-            error: function () {
-                alert("error occured");
-            }
-        });
-
-        
-    }
+    
 
 </script>
