@@ -100,17 +100,8 @@
 
     $(document).ready(function () {
 
-        //setting up pick up color
-        $(".pick-a-color").pickAColor({
-            showSpectrum: true,
-            showSavedColors: true,
-            saveColorsPerElement: false,
-            fadeMenuToggle: true,
-            showHexInput: true,
-            showBasicColors: true,
-            allowBlank: false,
-            inlineDropdown: false
-        });
+        // Set up pick a color
+        InitializePickColor();
 
         // load the toggle
         $(function () {
@@ -121,7 +112,6 @@
     
     $(function () {
         $('#edit-project-status').submit(function () {
-
             if ($(this).valid()) {
                 AlertSave();
             }

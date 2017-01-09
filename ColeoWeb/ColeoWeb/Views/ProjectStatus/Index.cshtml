@@ -5,7 +5,7 @@
 @Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
 @Scripts.Render("~/Scripts/notify.js")
 @Styles.Render("~/Content/animate.css")
-
+@Scripts.Render("~/Scripts/js-Utils.js")
 
 
 
@@ -45,25 +45,8 @@
         $.validator.unobtrusive.parse($("#edit-projectstatus"));
     }
 
-    // notifications defaults
-    $.notifyDefaults({
-        type: "success",
-        allow_dismiss: false,
-        newest_on_top: true,
-        delay: 1000,
-        placement: {
-            from: "top",
-            align: "right"
-        },
-        animate: {
-            enter: 'animated fadeInDown',
-            exit: 'animated fadeOutUp'
-        },
-        offset: {
-            x: 30,
-            y: 65
-        }
-    });
+    //set up notifications defaults
+    NotificationDefaults();
 </script>
 
 
