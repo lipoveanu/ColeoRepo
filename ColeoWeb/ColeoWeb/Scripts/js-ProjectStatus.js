@@ -17,7 +17,7 @@ function ShowList() {
     });
 
     // validate form for alert
-    $.validator.unobtrusive.parse($("#edit-projectstatus"));
+    //$.validator.unobtrusive.parse($("#edit-projectstatus"));
 }
 
 

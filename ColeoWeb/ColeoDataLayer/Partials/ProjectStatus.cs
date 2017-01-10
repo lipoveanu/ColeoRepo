@@ -32,6 +32,7 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
+                // do this to avoid error at json.encode
                 ProjectStatus defaultProjStatus = context.ProjectStatuses.FirstOrDefault(x => x.IsDefault == true);
                 if (defaultProjStatus == null)
                 {
@@ -45,11 +46,39 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
+                context.Configuration.LazyLoadingEnabled = false;
                 ProjectStatus projectStatus = context.ProjectStatuses
                                                     .FirstOrDefault(x => x.Id == id);
 
                 return projectStatus;
             }
+        }
+
+        public static void UpdateDefault(ColeoEntities context, ProjectStatus entity)
+        {
+            List<ProjectStatus> listAllOthers = context.ProjectStatuses.Where(x => x.Id != entity.Id).ToList();
+
+            if (listAllOthers.Any())
+            {
+                if (entity.IsDefault)
+                {
+                    listAllOthers.ForEach(x => x.IsDefault = false);
+                }
+                else
+                {
+                    // if i uncheck the default status choose random stauts and set as default
+                    if (!listAllOthers.Any(x=>x.IsDefault == true))
+                    {
+                        context.ProjectStatuses.FirstOrDefault(x => x.Id != entity.Id).IsDefault = true;
+                    }
+                }
+            }
+            else
+            {
+                //if this is the first status force it to be default
+                entity.IsDefault = true;
+            }
+           
         }
 
         public static int Save(ProjectStatus entity)
@@ -58,16 +87,14 @@ namespace ColeoDataLayer.ModelColeo
             {
                 context.ProjectStatuses.Add(entity);
 
-                ////get max order
-                //int maxOrder = 0;
-                //maxOrder = context.ProjectStatuses.Max(d => d.DisplayOrder);
-                //entity.DisplayOrder = maxOrder++;
+                ProjectStatus.UpdateDefault(context, entity);
 
                 context.SaveChanges();
 
                 return entity.Id;
             }
         }
+
 
         public static void Update(ProjectStatus entity)
         {
@@ -86,8 +113,9 @@ namespace ColeoDataLayer.ModelColeo
                 projectStatus.DisplayOrder = entity.DisplayOrder;
                 projectStatus.IsDefault = entity.IsDefault;
 
-                context.SaveChanges();
+                ProjectStatus.UpdateDefault(context, entity);
 
+                context.SaveChanges();
             }
         }
 
@@ -102,11 +130,23 @@ namespace ColeoDataLayer.ModelColeo
                     return false;
                 }
 
+                // do not delete project status if it is attached to any projects
                 var project = context.Projects.FirstOrDefault(x => x.IdStatus == id);
 
                 if (project != null)
                 {
                     return false;
+                }
+
+                // if the default project status is deleted, assign first other
+                if (projectStatus.IsDefault)
+                {
+                    ProjectStatus defaultProjectStatus = context.ProjectStatuses.FirstOrDefault(x => x.Id != id);
+
+                    if (defaultProjectStatus != null)
+                    {
+                        defaultProjectStatus.IsDefault = true;
+                    }
                 }
 
                 context.ProjectStatuses.Remove(projectStatus);

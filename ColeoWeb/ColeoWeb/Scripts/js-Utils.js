@@ -2,6 +2,7 @@
 
 function InitializePickColor() {
     console.log("initialize pick a color");
+
     //setting up pick up color
     $(".pick-a-color").pickAColor({
         showSpectrum: true,
@@ -63,6 +64,7 @@ function NotificationAlert(message, type, allowDismiss, delay) {
 
 function SetUpSortable() {
     console.log("set up sortable");
+
     $('.row').sortable({
         connectWith: ".panel",
         handle: ".item",

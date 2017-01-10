@@ -30,7 +30,8 @@ namespace ColeoWeb.Controllers
                     Order = x.DisplayOrder
 
                 })
-                    .ToList();
+                .OrderBy(x=>x.Order)
+                .ToList();
 
             return PartialView(projectStatusList);
 

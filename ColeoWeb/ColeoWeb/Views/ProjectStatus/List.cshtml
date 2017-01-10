@@ -35,7 +35,6 @@
                             <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit(@Model[i].Id);">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
                             </button>
-                            @*<button type="button" id="delete-btn" class="btn btn-default btn-sm pull-right" onclick="location.href='@Url.Action("Delete","ProjectStatus",new {@id = @Model[i].Id})'">*@
                             <button type="button" id="delete-btn" class="btn btn-default btn-sm pull-right" onclick="DeleteItem(@Model[i].Id)">
                                 <span class="glyphicon glyphicon-floppy-remove"></span> Delete
                             </button>
@@ -72,5 +71,4 @@
         SetUpSortable();
     });
     
-
 </script>

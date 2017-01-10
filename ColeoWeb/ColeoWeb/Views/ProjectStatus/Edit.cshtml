@@ -19,15 +19,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-1">
-        <div class="form-group row">
-            <div class="col-md-12">
-                <button id="edit-btn" class="btn btn-default btn-sm margin-top20">
-                    <span class="glyphicon glyphicon-collapse-up"> Collapse</span>
-                </button>
-            </div>
-        </div>
-    </div>
 </div>
 
 <div class="row">
@@ -38,7 +29,7 @@
                             UpdateTargetId = "edit-projectstatus",
                             HttpMethod = "POST",
                             InsertionMode = InsertionMode.Replace,
-                            OnSuccess = "ShowList();"
+                            OnSuccess = "ShowList(); AlertSave();"
                         },
                         new { @id = "edit-project-status" }))
     {
@@ -108,17 +99,17 @@
             $('#is-default').bootstrapToggle();
         })
 
-        AlertOnSave();
     });
 
-    
-    function AlertOnSave() {
-        $('#edit-project-status').submit(function () {
-            if ($(this).valid()) {
-                NotificationAlert('Project status saved!');
-            }
-        });
-    };
+    function AlertSave() {
+
+        var model = @Html.Raw(Json.Encode(Model));
+
+        if (model["Model"] != null) {
+            NotificationAlert('Project status saved!');
+        }
+    }
+
 
 </script>
 
