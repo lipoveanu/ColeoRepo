@@ -1,4 +1,4 @@
-﻿@model IList<ColeoWeb.Models.ProjectStatusViewModel>
+﻿@model IList<ColeoWeb.Models.ProjectViewModel>
 
 @{
     ViewBag.Title = "List";
@@ -8,29 +8,28 @@
     <div class="col-md-12">
         <div class="form-group row">
             <div class="col-md-12">
-                <h2> <span> Project Statuses </span> </h2>
+                <h2> <span> Project</span> </h2>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row">
-    @using (Html.BeginForm("List", "ProjectStatus", FormMethod.Post))
+    @using (Html.BeginForm("List", "Projects", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         <div class="col-md-12">
-            <div id="sortable" class="form-group row">
-                <ul class="sortable-list">
-                    @for (var i = 0; i < Model.Count; i++)
-                    {
-                        <li class="sortable-item tile" style="background-color: #@Model[i].Color;">
+            <div class="form-group row">
+                @for (var i = 0; i < Model.Count; i++)
+                {
+                    <div class="panel panel-primary tile">
+                        <div class="panel-body item" style="background-color: #@Model[i].Color;">
                             @Html.HiddenFor(m => m[i].Id)
                             @Html.HiddenFor(m => m[i].Name)
                             @Html.HiddenFor(m => m[i].Color)
-                            @Html.HiddenFor(m => m[i].IsDefault)
-                            @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
-                            <h4> @Html.DisplayFor(m => m[i].Name) </h4>
+
+                            @Html.DisplayFor(m => m[i].Name)
 
                             <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit(@Model[i].Id);">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
@@ -38,20 +37,21 @@
                             <button type="button" id="delete-btn" class="btn btn-default btn-sm pull-right" onclick="DeleteItem(@Model[i].Id)">
                                 <span class="glyphicon glyphicon-floppy-remove"></span> Delete
                             </button>
-                        </li>
-                    }
-                </ul>
+                        </div>
+                    </div>
+
+                }
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group row">
-                <ul class="sortable-list">
-                    <li class="tile">
+                <div class="panel panel-primary">
+                    <div class="panel-body add">
                         <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit();">
                             <span class="glyphicon glyphicon-plus"></span> Add
                         </button>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group row">
@@ -71,3 +71,14 @@
     });
 
 </script>
+
+<style>
+    .tile {
+        width: 100%;
+        display: inline-block;
+        box-sizing: border-box;
+        background: #fff;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+</style>

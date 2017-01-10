@@ -63,28 +63,27 @@ function NotificationAlert(message, type, allowDismiss, delay) {
 }
 
 function SetUpSortable() {
-    console.log("set up sortable");
-
-    $('.row').sortable({
-        connectWith: ".panel",
-        handle: ".item",
-        placeholder: "panel-placeholder",
+    $('.sortable-list').sortable({
+        axis: "y",
+        opacity: 0.9,
+        cursor: 'move',
+        containment: '#sortable',
         update: function () {
             ChangeOrder();
         }
     });
-
-    $('.panel').on('mousedown', function () {
-        $(this).css('cursor', 'move');
-    }).on('mouseup', function () {
-        $(this).css('cursor', 'auto');
-    });;
+    
+    //$('.panel').on('mousedown', function () {
+    //    $(this).css('cursor', 'move');
+    //}).on('mouseup', function () {
+    //    $(this).css('cursor', 'auto');
+    //});;
 }
 
 function ChangeOrder() {
     // reposition all components
     var positionIndex = 1;
-    $('.panel-body').each(function () {
+    $('.sortable-item').each(function () {
         $(this).find('.position').val(positionIndex++);
     });
     //save in db

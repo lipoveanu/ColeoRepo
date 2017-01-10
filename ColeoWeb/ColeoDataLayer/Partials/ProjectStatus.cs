@@ -32,7 +32,6 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                // do this to avoid error at json.encode
                 ProjectStatus defaultProjStatus = context.ProjectStatuses.FirstOrDefault(x => x.IsDefault == true);
                 if (defaultProjStatus == null)
                 {
@@ -46,6 +45,7 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
+                // do this to avoid error at json.encode
                 context.Configuration.LazyLoadingEnabled = false;
                 ProjectStatus projectStatus = context.ProjectStatuses
                                                     .FirstOrDefault(x => x.Id == id);

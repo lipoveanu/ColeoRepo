@@ -1,10 +1,25 @@
 ﻿@model ColeoWeb.Models.ProjectViewModel
 
 @{
-    ViewBag.Title = "Project";
+    ViewBag.Title = "Edit";
 }
 
 <h2>Edit Project</h2>
+
+@Scripts.Render("~/Scripts/pick-a-color-1.2.3.min.js")
+@Scripts.Render("~/Scripts/tinycolor-0.9.15.min.js")
+@Styles.Render("~/Content/pick-a-color-1.2.3.min.css")
+
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <h2> <span> Edit Project </span> </h2>
+            </div>
+        </div>
+    </div>
+</div>
 
 @using (Html.BeginForm())
 {

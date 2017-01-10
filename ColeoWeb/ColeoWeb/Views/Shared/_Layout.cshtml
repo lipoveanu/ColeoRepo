@@ -6,12 +6,12 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
-    
-
     @Scripts.Render("~/bundles/jquery")
 
-    
+    @Scripts.Render("~/Scripts/notify.js")
+    @Styles.Render("~/Content/animate.css")
+    @Scripts.Render("~/Scripts/js-Utils.js")
+
 </head>
 <body class="cbody">
     <div class="cnavbar navbar navbar-fixed-top">
@@ -61,7 +61,7 @@
     @Scripts.Render("~/bundles/jqueryunobtr")
     @Scripts.Render("~/bundles/bootstrap")
     
-    
+
 
     @RenderSection("scripts", required: false)
 

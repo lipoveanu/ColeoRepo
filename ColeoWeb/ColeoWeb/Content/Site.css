@@ -38,3 +38,35 @@ textarea {
 .margin-top20 {
     margin-top: 20px;
 }
+
+
+/*tile settings*/
+/*$base_font_size: 14px;
+$base_line_height: 1.5em;
+$text_font_family: 'Open Sans', "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+$display_font_family:*/ 
+
+.tile {
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.tile .title{
+    margin-top: 0px;
+}
+.tile h1, h2, h3, h4, h5, h6 {
+	font-family: 'Open Sans', "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+	line-height: 1.5em;
+	font-weight: 300;	
+}
+
+/*#sortable {
+    margin-top: 20px;
+}*/
+
+/* https://codepen.io/anon/pen/MJKyPm */
