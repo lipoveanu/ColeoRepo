@@ -11,17 +11,20 @@
 @Styles.Render("~/Content/pick-a-color-1.2.3.min.css")
 
 
-<div class="row">
-    <div class="col-md-9">
-        <div class="form-group row">
-            <div class="col-md-12">
-                <h2> <span> Edit Project Statuses </span> </h2>
+
+
+<div class="row tile">
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <h3 class="title"> Edit Project Status </span> </h3>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row">
     @using (Ajax.BeginForm("Edit",
                         null,
                         new AjaxOptions
@@ -40,20 +43,20 @@
 
         <div class="col-md-12">
             <div class="form-group row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     @Html.LabelFor(m => m.Name)
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     @Html.LabelFor(m => m.IsDefault)
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     @{
                                      //Dictionary<string, object> dic = new Dictionary<string, object>();
                                      //dic.Add("data-toggle", "toggle");
@@ -65,16 +68,16 @@
             </div>
 
             <div class="form-group row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     @Html.LabelFor(m => m.Color)
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     @Html.TextBoxFor(m => m.Color, new { @class = "pick-a-color form-control", @name = "color-picker" })
                 </div>
             </div>
 
             <div class="form-group row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <button type="submit" id="save" class="btn btn-default btn-sm pull-right">
                         <span class="glyphicon glyphicon-floppy-save"></span> Save
                     </button>

@@ -4,7 +4,7 @@
     ViewBag.Title = "List";
 }
 
-<div class="row">
+@*<div class="row">
     <div class="col-md-12">
         <div class="form-group row">
             <div class="col-md-12">
@@ -12,9 +12,10 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="row">
+    
     @using (Html.BeginForm("List", "ProjectStatus", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
@@ -30,7 +31,7 @@
                             @Html.HiddenFor(m => m[i].Color)
                             @Html.HiddenFor(m => m[i].IsDefault)
                             @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
-                            <h4> @Html.DisplayFor(m => m[i].Name) </h4>
+                            <h4 class="title"> @Html.DisplayFor(m => m[i].Name) </h4>
 
                             <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit(@Model[i].Id);">
                                 <span class="glyphicon glyphicon-edit"></span> Edit

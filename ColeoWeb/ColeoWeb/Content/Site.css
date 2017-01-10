@@ -50,7 +50,7 @@ $display_font_family:*/
     width: 100%;
     display: inline-block;
     box-sizing: border-box;
-    background: #fff;
+    background: #f5db80;;
     padding: 20px;
     margin-bottom: 10px;
     margin-top: 10px;
@@ -58,6 +58,7 @@ $display_font_family:*/
 
 .tile .title{
     margin-top: 0px;
+    font-weight: 400;
 }
 .tile h1, h2, h3, h4, h5, h6 {
 	font-family: 'Open Sans', "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
