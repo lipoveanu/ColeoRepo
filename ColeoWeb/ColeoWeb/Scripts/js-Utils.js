@@ -72,12 +72,6 @@ function SetUpSortable() {
             ChangeOrder();
         }
     });
-    
-    //$('.panel').on('mousedown', function () {
-    //    $(this).css('cursor', 'move');
-    //}).on('mouseup', function () {
-    //    $(this).css('cursor', 'auto');
-    //});;
 }
 
 function ChangeOrder() {
@@ -87,6 +81,9 @@ function ChangeOrder() {
         $(this).find('.position').val(positionIndex++);
     });
     //save in db
-    $('#btn-save').trigger('click');
+    $('#list-save').trigger('click');
 }
 
+function AddTooltip() {
+    $(".add-tooltip").tooltip();
+}

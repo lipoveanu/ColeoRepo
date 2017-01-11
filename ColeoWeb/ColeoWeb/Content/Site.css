@@ -51,7 +51,7 @@ $display_font_family:*/
     display: inline-block;
     box-sizing: border-box;
     background: #f5db80;;
-    padding: 20px;
+    padding: 15px;
     margin-bottom: 10px;
     margin-top: 10px;
 }
@@ -63,11 +63,23 @@ $display_font_family:*/
 .tile h1, h2, h3, h4, h5, h6 {
 	font-family: 'Open Sans', "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
 	line-height: 1.5em;
-	font-weight: 300;	
+	font-weight: 300;
 }
 
-/*#sortable {
-    margin-top: 20px;
-}*/
+.tile h4{
+    margin-top: 3px!important;
+    margin-bottom: 3px!important;
+}
 
+
+.glyphicon-md{
+    font-size: 1.3em;
+    padding: 2px;
+}
+
+.glyphicon-lg{
+    font-size: 1.9em;
+    opacity:0.7;
+    text-align:center;
+}
 /* https://codepen.io/anon/pen/MJKyPm */

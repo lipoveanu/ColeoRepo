@@ -15,12 +15,10 @@
 
 <div class="row tile">
 
-    <div class="row">
-        <div class="col-md-9">
-            <div class="form-group row">
-                <div class="col-md-12">
-                    <h3 class="title"> Edit Project Status </span> </h3>
-                </div>
+    <div class="col-md-12">
+        <div class="form-group row">
+            <div class="col-md-12">
+                <h3 class="title"> Edit Project Status </h3>
             </div>
         </div>
     </div>
@@ -44,9 +42,9 @@
         <div class="col-md-12">
             <div class="form-group row">
                 <div class="col-md-4">
-                    @Html.LabelFor(m => m.Name)
+                    <h4> @Html.DisplayNameFor(m => m.Name)</h4>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
                 </div>
@@ -54,37 +52,40 @@
 
             <div class="form-group row">
                 <div class="col-md-4">
-                    @Html.LabelFor(m => m.IsDefault)
+                    <h4> @Html.DisplayNameFor(m => m.IsDefault)</h4>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     @{
-                                     //Dictionary<string, object> dic = new Dictionary<string, object>();
-                                     //dic.Add("data-toggle", "toggle");
-                                     //dic.Add("data-onstyle", "default");
-
-                                    @Html.CheckBoxFor(m => m.IsDefault, new { @id = "is-default" });
+                        @Html.CheckBoxFor(m => m.IsDefault, new { @id = "is-default" });
                     }
                 </div>
             </div>
 
             <div class="form-group row">
                 <div class="col-md-4">
-                    @Html.LabelFor(m => m.Color)
+                    <h4> @Html.DisplayNameFor(m => m.Color)</h4>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-7">
                     @Html.TextBoxFor(m => m.Color, new { @class = "pick-a-color form-control", @name = "color-picker" })
                 </div>
             </div>
 
             <div class="form-group row">
-                <div class="col-md-10">
-                    <button type="submit" id="save" class="btn btn-default btn-sm pull-right">
+                <div class="col-md-12">
+                    &nbsp;
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div type="submit" class="glyphicon-md pull-right" onclick="SaveItem();">
                         <span class="glyphicon glyphicon-floppy-save"></span> Save
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>
+        <input id="item-save" type="submit" class="hidden">
     }
+
 </div>
 
 
@@ -113,7 +114,9 @@
         }
     }
 
-
+    function SaveItem(){
+        $('#item-save').trigger('click');
+    }
 </script>
 
 
