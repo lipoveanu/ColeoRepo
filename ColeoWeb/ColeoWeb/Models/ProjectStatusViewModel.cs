@@ -35,8 +35,6 @@ namespace ColeoWeb.Models
         [DisplayName("Order")]
         public int Order { get; set; }
 
-        public bool IsInvalid { get; set; }
-
         #endregion Properties
 
         #region Methods
@@ -64,7 +62,6 @@ namespace ColeoWeb.Models
             Color = Model.Color;
             IsDefault = Model.IsDefault;
             Order = Model.DisplayOrder;
-            IsInvalid = false;
         }
 
         public void Save()

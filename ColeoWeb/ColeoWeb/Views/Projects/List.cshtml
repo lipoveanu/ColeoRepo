@@ -4,15 +4,15 @@
     ViewBag.Title = "List";
 }
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group row">
-            <div class="col-md-12">
-                <h2> <span> Project</span> </h2>
+@*<div class="row">
+        <div class="col-md-12">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <h2> <span> Project</span> </h2>
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </div>*@
 
 <div class="row">
     @using (Html.BeginForm("List", "Projects", FormMethod.Post))
@@ -20,38 +20,38 @@
         @Html.AntiForgeryToken()
 
         <div class="col-md-12">
-            <div class="form-group row">
-                @for (var i = 0; i < Model.Count; i++)
-                {
-                    <div class="panel panel-primary tile">
-                        <div class="panel-body item" style="background-color: #@Model[i].Color;">
+            <div id="sortable" class="form-group row">
+                <ul class="sortable-list">
+                    @for (var i = 0; i < Model.Count; i++)
+                    {
+                        <li class="sortable-item tile tile-push" style="background-color: #@Model[i].Color;">
                             @Html.HiddenFor(m => m[i].Id)
                             @Html.HiddenFor(m => m[i].Name)
                             @Html.HiddenFor(m => m[i].Color)
+                            @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
 
-                            @Html.DisplayFor(m => m[i].Name)
+                            <h3 class="title"> @Html.DisplayFor(m => m[i].Name) </h3>
 
-                            <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit(@Model[i].Id);">
-                                <span class="glyphicon glyphicon-edit"></span> Edit
-                            </button>
-                            <button type="button" id="delete-btn" class="btn btn-default btn-sm pull-right" onclick="DeleteItem(@Model[i].Id)">
-                                <span class="glyphicon glyphicon-floppy-remove"></span> Delete
-                            </button>
-                        </div>
-                    </div>
-
-                }
+                            <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
+                                <span class="glyphicon glyphicon-edit"></span> &nbsp;
+                            </div>
+                            <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
+                                <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
+                            </div>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group row">
-                <div class="panel panel-primary">
-                    <div class="panel-body add">
-                        <button id="edit-btn" class="btn btn-default btn-sm pull-right" onclick="ShowEdit();">
-                            <span class="glyphicon glyphicon-plus"></span> Add
-                        </button>
-                    </div>
-                </div>
+                <ul class="sortable-list">
+                    <li class="tile tile-push">
+                        <div title="Add" class="glyphicon-lg add-tooltip" onclick="ShowEdit(null, divEdit);">
+                            <span class="glyphicon glyphicon-plus"></span> &nbsp;
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="form-group row">
@@ -63,22 +63,11 @@
     }
 </div>
 
-
 <script>
 
     $(document).ready(function () {
         SetUpSortable();
+        AddTooltip();
     });
 
 </script>
-
-<style>
-    .tile {
-        width: 100%;
-        display: inline-block;
-        box-sizing: border-box;
-        background: #fff;
-        padding: 20px;
-        margin-bottom: 30px;
-    }
-</style>

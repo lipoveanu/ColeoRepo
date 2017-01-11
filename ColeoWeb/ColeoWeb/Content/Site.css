@@ -56,6 +56,14 @@ $display_font_family:*/
     margin-top: 10px;
 }
 
+.tile-push:hover {
+	-webkit-transform: scale(1.05);
+}
+
+.tile-push:active{
+	-webkit-transform: scale(1);
+}
+
 .tile .title{
     margin-top: 0px;
     font-weight: 400;
@@ -82,4 +90,13 @@ $display_font_family:*/
     opacity:0.7;
     text-align:center;
 }
+
+
+.add-tooltip{
+    cursor: pointer;
+}
 /* https://codepen.io/anon/pen/MJKyPm */
+
+ [data-notify="container"]{
+        width: 15%;
+    }

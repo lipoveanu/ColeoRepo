@@ -2,19 +2,37 @@
 @{
     ViewBag.Title = "Index";
 }
-
-<h2>Index</h2>
+@Styles.Render("~/Content/bootstrap-toggle.min.css")
+@Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
 
 <div class="row">
-    <div id="index-project" class="col-md-5">
+    <div id="list-project" class="col-md-4">
         @{Html.RenderAction("List");}
     </div>
 
 
-    <div id="edit-project" class="col-md-7">
+    <div id="edit-project" class="col-md-7 pull-right">
 
     </div>
 </div>
+
 <script>
-    
+
+    $(document).ready(function () {
+        //set up notifications defaults
+        NotificationDefaults();
+
+        urlEdit = '@Url.Action("Edit", "Projects")';
+        urlIndex = '@Url.Action("Index", "Projects")';
+        urlList = '@Url.Action("List", "Projects")';
+        urlDelete = '@Url.Action("Delete", "Projects")';
+        
+        divList = $('#list-project');
+        divEdit = $('#edit-project');
+
+        alertDeleteSucces = 'Project deleted!';
+        alertDeleteError = 'The project that you attempted to delete it is attached to an issue therefore it can not be deleted!';
+        
+    });
+
 </script>

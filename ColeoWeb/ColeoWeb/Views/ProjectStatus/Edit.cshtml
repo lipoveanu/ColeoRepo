@@ -30,7 +30,7 @@
                             UpdateTargetId = "edit-projectstatus",
                             HttpMethod = "POST",
                             InsertionMode = InsertionMode.Replace,
-                            OnSuccess = "ShowList(); AlertSave();"
+                            OnSuccess = "ShowList(divList); AlertSave();"
                         },
                         new { @id = "edit-project-status" }))
     {
@@ -112,10 +112,6 @@
         if (model["Model"] != null) {
             NotificationAlert('Project status saved!');
         }
-    }
-
-    function SaveItem(){
-        $('#item-save').trigger('click');
     }
 </script>
 

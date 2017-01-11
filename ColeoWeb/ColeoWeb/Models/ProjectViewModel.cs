@@ -49,6 +49,9 @@ namespace ColeoWeb.Models
         [DisplayName("User created")]
         public string NameUserCreated { get; set; }
 
+        [DisplayName("Order")]
+        public int Order { get; set; }
+
         #endregion Properties
 
         #region Methods
@@ -104,6 +107,11 @@ namespace ColeoWeb.Models
             {
                 Project.Update(Model);
             }
+        }
+
+        public bool Delete(int id)
+        {
+            return Project.Delete(id);
         }
 
         #endregion Methods

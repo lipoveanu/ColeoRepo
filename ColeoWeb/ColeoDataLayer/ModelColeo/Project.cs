@@ -32,6 +32,7 @@ namespace ColeoDataLayer.ModelColeo
         public Nullable<int> IdParentProject { get; set; }
         public int IdStatus { get; set; }
         public Nullable<int> IdFile { get; set; }
+        public int DisplayOrder { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual File File { get; set; }

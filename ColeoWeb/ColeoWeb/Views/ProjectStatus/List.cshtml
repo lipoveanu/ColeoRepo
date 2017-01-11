@@ -25,7 +25,7 @@
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
                     {
-                        <li class="sortable-item tile" style="background-color: #@Model[i].Color;">
+                        <li class="sortable-item tile tile-push" style="background-color: #@Model[i].Color;">
                             @Html.HiddenFor(m => m[i].Id)
                             @Html.HiddenFor(m => m[i].Name)
                             @Html.HiddenFor(m => m[i].Color)
@@ -33,10 +33,10 @@
                             @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
                             <h3 class="title"> @Html.DisplayFor(m => m[i].Name) </h3>
 
-                            <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id);">
+                            <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
                                 <span class="glyphicon glyphicon-edit"></span> &nbsp;
                             </div>
-                            <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id)">
+                            <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
                                 <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
                             </div>
                         </li>
@@ -47,8 +47,8 @@
         <div class="col-md-12">
             <div class="form-group row">
                 <ul class="sortable-list">
-                    <li class="tile">
-                        <div title="Add" class="glyphicon-lg add-tooltip" onclick="ShowEdit();">
+                    <li class="tile tile-push">
+                        <div title="Add" class="glyphicon-lg add-tooltip" onclick="ShowEdit(null, divEdit);">
                             <span class="glyphicon glyphicon-plus"></span> &nbsp;
                         </div>
                     </li>

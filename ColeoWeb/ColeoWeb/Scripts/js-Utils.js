@@ -87,3 +87,73 @@ function ChangeOrder() {
 function AddTooltip() {
     $(".add-tooltip").tooltip();
 }
+
+function SaveItem() {
+    $('#item-save').trigger('click');
+}
+
+function ShowList(elem) {
+
+    $.ajax({
+        type: "GET",
+        url: urlList,
+        success: function (response) {
+            elem.html(response);
+        },
+        error: function () {
+            alert("error occured");
+        }
+    });
+
+    // validate form for alert
+    //$.validator.unobtrusive.parse($("#edit-projectstatus"));
+}
+
+
+function ShowEdit(id, elem) {
+
+    event.preventDefault();
+
+    console.log(id);
+    console.log(elem);
+
+    $.ajax({
+        type: "GET",
+        remote: true,
+        url: urlEdit,
+        data: { 'id': id },
+        success: function (response) {
+            elem.html(response);
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+    return false;
+}
+
+
+function DeleteItem(id, elemList, elemEdit, alertDeleteSucces, alertDeleteError) {
+    $.ajax({
+        type: "POST",
+        data: { id: id },
+        url: urlDelete,
+        success: function (response) {
+
+            elemEdit.empty();
+            ShowList(elemList);
+
+            if (response == 'True') {
+                NotificationAlert(alertDeleteSucces);
+            } else {
+                NotificationAlert(alertDeleteError, "danger", false, 2000);
+            }
+
+        },
+        error: function () {
+            alert("error occured");
+        }
+    });
+}
+
+

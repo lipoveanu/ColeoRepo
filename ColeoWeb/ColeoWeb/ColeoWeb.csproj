@@ -172,6 +172,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProjectStatusViewModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
+    <Compile Include="Models\UserProjectViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Enums.cs" />

@@ -16,44 +16,92 @@ namespace ColeoWeb.Controllers
             return View();
         }
 
-        public ActionResult Edit(int? id)
+        [HttpGet]
+        public PartialViewResult List()
         {
-            // creation of project not allowed if not logged in 
+            List<ProjectViewModel> projectList = Project.All()
+                .Select(x => new ProjectViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Color = x.Color,
+                    Order = x.DisplayOrder,
+                    IdStatus = x.IdStatus,
+                    DateCreated = x.DateCreated,
+                    UserCreated = x.IdUserCreated,
+                })
+                .OrderBy(x => x.Order)
+                .ToList();
+
+            return PartialView(projectList);
+
+        }
+
+        [HttpPost]
+        public ActionResult List(List<ProjectViewModel> model)
+        {
+            if (ModelState.IsValid)
+            {
+                foreach (var item in model)
+                {
+                    item.SetDataToModel();
+                    item.Save();
+                }
+
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return PartialView(model);
+            }
+        }
+
+        public PartialViewResult Edit(int? id)
+        {
+            // creation of project status not allowed if not logged in 
             if (!User.Identity.IsAuthenticated)
             {
                 RedirectToAction("Index");
             }
 
             ProjectViewModel vm = new ProjectViewModel();
-            vm.InitializeData();
 
-            // edit project
+            // edit project status
             if (id != null)
             {
                 vm.Id = id.Value;
+                
                 vm.SetDataFromModel();
             }
-            
-            return View(vm);
+
+            vm.InitializeData();
+
+            return PartialView(vm);
 
         }
 
         [HttpPost]
-        public ActionResult Edit(ProjectViewModel model)
+        public PartialViewResult Edit(ProjectViewModel model)
         {
             if (ModelState.IsValid)
             {
                 model.SetDataToModel();
                 model.Save();
-
-                return RedirectToAction("Edit", new { id = model.Id });
             }
-            else
-            {
-                model.InitializeData();
+            model.InitializeData();
 
-                return View(model);
-            }
+            return PartialView(model);
+
         }
+
+        public bool Delete(int id)
+        {
+            ProjectViewModel vm = new ProjectViewModel();
+
+            return vm.Delete(id);
+
+        }
+
     }
 }

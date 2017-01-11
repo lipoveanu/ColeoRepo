@@ -37,7 +37,9 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                Project project = context.Projects
+                context.Configuration.LazyLoadingEnabled = false;
+                
+                var project = context.Projects
                     .Include(d => d.AspNetUser)
                     .FirstOrDefault(d => d.Id == id);
 
@@ -133,6 +135,34 @@ namespace ColeoDataLayer.ModelColeo
                     );
 
                 context.SaveChanges();
+            }
+        }
+
+        public static bool Delete(int id)
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                Project project = context.Projects.FirstOrDefault(x => x.Id == id);
+
+                if (project == null)
+                {
+                    return false;
+                }
+
+                // do not delete project status if it is attached to any projects
+                var issue = context.Issues.FirstOrDefault(x => x.IdProject == id);
+
+                if (issue != null)
+                {
+                    return false;
+                }
+
+               
+                context.Projects.Remove(project);
+
+                context.SaveChanges();
+
+                return true;
             }
         }
 

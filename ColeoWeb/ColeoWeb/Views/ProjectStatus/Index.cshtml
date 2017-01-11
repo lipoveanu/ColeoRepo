@@ -7,7 +7,7 @@
 @Scripts.Render("~/Scripts/js-ProjectStatus.js")
 
 <div class="row">
-    <div id="index-projectstatus" class="col-md-4">
+    <div id="list-projectstatus" class="col-md-4">
         @{Html.RenderAction("List");}
     </div>
 
@@ -16,13 +16,6 @@
 
     </div>
 </div>
-
-<style>
-    [data-notify="container"]{
-        width: 15%;
-    }
-
-</style>
 
 <script>
 
@@ -35,6 +28,11 @@
         urlList = '@Url.Action("List", "ProjectStatus")';
         urlDelete = '@Url.Action("Delete", "ProjectStatus")';
         
+        divList = $('#list-projectstatus');
+        divEdit = $('#edit-projectstatus');
+        
+        alertDeleteSucces = 'Project status deleted!';
+        alertDeleteError = 'The project status that you attempted to delete it is attached to a project therefore it can not be deleted!';
     });
 
 </script>

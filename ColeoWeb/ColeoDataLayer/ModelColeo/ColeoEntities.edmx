@@ -167,6 +167,7 @@
           <Property Name="IdParentProject" Type="int" />
           <Property Name="IdStatus" Type="int" Nullable="false" />
           <Property Name="IdFile" Type="int" />
+          <Property Name="DisplayOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProjectStatuses">
           <Key>
@@ -1058,6 +1059,7 @@
           <Property Name="IdParentProject" Type="Int32" />
           <Property Name="IdStatus" Type="Int32" Nullable="false" />
           <Property Name="IdFile" Type="Int32" />
+          <Property Name="DisplayOrder" Type="Int32" Nullable="false" />
           <NavigationProperty Name="AspNetUser" Relationship="ColeoModel.FK_Project_IdUserCreated" FromRole="Project" ToRole="AspNetUser" />
           <NavigationProperty Name="File" Relationship="ColeoModel.FK_Project_IdFile" FromRole="Project" ToRole="File" />
           <NavigationProperty Name="Issues" Relationship="ColeoModel.FK_Issue_IdProject" FromRole="Project" ToRole="Issue" />
@@ -1621,6 +1623,7 @@
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ColeoModel.Project">
               <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="DisplayOrder" ColumnName="DisplayOrder" />
                 <ScalarProperty Name="IdFile" ColumnName="IdFile" />
                 <ScalarProperty Name="IdStatus" ColumnName="IdStatus" />
                 <ScalarProperty Name="IdParentProject" ColumnName="IdParentProject" />
