@@ -9,6 +9,12 @@ namespace ColeoDataLayer.ModelColeo
 {
     public partial class Project
     {
+        #region Properties
+
+        public List<UserProject> UsersProject { get; set; }
+
+        #endregion Properties
+
         public static List<Project> All()
         {
             using (ColeoEntities context = new ColeoEntities())
@@ -38,10 +44,13 @@ namespace ColeoDataLayer.ModelColeo
             using (ColeoEntities context = new ColeoEntities())
             {
                 context.Configuration.LazyLoadingEnabled = false;
-                
+
                 var project = context.Projects
                     .Include(d => d.AspNetUser)
+                    .Include(d => d.UserProjects)
                     .FirstOrDefault(d => d.Id == id);
+
+                project.UsersProject = project.UserProjects.ToList();
 
                 return project;
             }
@@ -109,7 +118,7 @@ namespace ColeoDataLayer.ModelColeo
 
                 //Project users
                 List<string> dbUserProject = project.UserProjects.Select(x => x.IdUser).ToList();
-                List<string> modelUserProject = entity.UserProjects.Select(x => x.IdUser).ToList();
+                List<string> modelUserProject = entity.UsersProject.Select(x => x.IdUser).ToList();
 
                 modelUserProject.ForEach(x =>
                     {
@@ -157,7 +166,7 @@ namespace ColeoDataLayer.ModelColeo
                     return false;
                 }
 
-               
+
                 context.Projects.Remove(project);
 
                 context.SaveChanges();

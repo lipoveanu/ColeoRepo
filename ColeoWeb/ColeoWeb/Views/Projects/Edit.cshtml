@@ -8,9 +8,9 @@
 @Scripts.Render("~/Scripts/tinycolor-0.9.15.min.js")
 @Styles.Render("~/Content/pick-a-color-1.2.3.min.css")
 
-<div class="row tile">
+<div class="row">
 
-    <div class="col-md-12">
+    <div class="">
         <div class="form-group row">
             <div class="col-md-12">
                 <h3 class="title"> Edit Project </h3>
@@ -34,8 +34,8 @@
         <input type="hidden" id="Id" name="Id" value="@Model.Id" />
         @Html.HiddenFor(m => m.Order);
 
-
-        <div class="col-md-12">
+        
+        <div class="col-md-12 tile">
             <div class="form-group row">
                 <div class="col-md-4">
                     <h4> @Html.DisplayNameFor(m => m.NameUserCreated)</h4>
@@ -106,17 +106,37 @@
                 </div>
             </div>
         </div>
+        
+        <div class="col-md-12">
+            @Html.Partial("UsersProject")
+        </div>
         <input id="item-save" type="submit" class="hidden">
 
     }
 
 </div>
 
+
+
+
 <script>
     $(document).ready(function () {
 
         // Set up pick a color
         InitializePickColor();
+
+        $(function () {
+            $("#sortable1,#sortable2").sortable({
+                connectWith: "#sortable1,#sortable2",
+                start: function (event, ui) {
+                    ui.item.toggleClass("highlight");
+                },
+                stop: function (event, ui) {
+                    ui.item.toggleClass("highlight");
+                }
+            });
+            $("#sortable1,#sortable2").disableSelection();
+        });
 
     });
 

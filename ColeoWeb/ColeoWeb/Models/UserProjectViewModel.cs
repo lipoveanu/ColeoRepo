@@ -10,16 +10,15 @@ namespace ColeoWeb.Models
     {
         #region Properties
 
-        UserProject Model { get; set; }
+        public int Id { get; set; }
 
-        public int? Id { get; set; }
-
-        public int UserId { get; set; }
         public int ProjectId { get; set; }
 
-        //public List<UserViewModel> AllUsers { get; set; }
+        public string UserId { get; set; }
 
-        //public List<UserViewModel> AttachedUsers { get; set; }
+        public UserViewModel User { get; set; }
+
+        public bool IsAssigned { get; set; }
 
         #endregion Properties
 
@@ -27,7 +26,13 @@ namespace ColeoWeb.Models
 
         public void InitializeData()
         {
-            
+            AspNetUser user = AspNetUser.GetById(UserId);
+            User = new UserViewModel { 
+                UserName = user.UserName,
+                Id = user.Id,
+                Email = user.Email,
+                Image = user.Image
+            };
         }
 
         #endregion Methods

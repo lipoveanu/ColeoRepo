@@ -173,6 +173,7 @@
     <Compile Include="Models\ProjectStatusViewModel.cs" />
     <Compile Include="Models\ProjectViewModel.cs" />
     <Compile Include="Models\UserProjectViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Enums.cs" />
@@ -281,6 +282,8 @@
     <Content Include="Views\ProjectStatus\List.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
     <Content Include="Views\Projects\List.cshtml" />
+    <Content Include="Views\Projects\UsersProject.cshtml" />
+    <Content Include="Views\Projects\UsersProjectItem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

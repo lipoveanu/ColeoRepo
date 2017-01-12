@@ -122,8 +122,10 @@
     <Compile Include="ModelColeo\UserProject.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="Partials\AspNetUser.cs" />
     <Compile Include="Partials\Project.cs" />
     <Compile Include="Partials\ProjectStatus.cs" />
+    <Compile Include="Partials\UserProject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
