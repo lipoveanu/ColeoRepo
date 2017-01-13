@@ -45,8 +45,7 @@ namespace ColeoWeb.Controllers
             {
                 foreach (var item in model)
                 {
-                    item.SetDataToModel();
-                    item.Save();
+                    item.Reorder(item.Id.Value, item.Order);
                 }
 
                 return RedirectToAction("Index");
@@ -88,9 +87,6 @@ namespace ColeoWeb.Controllers
                 model.SetDataToModel();
                 model.Save();
             }
-
-            //model.InitializeData();
-            //model.SetDataFromModel();
 
             return Edit(model.Id);
 

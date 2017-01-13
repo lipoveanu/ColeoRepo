@@ -44,7 +44,7 @@ function NotificationAlert(message, type, allowDismiss, delay) {
     if (type == null) {
         type = notifyDefault.type;
     }
-    
+
     if (allowDismiss == null) {
         allowDismiss = notifyDefault.allow_dismiss;
     }
@@ -61,6 +61,9 @@ function NotificationAlert(message, type, allowDismiss, delay) {
 }
 
 function SetUpSortable() {
+
+    console.log("initialize sortable");
+
     $('.sortable-list').sortable({
         axis: "y",
         opacity: 0.9,
@@ -149,6 +152,38 @@ function DeleteItem(id, elemList, elemEdit, alertDeleteSucces, alertDeleteError)
             alert("error occured");
         }
     });
+}
+
+function InitializeSortable2Lists() {
+
+    console.log("initialize sortable list");
+    
+
+    $("#sortable1,#sortable2").sortable({
+        connectWith: "#sortable1,#sortable2",
+        start: function (event, ui) {
+
+        },
+        stop: function (event, ui) {
+            //console.log(ui.item);
+        },
+        receive: function (event, ui) {
+            var value;
+            if (this.id == "sortable1") {
+                value = "False";
+            }
+            else {
+                value = "True"
+            }
+
+            $(this).children().find('.assigned').val(value);
+
+            //console.log("[" + this.id + "] received [" + ui.item.html() + "] from [" + ui.sender.attr("id") + "]");
+        }
+    });
+
+    $("#sortable1,#sortable2").disableSelection();
+
 }
 
 

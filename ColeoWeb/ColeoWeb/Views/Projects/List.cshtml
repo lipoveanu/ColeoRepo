@@ -4,17 +4,8 @@
     ViewBag.Title = "List";
 }
 
-@*<div class="row">
-        <div class="col-md-12">
-            <div class="form-group row">
-                <div class="col-md-12">
-                    <h2> <span> Project</span> </h2>
-                </div>
-            </div>
-        </div>
-    </div>*@
 
-<div class="row">
+<div class="form-group">
     @using (Html.BeginForm("List", "Projects", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
@@ -24,26 +15,30 @@
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
                     {
-                        <li class="sortable-item tile tile-push" style="background-color: #@Model[i].Color;">
-                            @Html.HiddenFor(m => m[i].Id)
-                            @Html.HiddenFor(m => m[i].Name)
-                            @Html.HiddenFor(m => m[i].Color)
-                            @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
+                    <li class="sortable-item tile" style="background-color: #@Model[i].Color;">
+                        @Html.HiddenFor(m => m[i].Id)
+                        @Html.HiddenFor(m => m[i].Name)
+                        @*@Html.HiddenFor(m => m[i].Description)
+                        @Html.HiddenFor(m => m[i].DateCreated)
+                        @Html.HiddenFor(m => m[i].Color)
+                        @Html.HiddenFor(m => m[i].UserCreated)
+                        @Html.HiddenFor(m => m[i].IdStatus)
+                        @Html.HiddenFor(m => m[i].UsersProject)*@
+                        
+                        @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
 
-                            <h3 class="title"> @Html.DisplayFor(m => m[i].Name) </h3>
+                        <h4 class="title"> @Html.DisplayFor(m => m[i].Name) </h4>
 
-                            <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
-                                <span class="glyphicon glyphicon-edit"></span> &nbsp;
-                            </div>
-                            <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
-                                <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
-                            </div>
-                        </li>
+                        <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
+                            <span class="glyphicon glyphicon-edit"></span> &nbsp;
+                        </div>
+                        <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
+                            <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
+                        </div>
+                    </li>
                     }
                 </ul>
             </div>
-        </div>
-        <div class="col-md-12">
             <div class="form-group row">
                 <ul class="sortable-list">
                     <li class="tile tile-push">
@@ -54,11 +49,8 @@
                 </ul>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-2">
-                <input type="submit" id="list-save" class="hidden" value="Save">
-            </div>
-        </div>
+        <input type="submit" id="list-save" class="hidden" value="Save">
+
 
     }
 </div>

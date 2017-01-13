@@ -99,6 +99,7 @@ namespace ColeoWeb.Models
             Model.Color = Color;
             Model.IdUserCreated = UserCreated;
             Model.IdStatus = IdStatus;
+            Model.DisplayOrder = Order;
 
             Model.UsersProject = new List<UserProject>();
             if (UsersProject != null)
@@ -108,7 +109,8 @@ namespace ColeoWeb.Models
                     .ToList()
                     .ForEach(x => Model.UsersProject.Add(new UserProject()
                     {
-                        IdUser = x.UserId
+                        IdUser = x.UserId,
+                        IdProject = Id.Value
                     }));
             }
 
@@ -125,6 +127,7 @@ namespace ColeoWeb.Models
             UserCreated = Model.IdUserCreated;
             IdStatus = Model.IdStatus;
             NameUserCreated = Model.AspNetUser.UserName;
+            Order = Model.DisplayOrder;
 
             if (Model.UsersProject.Any())
             {
@@ -151,6 +154,11 @@ namespace ColeoWeb.Models
         public bool Delete(int id)
         {
             return Project.Delete(id);
+        }
+
+        public void Reorder(int id, int order)
+        {
+            Project.Reorder(id, order);
         }
 
         #endregion Methods

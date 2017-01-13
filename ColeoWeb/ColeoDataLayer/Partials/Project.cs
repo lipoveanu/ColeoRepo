@@ -130,7 +130,7 @@ namespace ColeoDataLayer.ModelColeo
                             userproject.IdProject = entity.Id;
                             context.UserProjects.Add(userproject);
                             userproject.Project = context.Projects.FirstOrDefault(y => y.Id == entity.Id);
-                            userproject.AspNetUser = context.AspNetUsers.FirstOrDefault(y => y.UserName == x);
+                            userproject.AspNetUser = context.AspNetUsers.FirstOrDefault(y => y.Id == x);
                         }
                     }
                     );
@@ -174,6 +174,23 @@ namespace ColeoDataLayer.ModelColeo
                 context.SaveChanges();
 
                 return true;
+            }
+        }
+
+        public static void Reorder(int id, int order)
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                Project project = context.Projects.FirstOrDefault(x => x.Id == id);
+
+                if (project == null)
+                {
+                    return;
+                }
+
+                project.DisplayOrder = order;
+
+                context.SaveChanges();
             }
         }
 

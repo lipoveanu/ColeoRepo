@@ -18,11 +18,11 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
+/*input,
 select,
 textarea {
     max-width: 280px;
-}
+}*/
 
 .cnavbar {
     background-color: #f7e6c5;
@@ -35,7 +35,7 @@ textarea {
     background-color: #f7e6c5;
 }
 
-.margin-top20 {
+.margin-top-20 {
     margin-top: 20px;
 }
 
@@ -44,59 +44,74 @@ textarea {
 /*$base_font_size: 14px;
 $base_line_height: 1.5em;
 $text_font_family: 'Open Sans', "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-$display_font_family:*/ 
+$display_font_family:*/
 
 .tile {
     width: 100%;
     display: inline-block;
     box-sizing: border-box;
-    background: #f5db80;;
+    background: #f5db80;
     padding: 15px;
     margin-bottom: 10px;
     margin-top: 10px;
+    word-wrap: break-word;
 }
 
 .tile-push:hover {
-	-webkit-transform: scale(1.05);
+    -webkit-transform: scale(1.05);
 }
 
-.tile-push:active{
-	-webkit-transform: scale(1);
+.tile-push:active {
+    -webkit-transform: scale(1);
 }
 
-.tile .title{
+.tile .title {
     margin-top: 0px;
     font-weight: 400;
 }
+
 .tile h1, h2, h3, h4, h5, h6 {
-	font-family: 'Open Sans', "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
-	line-height: 1.5em;
-	font-weight: 300;
+    font-family: 'Open Sans', "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.5em;
+    font-weight: 300;
 }
 
-.tile h4{
-    margin-top: 3px!important;
-    margin-bottom: 3px!important;
+.tile h4 {
+    margin-top: 3px !important;
+    margin-bottom: 3px !important;
 }
 
 
-.glyphicon-md{
+.glyphicon-md {
     font-size: 1.3em;
     padding: 2px;
 }
 
-.glyphicon-lg{
+.glyphicon-lg {
     font-size: 1.9em;
-    opacity:0.7;
-    text-align:center;
+    opacity: 0.7;
+    text-align: center;
 }
 
 
-.add-tooltip{
+.add-tooltip {
     cursor: pointer;
 }
 /* https://codepen.io/anon/pen/MJKyPm */
 
- [data-notify="container"]{
-        width: 15%;
-    }
+[data-notify="container"] {
+    width: 15%;
+}
+
+.box {
+    border: solid 1px #f5db80;
+    padding: 15px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.margin-left-20 {
+    margin-left: 20px;
+}

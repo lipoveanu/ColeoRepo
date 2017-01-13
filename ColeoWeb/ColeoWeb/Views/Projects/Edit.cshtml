@@ -8,17 +8,7 @@
 @Scripts.Render("~/Scripts/tinycolor-0.9.15.min.js")
 @Styles.Render("~/Content/pick-a-color-1.2.3.min.css")
 
-<div class="row">
-
-    <div class="">
-        <div class="form-group row">
-            <div class="col-md-12">
-                <h3 class="title"> Edit Project </h3>
-            </div>
-        </div>
-    </div>
-
-    @using (Ajax.BeginForm("Edit",
+@using (Ajax.BeginForm("Edit",
                         null,
                         new AjaxOptions
                         {
@@ -28,94 +18,96 @@
                             OnSuccess = "ShowList(divList); AlertSave();"
                         },
                         new { @id = "edit-project" }))
-    {
-        @Html.AntiForgeryToken()
+{
+    @Html.AntiForgeryToken()
 
-        <input type="hidden" id="Id" name="Id" value="@Model.Id" />
-        @Html.HiddenFor(m => m.Order);
+    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+    @Html.HiddenFor(m => m.Order);
 
+    <div>
 
-        <div class="col-md-12 tile">
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.NameUserCreated)</h4>
+        <div class="col-md-5">
+            <div class="tile">
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <h4> @Html.DisplayNameFor(m => m.NameUserCreated)</h4>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.NameUserCreated, new { @readonly = "readonly", @class = "form-control" })
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @Html.TextBoxFor(m => m.NameUserCreated, new { @readonly = "readonly", @class = "form-control" })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.Name)</h4>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <h4> @Html.DisplayNameFor(m => m.Name)</h4>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.Description)</h4>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <h4> @Html.DisplayNameFor(m => m.Description)</h4>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "7" })
+                        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows = "7" })
-                    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.DateCreated)</h4>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <h4> @Html.DisplayNameFor(m => m.DateCreated)</h4>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.DateCreated, @"{0:dd\/MM\/yy}", new { @readonly = "readonly", @class = "form-control" })
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @Html.TextBoxFor(m => m.DateCreated, @"{0:dd\/MM\/yy}", new { @readonly = "readonly", @class = "form-control" })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.Status)</h4>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <h4> @Html.DisplayNameFor(m => m.Status)</h4>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(m => m.IdStatus, Model.Status, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @Html.DropDownListFor(m => m.IdStatus, Model.Status, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.Color)</h4>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <h4> @Html.DisplayNameFor(m => m.Color)</h4>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.Color, new { @class = "pick-a-color form-control", @name = "color-picker" })
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @Html.TextBoxFor(m => m.Color, new { @class = "pick-a-color form-control", @name = "color-picker" })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-12">
-                    &nbsp;
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        &nbsp;
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-12">
-                    <div type="submit" class="glyphicon-md pull-right" onclick="SaveItem();">
-                        <span class="glyphicon glyphicon-floppy-save"></span> Save
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div type="submit" class="glyphicon-md pull-right" onclick="SaveItem();">
+                            <span class="glyphicon glyphicon-floppy-save"></span> Save
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-12">
+        <div class="col-md-4">
             @Html.Partial("UsersProject")
         </div>
+
         <input id="item-save" type="submit" class="hidden">
 
-    }
-
-</div>
-
+    </div>
+}
 
 
 
@@ -124,53 +116,20 @@
 
         // Set up pick a color
         InitializePickColor();
-
-        $(function () {
-            $("#sortable1,#sortable2").sortable({
-                connectWith: "#sortable1,#sortable2",
-                start: function (event, ui) {
-
-                },
-                stop: function (event, ui) {
-                    //console.log(ui.item);
-                },
-                receive: function (event, ui) {
-                    var value;
-                    if (this.id == "sortable1") {
-                        value = "False";
-                    }
-                    else{
-                        value= "True"
-                    }
-                    
-                    $(this).children().find('.assigned').val(value);
-
-                    //console.log("[" + this.id + "] received [" + ui.item.html() + "] from [" + ui.sender.attr("id") + "]");
-                }
-            });
-
-            $("#sortable1,#sortable2").disableSelection();
-        });
-
+        InitializeSortable2Lists();
     });
+
+
 
     function AlertSave() {
 
         var model = @Html.Raw(Json.Encode(Model));
 
         if (model["Model"] != null) {
+
+            console.log("alert save");
             NotificationAlert('Project status saved!');
         }
     }
 
 </script>
-
-<style>
-    #sortable1, #sortable2 {
-        margin: 10px;
-        padding: 10px;
-        height: 500px;
-        /*width: 143px;*/
-    }
-
-</style>

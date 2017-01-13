@@ -3,7 +3,8 @@
 
 <div class="col-md-6">
     <div class="form-group row">
-        <ul id="sortable1" class="sortable-list">
+        <ul id="sortable1" class="box">
+            <h4 class="margin-left-20"> Available users </h4>
             @foreach (var item in Model.UsersProject.Where(x => x.IsAssigned == false))
             {
                 @Html.Partial("UsersProjectItem", item);
@@ -13,7 +14,8 @@
 </div>
 <div class="col-md-6">
     <div class="form-group row">
-        <ul id="sortable2" class="sortable-list">
+        <ul id="sortable2" class="box">
+            <h4 class="margin-left-20"> Assigned users </h4>
             @foreach (var item in Model.UsersProject.Where(x => x.IsAssigned == true))
             {
                 @Html.Partial("UsersProjectItem", item);
@@ -28,6 +30,8 @@
         <input type="submit" id="list-save" class="hidden" value="Save">
     </div>
 </div>
+
+
 
 
 
