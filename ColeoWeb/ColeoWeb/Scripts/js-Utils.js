@@ -1,7 +1,6 @@
 ﻿// Pick-up-color
 
 function InitializePickColor() {
-    console.log("initialize pick a color");
 
     //setting up pick up color
     $(".pick-a-color").pickAColor({
@@ -17,7 +16,6 @@ function InitializePickColor() {
 }
 
 function NotificationDefaults() {
-    console.log("notification defaults");
 
     $.notifyDefaults({
         type: "success",
@@ -113,9 +111,6 @@ function ShowList(elem) {
 function ShowEdit(id, elem) {
 
     event.preventDefault();
-
-    console.log(id);
-    console.log(elem);
 
     $.ajax({
         type: "GET",

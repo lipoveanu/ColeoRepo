@@ -126,6 +126,8 @@ namespace ColeoDataLayer.ModelColeo
                         if (!dbUserProject.Contains(x))
                         {
                             UserProject userproject = context.UserProjects.Create();
+                            userproject.IdUser = x;
+                            userproject.IdProject = entity.Id;
                             context.UserProjects.Add(userproject);
                             userproject.Project = context.Projects.FirstOrDefault(y => y.Id == entity.Id);
                             userproject.AspNetUser = context.AspNetUsers.FirstOrDefault(y => y.UserName == x);
@@ -137,7 +139,7 @@ namespace ColeoDataLayer.ModelColeo
                         // if deleted 
                         if (!modelUserProject.Contains(x))
                         {
-                            var userProject = context.UserProjects.FirstOrDefault(y => y.AspNetUser.UserName == x && y.IdProject == entity.Id);
+                            var userProject = context.UserProjects.FirstOrDefault(y => y.IdUser == x && y.IdProject == entity.Id);
                             context.UserProjects.Remove(userProject);
                         }
                     }

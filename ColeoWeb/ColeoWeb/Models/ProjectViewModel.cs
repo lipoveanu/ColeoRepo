@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace ColeoWeb.Models
 {
@@ -14,7 +15,7 @@ namespace ColeoWeb.Models
 
         public ProjectViewModel()
         {
-            DateCreated = DateTime.Now;
+            DateCreated = DateTime.Now.AddDays(-6);
             UserCreated = HttpContext.Current.User.Identity.GetUserId();
             NameUserCreated = HttpContext.Current.User.Identity.Name;
             Color = "#E8A13F";
@@ -33,6 +34,8 @@ namespace ColeoWeb.Models
         [DisplayName("Description")]
         public string Description { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}",
+               ApplyFormatInEditMode = true)]
         [DisplayName("Date created")]
         public DateTime DateCreated { get; set; }
 
@@ -66,23 +69,19 @@ namespace ColeoWeb.Models
                     Value = d.Id.ToString()
                 }).ToList();
 
-            UsersProject = UserProject.GetByProjectId(Id.Value).Select(d => new UserProjectViewModel()
-            {
-                Id = d.Id,
-                UserId = d.IdUser,
-                ProjectId = d.IdProject,
-                IsAssigned = true
-            }).ToList();
-
-            var idsUsersProject = UsersProject.Select(d => d.UserId).ToList();
-            UsersProject.AddRange ( AspNetUser.All().Where(x => !idsUsersProject.Contains(x.Id)).Select(y => new UserProjectViewModel()
+            UsersProject = new List<UserProjectViewModel>();
+            UsersProject
+                .AddRange(AspNetUser.All().Select(y => new UserProjectViewModel()
             {
                 UserId = y.Id,
-                ProjectId = Id.Value,
                 IsAssigned = false
             }).ToList());
 
             UsersProject.ForEach(x => x.InitializeData());
+
+            
+
+            Order = 1;
         }
 
         public void SetDataToModel()
@@ -101,14 +100,16 @@ namespace ColeoWeb.Models
             Model.IdUserCreated = UserCreated;
             Model.IdStatus = IdStatus;
 
+            Model.UsersProject = new List<UserProject>();
             if (UsersProject != null)
             {
-                UsersProject.ForEach(x => Model.UsersProject.Add(new UserProject()
-                {
-                    Id = x.Id,
-                    IdProject = x.ProjectId,
-                    IdUser = x.UserId
-                }));
+                UsersProject
+                    .Where(x => x.IsAssigned == true)
+                    .ToList()
+                    .ForEach(x => Model.UsersProject.Add(new UserProject()
+                    {
+                        IdUser = x.UserId
+                    }));
             }
 
         }
@@ -125,13 +126,13 @@ namespace ColeoWeb.Models
             IdStatus = Model.IdStatus;
             NameUserCreated = Model.AspNetUser.UserName;
 
-            UsersProject = Model.UsersProject.Select(x => new UserProjectViewModel()
-                {
-                    Id = x.Id,
-                    UserId = x.IdUser,
-                    ProjectId = x.IdProject
-                }).ToList();
-            UsersProject.ForEach(x => x.InitializeData());
+            if (Model.UsersProject.Any())
+            {
+                UsersProject.Where(x => Model.UsersProject.Select(y => y.IdUser).Contains(x.UserId))
+                .ToList()
+                .ForEach(z => z.IsAssigned = true);
+            }
+
         }
 
         public void Save()

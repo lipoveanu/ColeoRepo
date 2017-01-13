@@ -25,7 +25,7 @@
                             UpdateTargetId = "edit-project",
                             HttpMethod = "POST",
                             InsertionMode = InsertionMode.Replace,
-                            OnSuccess = "ShowList(); AlertSave();"
+                            OnSuccess = "ShowList(divList); AlertSave();"
                         },
                         new { @id = "edit-project" }))
     {
@@ -34,7 +34,7 @@
         <input type="hidden" id="Id" name="Id" value="@Model.Id" />
         @Html.HiddenFor(m => m.Order);
 
-        
+
         <div class="col-md-12 tile">
             <div class="form-group row">
                 <div class="col-md-4">
@@ -106,7 +106,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="col-md-12">
             @Html.Partial("UsersProject")
         </div>
@@ -129,12 +129,26 @@
             $("#sortable1,#sortable2").sortable({
                 connectWith: "#sortable1,#sortable2",
                 start: function (event, ui) {
-                    ui.item.toggleClass("highlight");
+
                 },
                 stop: function (event, ui) {
-                    ui.item.toggleClass("highlight");
+                    //console.log(ui.item);
+                },
+                receive: function (event, ui) {
+                    var value;
+                    if (this.id == "sortable1") {
+                        value = "False";
+                    }
+                    else{
+                        value= "True"
+                    }
+                    
+                    $(this).children().find('.assigned').val(value);
+
+                    //console.log("[" + this.id + "] received [" + ui.item.html() + "] from [" + ui.sender.attr("id") + "]");
                 }
             });
+
             $("#sortable1,#sortable2").disableSelection();
         });
 
@@ -150,3 +164,13 @@
     }
 
 </script>
+
+<style>
+    #sortable1, #sortable2 {
+        margin: 10px;
+        padding: 10px;
+        height: 500px;
+        /*width: 143px;*/
+    }
+
+</style>

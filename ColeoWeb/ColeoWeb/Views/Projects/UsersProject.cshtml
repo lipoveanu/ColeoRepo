@@ -3,14 +3,10 @@
 
 <div class="col-md-6">
     <div class="form-group row">
-        <ul id="sortable1" class="sortable-list" >
-            @for (var i = 0; i < Model.UsersProject.Where(x=>x.IsAssigned == false).Count(); i++)
+        <ul id="sortable1" class="sortable-list">
+            @foreach (var item in Model.UsersProject.Where(x => x.IsAssigned == false))
             {
-                <li class="sortable-item tile tile-push">
-                    @Html.HiddenFor(m => Model.UsersProject[i].Id)
-                    @Html.HiddenFor(m => Model.UsersProject[i].ProjectId)
-                    <h3 class="title"> @Html.DisplayFor(m => Model.UsersProject[i].User.UserName) </h3>
-                </li>
+                @Html.Partial("UsersProjectItem", item);
             }
         </ul>
     </div>
@@ -18,13 +14,9 @@
 <div class="col-md-6">
     <div class="form-group row">
         <ul id="sortable2" class="sortable-list">
-            @for (var i = 0; i < Model.UsersProject.Where(x=>x.IsAssigned == true).Count(); i++)
+            @foreach (var item in Model.UsersProject.Where(x => x.IsAssigned == true))
             {
-                <li class="sortable-item tile tile-push">
-                    @Html.HiddenFor(m => Model.UsersProject[i].Id)
-                    @Html.HiddenFor(m => Model.UsersProject[i].ProjectId)
-                    <h3 class="title"> @Html.DisplayFor(m => Model.UsersProject[i].User.UserName) </h3>
-                </li>
+                @Html.Partial("UsersProjectItem", item);
             }
         </ul>
     </div>

@@ -67,15 +67,14 @@ namespace ColeoWeb.Controllers
 
             ProjectViewModel vm = new ProjectViewModel();
 
+            vm.InitializeData();
+
             // edit project status
             if (id != null)
             {
                 vm.Id = id.Value;
-                
                 vm.SetDataFromModel();
             }
-
-            vm.InitializeData();
 
             return PartialView(vm);
 
@@ -89,9 +88,11 @@ namespace ColeoWeb.Controllers
                 model.SetDataToModel();
                 model.Save();
             }
-            model.InitializeData();
 
-            return PartialView(model);
+            //model.InitializeData();
+            //model.SetDataFromModel();
+
+            return Edit(model.Id);
 
         }
 
