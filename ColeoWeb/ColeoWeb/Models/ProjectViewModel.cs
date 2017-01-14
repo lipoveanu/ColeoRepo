@@ -28,15 +28,17 @@ namespace ColeoWeb.Models
 
         public int? Id { get; set; }
 
+        [Required]
         [DisplayName("Name")]
         public string Name { get; set; }
 
+        [Required]
         [DisplayName("Description")]
         public string Description { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}",
                ApplyFormatInEditMode = true)]
-        [DisplayName("Date created")]
+        [DisplayName("Date")]
         public DateTime DateCreated { get; set; }
 
         [DisplayName("Stauts")]
@@ -49,7 +51,7 @@ namespace ColeoWeb.Models
 
         public string UserCreated;
 
-        [DisplayName("User created")]
+        [DisplayName("Created by")]
         public string NameUserCreated { get; set; }
 
         [DisplayName("Order")]
@@ -109,8 +111,8 @@ namespace ColeoWeb.Models
                     .ToList()
                     .ForEach(x => Model.UsersProject.Add(new UserProject()
                     {
-                        IdUser = x.UserId,
-                        IdProject = Id.Value
+                        IdUser = x.UserId
+                        //IdProject = Id.Value
                     }));
             }
 

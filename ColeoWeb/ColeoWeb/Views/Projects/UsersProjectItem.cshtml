@@ -1,12 +1,12 @@
 ﻿@model ColeoWeb.Models.UserProjectViewModel
 
 
-<li class="sortable-item tile tile-push">
+<li class="sortable-item tile">
 
     @using (Html.BeginCollectionItem("UsersProject"))
     {
         @Html.HiddenFor(m => Model.UserId)
-        @Html.HiddenFor(m => Model.IsAssigned, new { @class = "assigned"})
+        @Html.HiddenFor(m => Model.IsAssigned, new { @class = "assigned" })
         <h5 class="title"> @Html.DisplayFor(m => Model.User.UserName) </h5>
     }
 </li>

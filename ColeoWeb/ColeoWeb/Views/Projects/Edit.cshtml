@@ -25,10 +25,9 @@
     @Html.HiddenFor(m => m.Order);
 
     <div>
-
         <div class="col-md-5">
-            <div class="tile">
-                <div class="form-group row">
+            <div class="tile " style="background-color: #@Model.Color;">
+                <div class=" form-group row">
                     <div class="col-md-3">
                         <h4> @Html.DisplayNameFor(m => m.NameUserCreated)</h4>
                     </div>
@@ -102,6 +101,13 @@
 
         <div class="col-md-4">
             @Html.Partial("UsersProject")
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div type="submit" class="glyphicon-md pull-right" onclick="SaveItem();">
+                        <span class="glyphicon glyphicon-floppy-save"></span> Save
+                    </div>
+                </div>
+            </div>
         </div>
 
         <input id="item-save" type="submit" class="hidden">
@@ -124,6 +130,8 @@
     function AlertSave() {
 
         var model = @Html.Raw(Json.Encode(Model));
+
+        console.log(model);
 
         if (model["Model"] != null) {
 

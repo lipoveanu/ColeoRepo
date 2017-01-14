@@ -2,16 +2,15 @@
 @{
     ViewBag.Title = "Index";
 }
-@Styles.Render("~/Content/bootstrap-toggle.min.css")
-@Scripts.Render("~/Scripts/bootstrap-toggle.min.js")
 
 <div class="row">
-    <div id="list-project" class="col-md-2">
+    <div id="list-project" class="col-md-8 col-md-offset-2">
         @{Html.RenderAction("List");}
     </div>
 
 
-    <div id="edit-project" class="col-md-9">
+
+    <div id="edit-project" class="col-md-8">
 
     </div>
 </div>
@@ -32,6 +31,8 @@
 
         alertDeleteSucces = 'Project deleted!';
         alertDeleteError = 'The project that you attempted to delete it is attached to an issue therefore it can not be deleted!';
+
+        
         
     });
 

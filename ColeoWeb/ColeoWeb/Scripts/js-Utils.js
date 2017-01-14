@@ -62,11 +62,8 @@ function NotificationAlert(message, type, allowDismiss, delay) {
 
 function SetUpSortable() {
 
-    console.log("initialize sortable");
-
     $('.sortable-list').sortable({
-        axis: "y",
-        opacity: 0.9,
+        opacity: 0.7,
         cursor: 'move',
         containment: '#sortable',
         update: function () {
@@ -121,6 +118,7 @@ function ShowEdit(id, elem) {
         url: urlEdit,
         data: { 'id': id },
         success: function (response) {
+            divList.removeClass().addClass("col-md-4");
             elem.html(response);
         },
         error: function (response) {
@@ -157,28 +155,53 @@ function DeleteItem(id, elemList, elemEdit, alertDeleteSucces, alertDeleteError)
 function InitializeSortable2Lists() {
 
     console.log("initialize sortable list");
-    
+
 
     $("#sortable1,#sortable2").sortable({
         connectWith: "#sortable1,#sortable2",
-        start: function (event, ui) {
-
+        opacity: 0.9,
+        cursor: 'move',
+        create: function (event, ui) {
+            if (this.id == "sortable2") {
+                var color = "#" + $(".pick-a-color").val();
+                $(this).find(".sortable-item").css("background-color", color);
+            }
+        },
+        beforeStop: function (event, ui) {
+            $(this).sortable("option", "selfDrop", $(ui.placeholder).parent()[0] == this);
         },
         stop: function (event, ui) {
-            //console.log(ui.item);
+            var $sortable = $(this);
+            if ($sortable.sortable("option", "selfDrop")) {
+                $sortable.sortable('cancel');
+                return;
+            }
         },
         receive: function (event, ui) {
             var value;
             if (this.id == "sortable1") {
                 value = "False";
+                ui.item.css("background-color", "");
             }
             else {
                 value = "True"
+                var color = "#" + $(".pick-a-color").val();
+                ui.item.css("background-color", color);
             }
 
             $(this).children().find('.assigned').val(value);
 
+
             //console.log("[" + this.id + "] received [" + ui.item.html() + "] from [" + ui.sender.attr("id") + "]");
+        },
+        over: function (event, ui) {
+            if (this.id == "sortable1") {
+                ui.item.css("background-color", "");
+            }
+            else {
+                var color = "#" + $(".pick-a-color").val();
+                ui.item.css("background-color", color);
+            }
         }
     });
 
