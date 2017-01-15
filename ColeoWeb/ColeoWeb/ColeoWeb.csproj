@@ -290,6 +290,7 @@
     <Content Include="Views\Projects\UsersProject.cshtml" />
     <Content Include="Views\Projects\UsersProjectItem.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
+    <Content Include="Views\Projects\ProjectFilters.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

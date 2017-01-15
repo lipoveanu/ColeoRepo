@@ -4,39 +4,7 @@
 
 <div id="filters" class="row">
     <div class="col-md-8 col-md-offset-2">
-        <div class="form-group">
-            <div class="col-md-2">
-                <div class="tile" onclick="ShowList(divList, 'Order')">
-                    <h4 class="title">My order</h4>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="tile" onclick="ShowList(divList,'Name')">
-                    <h4 class="title">Name</h4>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="tile" onclick="ShowList(divList, 'OrderStatus')">
-                    <h4 class="title">Status</h4>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="tile" onclick="ShowList(divList,'Color')">
-                    <h4 class="title">Color</h4>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="tile" onclick="ShowList(divList,'DateCreated')">
-                    <h4 class="title">Date</h4>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="tile" onclick="ShowList(divList, 'OrderParent')">
-                    <h4 class="title">Parent project</h4>
-                </div>
-            </div>
-
-        </div>
+        @Html.Partial("ProjectFilters")
     </div>
 </div>
 <div id="list-project" class="col-md-8 col-md-offset-2">
