@@ -66,8 +66,17 @@ function SetUpSortable() {
         opacity: 0.7,
         cursor: 'move',
         containment: '#sortable',
-        update: function () {
+        update: function (event, ui) {
             ChangeOrder();
+        },
+        create: function (event, ui) {
+            console.log(ui);
+        },
+        start: function (event, ui) {
+        },
+        stop: function (event, ui) {
+            ui.item.addClass("animated flipInY");
+            
         }
     });
 }
@@ -116,6 +125,7 @@ function ShowList(elem, order) {
         data: {order: order},
         success: function (response) {
             elem.html(response);
+            
         },
         error: function () {
             alert("error occured");
@@ -139,6 +149,7 @@ function ShowEdit(id, elem) {
         success: function (response) {
             divList.removeClass().addClass("col-md-4");
             elem.html(response);
+            //divList.find('.sortable-list').find('.sortable-item').removeClass('animated flipInY');
         },
         error: function (response) {
             console.log(response);

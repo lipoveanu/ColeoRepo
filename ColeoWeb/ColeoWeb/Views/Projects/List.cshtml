@@ -18,7 +18,7 @@
                         <li title="@Model[i].Name" class="sortable-item tile add-tooltip" style="background-color: #@Model[i].Color;">
                             @Html.HiddenFor(m => m[i].Id, new { @class = "id" })
                             @Html.HiddenFor(m => m[i].Name)
-                            @Html.HiddenFor(m => m[i].Description)
+                            @*@Html.HiddenFor(m => m[i].Description)
                             @Html.HiddenFor(m => m[i].DateCreated)
                             @Html.HiddenFor(m => m[i].Color)
                             @Html.HiddenFor(m => m[i].UserCreated)
@@ -26,7 +26,7 @@
                             @Html.HiddenFor(m => m[i].OrderStatus)
                             @Html.HiddenFor(m => m[i].UsersProject)
                             @Html.HiddenFor(m => m[i].IdParentProject)
-                            @Html.HiddenFor(m => m[i].OrderParent)
+                            @Html.HiddenFor(m => m[i].OrderParent)*@
 
                             @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
 

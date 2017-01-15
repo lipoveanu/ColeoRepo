@@ -37,12 +37,13 @@ namespace ColeoWeb.Controllers
                     Color = x.Color,
                     Order = x.DisplayOrder,
                     IdStatus = x.IdStatus,
-                    //IdParentProject = x.IdParentProject,
+                    IdParentProject = x.IdParentProject,
                     DateCreated = x.DateCreated,
                     UserCreated = x.IdUserCreated,
                     OrderStatus = x.ProjectStatus.DisplayOrder,
                     OrderParent = x.Project1 != null ? x.Project1.Name : null
                 })
+                .OrderBy(x=>x.Order)
                 .ToList();
             var propertyInfo = typeof(ProjectViewModel).GetProperty(order);
 
