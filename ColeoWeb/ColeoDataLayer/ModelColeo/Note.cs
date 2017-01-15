@@ -27,8 +27,8 @@ namespace ColeoDataLayer.ModelColeo
         public string IdUser { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Issue Issue { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IssueFile> IssueFiles { get; set; }
+        public virtual Issue Issue { get; set; }
     }
 }

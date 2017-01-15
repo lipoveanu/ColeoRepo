@@ -85,6 +85,16 @@
                 </div>
 
                 <div class="form-group row">
+                    <div class="col-md-3">
+                        <h4> @Html.DisplayNameFor(m => m.Parent)</h4>
+                    </div>
+                    <div class="col-md-9">
+                        @Html.DropDownListFor(m => m.IdParentProject, Model.Parent, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
                     <div class="col-md-12">
                         &nbsp;
                     </div>

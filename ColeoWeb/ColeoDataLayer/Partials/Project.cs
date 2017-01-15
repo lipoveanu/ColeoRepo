@@ -19,7 +19,10 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                return context.Projects.ToList();
+                return context.Projects
+                    .Include(x => x.ProjectStatus)
+                    .Include(x => x.Project1)
+                    .ToList();
             }
         }
 
@@ -101,6 +104,13 @@ namespace ColeoDataLayer.ModelColeo
                 if (projectStatus != null)
                 {
                     project.ProjectStatus = projectStatus;
+                }
+
+                //Parent project
+                Project projectParent = context.Projects.FirstOrDefault(x => x.Id == entity.IdParentProject);
+                if (projectParent != null)
+                {
+                    project.Project1 = projectParent;
                 }
 
                 //User created

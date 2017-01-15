@@ -47,7 +47,14 @@ namespace ColeoWeb.Models
         [DisplayName("Color")]
         public string Color { get; set; }
 
+        public int OrderStatus { get; set; }
+
         public IEnumerable<SelectListItem> Status { get; set; }
+
+        [DisplayName("Parent")]
+        public int? IdParentProject { get; set; }
+
+        public IEnumerable<SelectListItem> Parent { get; set; }
 
         public string UserCreated;
 
@@ -56,6 +63,8 @@ namespace ColeoWeb.Models
 
         [DisplayName("Order")]
         public int Order { get; set; }
+
+        public string OrderParent { get; set; }
 
         public List<UserProjectViewModel> UsersProject { get; set; }
 
@@ -70,6 +79,12 @@ namespace ColeoWeb.Models
                     Text = d.Name,
                     Value = d.Id.ToString()
                 }).ToList();
+
+            Parent = Project.All().Select(d => new SelectListItem()
+            {
+                Text = d.Name,
+                Value = d.Id.ToString()
+            }).ToList();
 
             UsersProject = new List<UserProjectViewModel>();
             UsersProject
@@ -102,6 +117,7 @@ namespace ColeoWeb.Models
             Model.IdUserCreated = UserCreated;
             Model.IdStatus = IdStatus;
             Model.DisplayOrder = Order;
+            Model.IdParentProject = IdParentProject;
 
             Model.UsersProject = new List<UserProject>();
             if (UsersProject != null)
@@ -130,6 +146,7 @@ namespace ColeoWeb.Models
             IdStatus = Model.IdStatus;
             NameUserCreated = Model.AspNetUser.UserName;
             Order = Model.DisplayOrder;
+            IdParentProject = Model.IdParentProject;
 
             if (Model.UsersProject.Any())
             {

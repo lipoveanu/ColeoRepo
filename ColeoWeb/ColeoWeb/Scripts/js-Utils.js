@@ -75,11 +75,29 @@ function SetUpSortable() {
 function ChangeOrder() {
     // reposition all components
     var positionIndex = 1;
+    var a=[];
     $('.sortable-item').each(function () {
         $(this).find('.position').val(positionIndex++);
+        var key = $(this).find('.id').val();
+        var value = $(this).find('.position').val();
+        var obj = { Key: parseInt(key), Value: parseInt(value) };
+        a.push(obj);
     });
-    //save in db
-    $('#list-save').trigger('click');
+    Reorder(a);
+}
+
+function Reorder(a) {
+    $.ajax({
+        type: "POST",
+        data: { test: a},
+        url: urlOrder,
+        success: function (response) {
+            console.log(response)
+        },
+        error: function () {
+            alert("error occured");
+        }
+    });
 }
 
 function AddTooltip() {
@@ -90,11 +108,12 @@ function SaveItem() {
     $('#item-save').trigger('click');
 }
 
-function ShowList(elem) {
+function ShowList(elem, order) {
 
     $.ajax({
         type: "GET",
         url: urlList,
+        data: {order: order},
         success: function (response) {
             elem.html(response);
         },
