@@ -46,15 +46,19 @@ namespace ColeoWeb.Models
         [DisplayName("Stauts")]
         public int IdStatus { get; set; }
 
-        [DisplayName("Color")]
-        public string Color { get; set; }
+        public IEnumerable<SelectListItem> Status { get; set; }
+
+        public string StatusName { get; set; }
 
         public int OrderStatus { get; set; }
 
-        public IEnumerable<SelectListItem> Status { get; set; }
+        [DisplayName("Color")]
+        public string Color { get; set; }
 
         [DisplayName("Parent")]
         public int? IdParentProject { get; set; }
+
+        public string ParentName { get; set; }
 
         public IEnumerable<SelectListItem> Parent { get; set; }
 
@@ -65,8 +69,6 @@ namespace ColeoWeb.Models
 
         [DisplayName("Order")]
         public int Order { get; set; }
-
-        public string OrderParent { get; set; }
 
         public List<UserProjectViewModel> UsersProject { get; set; }
 
@@ -149,6 +151,7 @@ namespace ColeoWeb.Models
             NameUserCreated = Model.AspNetUser.UserName;
             Order = Model.DisplayOrder;
             IdParentProject = Model.IdParentProject;
+
 
             if (Model.UsersProject.Any())
             {

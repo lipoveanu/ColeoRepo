@@ -41,7 +41,8 @@ namespace ColeoWeb.Controllers
                     DateCreated = x.DateCreated,
                     UserCreated = x.IdUserCreated,
                     OrderStatus = x.ProjectStatus.DisplayOrder,
-                    OrderParent = x.Project2 != null ? x.Project2.Name : null
+                    StatusName = x.ProjectStatus.Name,
+                    ParentName = x.Project2.Name
                 })
                 .OrderBy(x=>x.Order)
                 .ToList();

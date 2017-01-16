@@ -15,22 +15,29 @@
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
                     {
-                        <li  class="sortable-item tile" style="background-color: #@Model[i].Color;">
+                        <li class="sortable-item tile" style="background-color: #@Model[i].Color;">
                             @Html.HiddenFor(m => m[i].Id, new { @class = "id" })
                             @Html.HiddenFor(m => m[i].Name)
                             @*@Html.HiddenFor(m => m[i].Description)
-                            @Html.HiddenFor(m => m[i].DateCreated)
-                            @Html.HiddenFor(m => m[i].Color)
-                            @Html.HiddenFor(m => m[i].UserCreated)
-                            @Html.HiddenFor(m => m[i].IdStatus)
-                            @Html.HiddenFor(m => m[i].OrderStatus)
-                            @Html.HiddenFor(m => m[i].UsersProject)
-                            @Html.HiddenFor(m => m[i].IdParentProject)
-                            @Html.HiddenFor(m => m[i].OrderParent)*@
+                                @Html.HiddenFor(m => m[i].DateCreated)
+                                @Html.HiddenFor(m => m[i].Color)
+                                @Html.HiddenFor(m => m[i].UserCreated)
+                                @Html.HiddenFor(m => m[i].IdStatus)
+                                @Html.HiddenFor(m => m[i].OrderStatus)
+                                @Html.HiddenFor(m => m[i].UsersProject)
+                                @Html.HiddenFor(m => m[i].IdParentProject)
+                                @Html.HiddenFor(m => m[i].OrderParent)*@
 
                             @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
 
                             <h4 title="@Model[i].Name" class="title tile-describe add-tooltip"> @Html.DisplayFor(m => m[i].Name) </h4>
+
+                            <div id="details" class="animated fadeInLeft">
+                                <h5>@Html.DisplayNameFor(m=>m[i].DateCreated): @Html.DisplayFor(m => m[i].DateCreated)</h5>
+                                <h5>@Html.DisplayNameFor(m => m[i].NameUserCreated): @Html.DisplayFor(m => m[i].NameUserCreated)</h5>
+                                <h5>@Html.DisplayNameFor(m => m[i].StatusName): @Html.DisplayFor(m => m[i].IdStatus)</h5>
+                                <h5>@Html.DisplayNameFor(m => m[i].ParentName): @Html.DisplayFor(m => m[i].IdParentProject)</h5>
+                            </div>
 
                             <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
                                 <span class="glyphicon glyphicon-edit"></span> &nbsp;
@@ -70,8 +77,32 @@
         AddTooltip();
     });
 
+
+
 </script>
 
 <style>
+    .image-block {
+        border: 3px solid white;
+        background-color: black;
+        padding: 0px;
+        margin: 0px;
+        height: 200px;
+        text-align: center;
+        vertical-align: bottom;
+    }
 
+    .sortable-item > #details {
+        width: 100%;
+        height: 100%;
+        font-weight: normal;
+        background-color: rgba(3,3,3,0.0);
+        color: rgba(6,6,6,0.0);
+    }
+
+    .sortable-item:hover > #details {
+        padding: 2px;
+        background-color: rgba(3,3,3,0.5);
+        color: white;
+    }
 </style>
