@@ -60,55 +60,6 @@ function NotificationAlert(message, type, allowDismiss, delay) {
     });
 }
 
-function SetUpSortable() {
-
-    $('.sortable-list').sortable({
-        opacity: 0.7,
-        cursor: 'move',
-        containment: '#sortable',
-        update: function (event, ui) {
-            ChangeOrder();
-        },
-        create: function (event, ui) {
-            console.log(ui);
-        },
-        start: function (event, ui) {
-        },
-        stop: function (event, ui) {
-            ui.item.addClass("animated flipInY");
-            
-        }
-    });
-}
-
-function ChangeOrder() {
-    // reposition all components
-    var positionIndex = 1;
-    var a=[];
-    $('.sortable-item').each(function () {
-        $(this).find('.position').val(positionIndex++);
-        var key = $(this).find('.id').val();
-        var value = $(this).find('.position').val();
-        var obj = { Key: parseInt(key), Value: parseInt(value) };
-        a.push(obj);
-    });
-    Reorder(a);
-}
-
-function Reorder(a) {
-    $.ajax({
-        type: "POST",
-        data: { test: a},
-        url: urlOrder,
-        success: function (response) {
-            console.log(response)
-        },
-        error: function () {
-            alert("error occured");
-        }
-    });
-}
-
 function AddTooltip() {
     $(".add-tooltip").tooltip();
 }
@@ -116,6 +67,7 @@ function AddTooltip() {
 function SaveItem() {
     $('#item-save').trigger('click');
 }
+
 
 function ShowList(elem, order) {
 
@@ -132,8 +84,6 @@ function ShowList(elem, order) {
         }
     });
 
-    // validate form for alert
-    //$.validator.unobtrusive.parse($("#edit-projectstatus"));
 }
 
 
@@ -182,10 +132,57 @@ function DeleteItem(id, elemList, elemEdit, alertDeleteSucces, alertDeleteError)
     });
 }
 
+
+function SetUpSortable() {
+
+    $('.sortable-list').sortable({
+        opacity: 0.7,
+        cursor: 'move',
+        containment: '#sortable',
+        update: function (event, ui) {
+            ChangeOrder();
+        },
+        create: function (event, ui) {
+            //console.log(ui);
+        },
+        start: function (event, ui) {
+        },
+        stop: function (event, ui) {
+            ui.item.addClass("animated flipInY");
+
+        }
+    });
+}
+
+function ChangeOrder() {
+    // reposition all components
+    var positionIndex = 1;
+    var a = [];
+    $('.sortable-item').each(function () {
+        $(this).find('.position').val(positionIndex++);
+        var key = $(this).find('.id').val();
+        var value = $(this).find('.position').val();
+        var obj = { Key: parseInt(key), Value: parseInt(value) };
+        a.push(obj);
+    });
+    Reorder(a);
+}
+
+function Reorder(a) {
+    $.ajax({
+        type: "POST",
+        data: { test: a },
+        url: urlOrder,
+        success: function (response) {
+            console.log(response)
+        },
+        error: function () {
+            alert("error occured");
+        }
+    });
+}
+
 function InitializeSortable2Lists() {
-
-    console.log("initialize sortable list");
-
 
     $("#sortable1,#sortable2").sortable({
         connectWith: "#sortable1,#sortable2",
@@ -220,7 +217,6 @@ function InitializeSortable2Lists() {
             }
 
             $(this).children().find('.assigned').val(value);
-
 
             //console.log("[" + this.id + "] received [" + ui.item.html() + "] from [" + ui.sender.attr("id") + "]");
         },

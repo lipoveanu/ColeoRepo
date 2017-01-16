@@ -7,6 +7,7 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Script.Serialization;
 
 namespace ColeoWeb.Models
 {
@@ -24,8 +25,9 @@ namespace ColeoWeb.Models
 
         #region Properties
 
-        Project Model { get; set; }
+        public Project Model {get; set; }
 
+        [Key]
         public int? Id { get; set; }
 
         [Required]
@@ -68,6 +70,8 @@ namespace ColeoWeb.Models
 
         public List<UserProjectViewModel> UsersProject { get; set; }
 
+        public bool isValid { get; set; }
+
         #endregion Properties
 
         #region Methods
@@ -96,9 +100,7 @@ namespace ColeoWeb.Models
 
             UsersProject.ForEach(x => x.InitializeData());
 
-            
-
-            Order = 1;
+            Order = Project.GetOrder();
         }
 
         public void SetDataToModel()

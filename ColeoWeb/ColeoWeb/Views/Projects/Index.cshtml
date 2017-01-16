@@ -2,11 +2,11 @@
     ViewBag.Title = "Index";
 }
 
-<div id="filters" class="row">
-    <div class="col-md-8 col-md-offset-2">
+@*<div id="filters" class="">
+    <div class="col-md-2">
         @Html.Partial("ProjectFilters")
     </div>
-</div>
+</div>*@
 <div id="list-project" class="col-md-8 col-md-offset-2">
 
     @{Html.RenderAction("List");}
@@ -16,7 +16,6 @@
 
 <div id="edit-project" class="col-md-8">
 
-</div>
 </div>
 
 <script>

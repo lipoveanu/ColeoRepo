@@ -57,6 +57,10 @@ $display_font_family:*/
     
 }
 
+.tile-push{
+    cursor: pointer;
+}
+
 .tile-push:hover {
     -webkit-transform: scale(1.05);
 }
@@ -89,6 +93,10 @@ $display_font_family:*/
 .glyphicon-md {
     font-size: 1.3em;
     padding: 2px;
+}
+
+.glyphicon-md:hover{
+    -webkit-transform: scale(1.05);
 }
 
 .glyphicon-lg {

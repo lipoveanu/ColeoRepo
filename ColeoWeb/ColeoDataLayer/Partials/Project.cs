@@ -19,6 +19,8 @@ namespace ColeoDataLayer.ModelColeo
         {
             using (ColeoEntities context = new ColeoEntities())
             {
+                context.Configuration.LazyLoadingEnabled = false;
+
                 return context.Projects
                     .Include(x => x.ProjectStatus)
                     .Include(x => x.Project1)
@@ -73,16 +75,9 @@ namespace ColeoDataLayer.ModelColeo
                     entity.ProjectStatus = projectStatus;
                 }
 
-                //User created
-                AspNetUser userCreated = context.AspNetUsers.FirstOrDefault(x => x.Id == entity.IdUserCreated);
-                if (userCreated != null)
-                {
-                    entity.AspNetUser = userCreated;
-                }
-
-                //to do save project users
-
                 context.SaveChanges();
+
+                Project.Update(entity);
 
                 return entity.Id;
             }
@@ -99,18 +94,17 @@ namespace ColeoDataLayer.ModelColeo
                     return;
                 }
 
-                //Project status
-                ProjectStatus projectStatus = context.ProjectStatuses.FirstOrDefault(x => x.Id == entity.IdStatus);
-                if (projectStatus != null)
-                {
-                    project.ProjectStatus = projectStatus;
-                }
+                //set properties
+                project.Name = entity.Name;
+                project.Description = entity.Description;
+                project.DateCreated = entity.DateCreated;
+                project.Color = entity.Color;
 
                 //Parent project
                 Project projectParent = context.Projects.FirstOrDefault(x => x.Id == entity.IdParentProject);
                 if (projectParent != null)
                 {
-                    project.Project1 = projectParent;
+                    project.Project2 = projectParent;
                 }
 
                 //User created
@@ -119,12 +113,6 @@ namespace ColeoDataLayer.ModelColeo
                 {
                     project.AspNetUser = userCreated;
                 }
-
-                //set properties
-                project.Name = entity.Name;
-                project.Description = entity.Description;
-                project.DateCreated = entity.DateCreated;
-                project.Color = entity.Color;
 
                 //Project users
                 List<string> dbUserProject = project.UserProjects.Select(x => x.IdUser).ToList();
@@ -178,6 +166,12 @@ namespace ColeoDataLayer.ModelColeo
                     return false;
                 }
 
+                var usersProject = context.UserProjects.Where(x => x.IdProject == id);
+
+                if (usersProject != null)
+                {
+                    context.UserProjects.RemoveRange(usersProject);
+                }
 
                 context.Projects.Remove(project);
 
@@ -207,6 +201,23 @@ namespace ColeoDataLayer.ModelColeo
         public override string ToString()
         {
             return Name;
+        }
+
+        public static int GetOrder()
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                int result = 1;
+
+                Project project = context.Projects.OrderByDescending(x => x.DisplayOrder).FirstOrDefault();
+
+                if (project != null)
+                {
+                    result = project.DisplayOrder + 1;
+                }
+
+                return result;
+            }
         }
     }
 }

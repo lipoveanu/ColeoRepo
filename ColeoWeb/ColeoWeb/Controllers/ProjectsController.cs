@@ -23,7 +23,7 @@ namespace ColeoWeb.Controllers
         {
             if (order == null)
             {
-                order = "Name";
+                order = "Order";
             }
 
             var prok = Project.All();
@@ -41,7 +41,7 @@ namespace ColeoWeb.Controllers
                     DateCreated = x.DateCreated,
                     UserCreated = x.IdUserCreated,
                     OrderStatus = x.ProjectStatus.DisplayOrder,
-                    OrderParent = x.Project1 != null ? x.Project1.Name : null
+                    OrderParent = x.Project2 != null ? x.Project2.Name : null
                 })
                 .OrderBy(x=>x.Order)
                 .ToList();
@@ -85,6 +85,7 @@ namespace ColeoWeb.Controllers
             }
         }
 
+        [HttpGet]
         public PartialViewResult Edit(int? id)
         {
             // creation of project status not allowed if not logged in 
@@ -102,6 +103,7 @@ namespace ColeoWeb.Controllers
             {
                 vm.Id = id.Value;
                 vm.SetDataFromModel();
+                vm.isValid = ModelState.IsValid;
             }
 
             return PartialView(vm);
@@ -117,7 +119,17 @@ namespace ColeoWeb.Controllers
                 model.Save();
             }
 
-            return Edit(model.Id);
+            model.isValid = ModelState.IsValid;
+
+            model.InitializeData();
+
+            // edit project status
+            if (model.Id != null)
+            {
+                model.SetDataFromModel();
+            }
+
+            return PartialView(model);
 
         }
 

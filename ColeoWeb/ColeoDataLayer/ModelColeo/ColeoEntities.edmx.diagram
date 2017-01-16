@@ -6,23 +6,23 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c977208658db4fc1b3bccd86c524391d" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="ColeoModel.AspNetRole" Width="1.5" PointX="1.5" PointY="0.75" />
-        <EntityTypeShape EntityType="ColeoModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="4.25" />
-        <EntityTypeShape EntityType="ColeoModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="16" />
+        <EntityTypeShape EntityType="ColeoModel.AspNetUserClaim" Width="1.5" PointX="3" PointY="15.875" />
+        <EntityTypeShape EntityType="ColeoModel.AspNetUserLogin" Width="1.5" PointX="3" PointY="4.25" />
         <EntityTypeShape EntityType="ColeoModel.AspNetUser" Width="1.5" PointX="0.75" PointY="3.875" />
         <EntityTypeShape EntityType="ColeoModel.File" Width="1.5" PointX="0.75" PointY="12" />
-        <EntityTypeShape EntityType="ColeoModel.History" Width="1.5" PointX="10.5" PointY="14.75" />
+        <EntityTypeShape EntityType="ColeoModel.History" Width="1.5" PointX="13.5" PointY="11.75" />
         <EntityTypeShape EntityType="ColeoModel.Issue" Width="1.5" PointX="8.25" PointY="9.625" />
         <EntityTypeShape EntityType="ColeoModel.IssueFile" Width="1.5" PointX="3" PointY="11.625" />
-        <EntityTypeShape EntityType="ColeoModel.IssueLabel" Width="1.5" PointX="13.5" PointY="17.125" />
+        <EntityTypeShape EntityType="ColeoModel.IssueLabel" Width="1.5" PointX="10.5" PointY="18.125" />
         <EntityTypeShape EntityType="ColeoModel.IssueStatus" Width="1.5" PointX="6" PointY="6.875" />
         <EntityTypeShape EntityType="ColeoModel.Label" Width="1.5" PointX="8.25" PointY="22.5" />
         <EntityTypeShape EntityType="ColeoModel.Note" Width="1.5" PointX="10.5" PointY="8.75" />
-        <EntityTypeShape EntityType="ColeoModel.Priority" Width="1.5" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="ColeoModel.Priority" Width="1.5" PointX="6" PointY="19.5" />
         <EntityTypeShape EntityType="ColeoModel.Project" Width="1.5" PointX="6" PointY="10.875" />
         <EntityTypeShape EntityType="ColeoModel.ProjectStatus" Width="1.5" PointX="3.75" PointY="8" />
-        <EntityTypeShape EntityType="ColeoModel.RelatedIssue" Width="1.5" PointX="10.5" PointY="18.75" />
-        <EntityTypeShape EntityType="ColeoModel.Reproducibility" Width="1.5" PointX="6" PointY="19.5" />
-        <EntityTypeShape EntityType="ColeoModel.Severity" Width="1.5" PointX="6" PointY="17" />
+        <EntityTypeShape EntityType="ColeoModel.RelatedIssue" Width="1.5" PointX="10.5" PointY="15.375" />
+        <EntityTypeShape EntityType="ColeoModel.Reproducibility" Width="1.5" PointX="6" PointY="17" />
+        <EntityTypeShape EntityType="ColeoModel.Severity" Width="1.5" PointX="6" PointY="3.5" />
         <EntityTypeShape EntityType="ColeoModel.UserProject" Width="1.5" PointX="11.25" PointY="12.125" />
         <AssociationConnector Association="ColeoModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="ColeoModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />

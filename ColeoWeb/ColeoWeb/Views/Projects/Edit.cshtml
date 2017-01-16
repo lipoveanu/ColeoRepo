@@ -21,11 +21,11 @@
 {
     @Html.AntiForgeryToken()
 
-    <input type="hidden" id="Id" name="Id" value="@Model.Id" />
+    @Html.HiddenFor(m => m.Id);
     @Html.HiddenFor(m => m.Order);
 
     <div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="tile " style="background-color: #@Model.Color;">
                 <div class=" form-group row">
                     <div class="col-md-3">
@@ -101,7 +101,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-md-12">
-                        <div type="submit" class="glyphicon-md pull-right" onclick="SaveItem();">
+                        <div title="Save" type="submit" class="glyphicon-md pull-right add-tooltip" onclick="SaveItem();">
                             <span class="glyphicon glyphicon-floppy-save"></span> Save
                         </div>
                     </div>
@@ -109,11 +109,11 @@
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-6">
             @Html.Partial("UsersProject")
             <div class="form-group row">
                 <div class="col-md-12">
-                    <div type="submit" class="glyphicon-md pull-right" onclick="SaveItem();">
+                    <div title="Save" type="submit" class="glyphicon-md pull-right add-tooltip" onclick="SaveItem();">
                         <span class="glyphicon glyphicon-floppy-save"></span> Save
                     </div>
                 </div>
@@ -138,15 +138,13 @@
 
 
     function AlertSave() {
+        var isValid = "@Model.isValid.ToString()";
 
-        var model = @Html.Raw(Json.Encode(Model));
-
-        console.log(model);
-
-        if (model["Model"] != null) {
-
-            console.log("alert save");
-            NotificationAlert('Project status saved!');
+        if (isValid == "True") {
+            NotificationAlert('Project saved!');
+        }
+        else {
+            NotificationAlert('Project is invalid!', "danger", false, 3000);
         }
     }
 
