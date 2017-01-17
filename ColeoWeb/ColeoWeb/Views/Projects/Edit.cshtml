@@ -3,10 +3,13 @@
 @{
     ViewBag.Title = "Edit";
 }
+@Scripts.Render("~/Scripts/tinycolor-0.9.15.min.js")
 
 @Scripts.Render("~/Scripts/pick-a-color-1.2.3.min.js")
-@Scripts.Render("~/Scripts/tinycolor-0.9.15.min.js")
 @Styles.Render("~/Content/pick-a-color-1.2.3.min.css")
+
+@Scripts.Render("~/Scripts/fileinput.min.js")
+@Styles.Render("~/Content/fileinput.min.css")
 
 @using (Ajax.BeginForm("Edit",
                         null,
@@ -122,6 +125,14 @@
 
         <input id="item-save" type="submit" class="hidden">
 
+    </div>
+
+    <div>
+        <div class="col-md-12">
+            <div class="tile " style="background-color: #@Model.Color;">
+                @Html.Partial("SelectFile", "Shared")
+            </div>
+        </div>
     </div>
 }
 
