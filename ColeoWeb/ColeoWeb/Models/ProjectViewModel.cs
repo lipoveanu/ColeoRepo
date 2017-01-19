@@ -25,7 +25,7 @@ namespace ColeoWeb.Models
 
         #region Properties
 
-        public Project Model {get; set; }
+        public Project Model { get; set; }
 
         [Key]
         public int? Id { get; set; }
@@ -74,6 +74,8 @@ namespace ColeoWeb.Models
 
         public bool isValid { get; set; }
 
+        public FileViewModel File { get; set; }
+
         #endregion Properties
 
         #region Methods
@@ -95,12 +97,14 @@ namespace ColeoWeb.Models
             UsersProject = new List<UserProjectViewModel>();
             UsersProject
                 .AddRange(AspNetUser.All().Select(y => new UserProjectViewModel()
-            {
-                UserId = y.Id,
-                IsAssigned = false
-            }).ToList());
+                    {
+                        UserId = y.Id,
+                        IsAssigned = false
+                    }).ToList());
 
             UsersProject.ForEach(x => x.InitializeData());
+
+            File = new FileViewModel();
 
             Order = Project.GetOrder();
         }
@@ -152,13 +156,23 @@ namespace ColeoWeb.Models
             Order = Model.DisplayOrder;
             IdParentProject = Model.IdParentProject;
 
-
             if (Model.UsersProject.Any())
             {
                 UsersProject.Where(x => Model.UsersProject.Select(y => y.IdUser).Contains(x.UserId))
                 .ToList()
                 .ForEach(z => z.IsAssigned = true);
             }
+
+            if (Model.File != null)
+            {
+                File = new FileViewModel { 
+                    Id = Model.File.Id,
+                    Name = Model.File.Name,
+                    LocalName = Model.File.LocalName,
+                    Extension = Model.File.Extension
+                };
+            }
+
 
         }
 

@@ -2,6 +2,7 @@
 using ColeoWeb.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -140,6 +141,23 @@ namespace ColeoWeb.Controllers
 
             return vm.Delete(id);
 
+        }
+
+        [HttpPost]
+        public JsonResult UploadFile(IEnumerable<HttpPostedFileBase> fileUpload)
+        {
+            // save files and the desired location 
+            List<FileViewModel> files = new FileController().Upload(fileUpload);
+            
+            //TODO: save each file in file table 
+            foreach (var item in files)
+            {
+                item.SetDataToModel();
+                item.Save();
+            }
+
+            // fie uploaded event assyncron true
+            return Json("");
         }
 
     }

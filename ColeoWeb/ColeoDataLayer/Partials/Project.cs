@@ -53,6 +53,7 @@ namespace ColeoDataLayer.ModelColeo
                 var project = context.Projects
                     .Include(d => d.AspNetUser)
                     .Include(d => d.UserProjects)
+                    .Include(d => d.File)
                     .FirstOrDefault(d => d.Id == id);
 
                 project.UsersProject = project.UserProjects.ToList();
@@ -113,6 +114,10 @@ namespace ColeoDataLayer.ModelColeo
                 {
                     project.AspNetUser = userCreated;
                 }
+
+                //File ????
+                int dbFile = project.File.Id;
+                int modelFile = entity.File.Id; 
 
                 //Project users
                 List<string> dbUserProject = project.UserProjects.Select(x => x.IdUser).ToList();

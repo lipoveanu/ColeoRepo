@@ -1,0 +1,35 @@
+﻿@model ColeoWeb.Models.FileViewModel
+
+@{
+    ViewBag.Title = "Select file";
+}
+
+<div class=" form-group row">
+    <div class="col-md-12">
+        <h4>Select File</h4>
+        <input id="select-file" name="fileUpload" type="file" multiple class="file-loading">
+        <div id="errorBlock" class="help-block"></div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#select-file").fileinput({
+            uploadUrl: '@Url.Action("UploadFile","Projects")',
+            //maxFilePreviewSize: 100200,
+            multiple: true,
+            uploadAsync: false,
+            maxFileCount: 10,
+            overwriteInitial: false,
+            //maxFileSize: 100200
+        });
+            @*.fileinput({
+            showCaption: true,
+            showPreview: true,
+            showUploadedThumbs: false,
+            @*uploadUrl: @Url.Action("UploadFile"),* @
+            maxFilePreviewSize: 10240,
+            allowedFileTypes: ['image', 'html', 'text', 'video', 'audio', 'flash', 'object']
+        });*@
+    });
+</script>
