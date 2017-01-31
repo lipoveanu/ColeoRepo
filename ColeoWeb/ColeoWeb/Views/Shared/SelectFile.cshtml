@@ -1,5 +1,4 @@
-﻿@model ColeoWeb.Models.FileViewModel
-
+﻿
 @{
     ViewBag.Title = "Select file";
 }
@@ -15,7 +14,7 @@
 <script>
     $(document).ready(function () {
         $("#select-file").fileinput({
-            uploadUrl: '@Url.Action("UploadFile","Projects")',
+            uploadUrl: '@Url.Action("UploadFile")',
             //maxFilePreviewSize: 100200,
             multiple: true,
             uploadAsync: false,

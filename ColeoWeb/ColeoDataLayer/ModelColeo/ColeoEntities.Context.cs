@@ -31,13 +31,14 @@ namespace ColeoDataLayer.ModelColeo
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<History> Histories { get; set; }
-        public virtual DbSet<Issue> Issues { get; set; }
         public virtual DbSet<IssueFile> IssueFiles { get; set; }
         public virtual DbSet<IssueLabel> IssueLabels { get; set; }
+        public virtual DbSet<Issue> Issues { get; set; }
         public virtual DbSet<IssueStatus> IssueStatuses { get; set; }
         public virtual DbSet<Label> Labels { get; set; }
         public virtual DbSet<Note> Notes { get; set; }
         public virtual DbSet<Priority> Priorities { get; set; }
+        public virtual DbSet<ProjectFile> ProjectFiles { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
         public virtual DbSet<ProjectStatus> ProjectStatuses { get; set; }
         public virtual DbSet<RelatedIssue> RelatedIssues { get; set; }

@@ -23,7 +23,7 @@ namespace ColeoWeb.Controllers
             foreach (var file in fileUpload)
             {
                 string fileName = file.FileName;
-                string UploadPath = "D:/01 COLEO/Images/";
+                string UploadPath = "F:/01 COLEO/Images/";
 
                 if (file.ContentLength == 0)
                     continue;

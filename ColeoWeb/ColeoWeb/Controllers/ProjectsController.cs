@@ -27,8 +27,6 @@ namespace ColeoWeb.Controllers
                 order = "Order";
             }
 
-            var prok = Project.All();
-
             List<ProjectViewModel> projectList = Project.All()
                 .Select(x => new ProjectViewModel()
                 {
@@ -40,10 +38,10 @@ namespace ColeoWeb.Controllers
                     IdStatus = x.IdStatus,
                     IdParentProject = x.IdParentProject,
                     DateCreated = x.DateCreated,
-                    UserCreated = x.IdUserCreated,
+                    IdUserCreated = x.IdUserCreated,
                     OrderStatus = x.ProjectStatus.DisplayOrder,
                     StatusName = x.ProjectStatus.Name,
-                    ParentName = x.Project2.Name
+                    ParentName = x.Project1 != null ? x.Project1.Name : string.Empty
                 })
                 .OrderBy(x=>x.Order)
                 .ToList();
@@ -117,6 +115,19 @@ namespace ColeoWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                //get files from session and save each file in file table 
+                List<FileViewModel> files = Session.GetFiles();
+                if (files != null)
+                {
+                    foreach (var item in files)
+                    {
+                        item.SetDataToModel();
+                        item.Save();
+                    }
+                }
+                // set the list to model
+                model.Files = files;
+
                 model.SetDataToModel();
                 model.Save();
             }
@@ -125,7 +136,7 @@ namespace ColeoWeb.Controllers
 
             model.InitializeData();
 
-            // edit project status
+            // edit project
             if (model.Id != null)
             {
                 model.SetDataFromModel();
@@ -146,15 +157,10 @@ namespace ColeoWeb.Controllers
         [HttpPost]
         public JsonResult UploadFile(IEnumerable<HttpPostedFileBase> fileUpload)
         {
-            // save files and the desired location 
+            // save files in the desired location 
             List<FileViewModel> files = new FileController().Upload(fileUpload);
-            
-            //TODO: save each file in file table 
-            foreach (var item in files)
-            {
-                item.SetDataToModel();
-                item.Save();
-            }
+
+            Session.SetFiles(files);
 
             // fie uploaded event assyncron true
             return Json("");

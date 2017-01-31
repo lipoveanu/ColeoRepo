@@ -107,6 +107,9 @@
     <Compile Include="ModelColeo\Project.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelColeo\ProjectFile.cs">
+      <DependentUpon>ColeoEntities.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelColeo\ProjectStatus.cs">
       <DependentUpon>ColeoEntities.tt</DependentUpon>
     </Compile>

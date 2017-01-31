@@ -16,11 +16,7 @@ namespace ColeoWeb.Models
 
         public ProjectViewModel()
         {
-            DateCreated = DateTime.Now.AddDays(-6);
-            UserCreated = HttpContext.Current.User.Identity.GetUserId();
-            NameUserCreated = HttpContext.Current.User.Identity.Name;
-            Color = "#E8A13F";
-            IdStatus = ProjectStatus.GetDefault().Id;
+
         }
 
         #region Properties
@@ -62,7 +58,7 @@ namespace ColeoWeb.Models
 
         public IEnumerable<SelectListItem> Parent { get; set; }
 
-        public string UserCreated;
+        public string IdUserCreated { get; set; }
 
         [DisplayName("Created by")]
         public string NameUserCreated { get; set; }
@@ -74,7 +70,7 @@ namespace ColeoWeb.Models
 
         public bool isValid { get; set; }
 
-        public FileViewModel File { get; set; }
+        public List<FileViewModel> Files { get; set; }
 
         #endregion Properties
 
@@ -82,6 +78,12 @@ namespace ColeoWeb.Models
 
         public void InitializeData()
         {
+            DateCreated = DateTime.Now.AddDays(-6);
+            IdUserCreated = HttpContext.Current.User.Identity.GetUserId();
+            NameUserCreated = HttpContext.Current.User.Identity.Name;
+            Color = "#E8A13F";
+            IdStatus = ProjectStatus.GetDefault().Id;
+
             Status = ProjectStatus.All().Select(d => new SelectListItem()
                 {
                     Text = d.Name,
@@ -104,8 +106,6 @@ namespace ColeoWeb.Models
 
             UsersProject.ForEach(x => x.InitializeData());
 
-            File = new FileViewModel();
-
             Order = Project.GetOrder();
         }
 
@@ -122,7 +122,7 @@ namespace ColeoWeb.Models
             Model.Description = Description;
             Model.DateCreated = DateCreated;
             Model.Color = Color;
-            Model.IdUserCreated = UserCreated;
+            Model.IdUserCreated = IdUserCreated;
             Model.IdStatus = IdStatus;
             Model.DisplayOrder = Order;
             Model.IdParentProject = IdParentProject;
@@ -140,6 +140,17 @@ namespace ColeoWeb.Models
                     }));
             }
 
+            //TODO: add table FilesProject  and set data to model
+            Model.ProjectFiles = new List<ProjectFile>();
+            if (Files != null)
+            {
+                Model.ProjectFiles = Files.Select(d => new ProjectFile()
+                {
+                    IdFile = d.Id.Value,
+                    IdUser = IdUserCreated,
+                    DateCreated = DateTime.Now
+                }).ToList();
+            }
         }
 
         public void SetDataFromModel()
@@ -150,7 +161,7 @@ namespace ColeoWeb.Models
             Description = Model.Description;
             DateCreated = Model.DateCreated;
             Color = Model.Color;
-            UserCreated = Model.IdUserCreated;
+            IdUserCreated = Model.IdUserCreated;
             IdStatus = Model.IdStatus;
             NameUserCreated = Model.AspNetUser.UserName;
             Order = Model.DisplayOrder;
@@ -163,17 +174,16 @@ namespace ColeoWeb.Models
                 .ForEach(z => z.IsAssigned = true);
             }
 
-            if (Model.File != null)
+            if (Model.ProjectFiles != null)
             {
-                File = new FileViewModel { 
-                    Id = Model.File.Id,
-                    Name = Model.File.Name,
-                    LocalName = Model.File.LocalName,
-                    Extension = Model.File.Extension
-                };
+                Files = Model.ProjectFiles.Select(d => new FileViewModel()
+                {
+                    Id = d.IdFile,
+                    Name = d.File.Name,
+                    LocalName = d.File.LocalName,
+                    Extension = d.File.Extension
+                }).ToList();
             }
-
-
         }
 
         public void Save()

@@ -53,6 +53,7 @@ namespace ColeoDataLayer.ModelColeo
                 var project = context.Projects
                     .Include(d => d.AspNetUser)
                     .Include(d => d.UserProjects)
+                    .Include(d => d.ProjectFiles)
                     .Include(d => d.File)
                     .FirstOrDefault(d => d.Id == id);
 
@@ -105,7 +106,7 @@ namespace ColeoDataLayer.ModelColeo
                 Project projectParent = context.Projects.FirstOrDefault(x => x.Id == entity.IdParentProject);
                 if (projectParent != null)
                 {
-                    project.Project2 = projectParent;
+                    project.Project1 = projectParent;
                 }
 
                 //User created
@@ -116,8 +117,34 @@ namespace ColeoDataLayer.ModelColeo
                 }
 
                 //File ????
-                int dbFile = project.File.Id;
-                int modelFile = entity.File.Id; 
+                List<int> dbProjectFile = project.ProjectFiles.Select(x => x.Id).ToList();
+                List<int> modelProjectFile = entity.ProjectFiles.Select(x => x.IdFile).ToList();
+
+                modelProjectFile.ForEach(x =>
+                {
+                    // if added
+                    if (!dbProjectFile.Contains(x))
+                    {
+                        ProjectFile projectFile = context.ProjectFiles.Create();
+                        projectFile.IdFile = x;
+                        projectFile.IdProject = entity.Id;
+                        projectFile.IdUser = entity.ProjectFiles.FirstOrDefault().IdUser;
+                        projectFile.DateCreated = entity.ProjectFiles.FirstOrDefault().DateCreated;
+                        context.ProjectFiles.Add(projectFile);
+                        projectFile.Project = context.Projects.FirstOrDefault(y => y.Id == entity.Id);
+                        projectFile.AspNetUser = context.AspNetUsers.FirstOrDefault(y => y.Id == projectFile.IdUser);
+                    }
+                });
+                dbProjectFile.ForEach(x =>
+                {
+                    // if deleted 
+                    if (!modelProjectFile.Contains(x))
+                    {
+                        var filesProject = context.ProjectFiles
+                                                    .FirstOrDefault(y => y.IdFile == x && y.IdProject == entity.Id);
+                        context.ProjectFiles.Remove(filesProject);
+                    }
+                });
 
                 //Project users
                 List<string> dbUserProject = project.UserProjects.Select(x => x.IdUser).ToList();
@@ -135,8 +162,7 @@ namespace ColeoDataLayer.ModelColeo
                             userproject.Project = context.Projects.FirstOrDefault(y => y.Id == entity.Id);
                             userproject.AspNetUser = context.AspNetUsers.FirstOrDefault(y => y.Id == x);
                         }
-                    }
-                    );
+                    });
                 dbUserProject.ForEach(x =>
                     {
                         // if deleted 
@@ -145,8 +171,7 @@ namespace ColeoDataLayer.ModelColeo
                             var userProject = context.UserProjects.FirstOrDefault(y => y.IdUser == x && y.IdProject == entity.Id);
                             context.UserProjects.Remove(userProject);
                         }
-                    }
-                    );
+                    });
 
                 context.SaveChanges();
             }

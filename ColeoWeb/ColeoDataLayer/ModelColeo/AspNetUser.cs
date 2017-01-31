@@ -25,6 +25,7 @@ namespace ColeoDataLayer.ModelColeo
             this.IssueFiles = new HashSet<IssueFile>();
             this.Notes = new HashSet<Note>();
             this.Projects = new HashSet<Project>();
+            this.ProjectFiles = new HashSet<ProjectFile>();
             this.UserProjects = new HashSet<UserProject>();
             this.AspNetRoles = new HashSet<AspNetRole>();
         }
@@ -59,6 +60,8 @@ namespace ColeoDataLayer.ModelColeo
         public virtual ICollection<Note> Notes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Project> Projects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProjectFile> ProjectFiles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserProject> UserProjects { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

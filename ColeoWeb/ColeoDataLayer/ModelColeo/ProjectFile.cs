@@ -12,23 +12,16 @@ namespace ColeoDataLayer.ModelColeo
     using System;
     using System.Collections.Generic;
     
-    public partial class Note
+    public partial class ProjectFile
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Note()
-        {
-            this.IssueFiles = new HashSet<IssueFile>();
-        }
-    
         public int Id { get; set; }
-        public string Description { get; set; }
-        public System.DateTime DateCreated { get; set; }
-        public int IdIssue { get; set; }
         public string IdUser { get; set; }
+        public System.DateTime DateCreated { get; set; }
+        public int IdProject { get; set; }
+        public int IdFile { get; set; }
     
         public virtual AspNetUser AspNetUser { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IssueFile> IssueFiles { get; set; }
-        public virtual Issue Issue { get; set; }
+        public virtual File File { get; set; }
+        public virtual Project Project { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace ColeoDataLayer.ModelColeo
         public int Id { get; set; }
         public string IdUser { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public Nullable<int> IdIssue { get; set; }
+        public int IdIssue { get; set; }
         public Nullable<int> IdNote { get; set; }
         public int IdFile { get; set; }
     
