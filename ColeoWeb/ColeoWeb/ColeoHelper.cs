@@ -6,20 +6,60 @@ using System.Web;
 
 namespace ColeoWeb
 {
-    public static class ColeoHelper 
+    public static class ColeoHelper
     {
-        #region Set/get files in session 
-
-        public static void SetFiles(this HttpSessionStateBase session, List<FileViewModel> files)
+        private class FileSession
         {
-            session["files"] = files;
+            public int Destination { get; set; }
+            public List<FileViewModel> Files { get; set; }
         }
 
-        public static List<FileViewModel> GetFiles(this HttpSessionStateBase session)
+        public enum FileType
         {
-            return (List<FileViewModel>)session["files"];
+            None = 0,
+            Project = 1,
+            Issue = 2,
+            Note = 3
         }
 
-        #endregion 
+        #region Set/get files in session
+
+        public static void SetFiles(this HttpSessionStateBase session, List<FileViewModel> files, int type)
+        {
+            FileSession file = new FileSession()
+            {
+                Destination = type,
+                Files = files
+            };
+
+            if (session["files"] == null)
+            {
+                session["files"] = new List<FileSession>();
+            }
+            ((List<FileSession>)session["files"]).Add(file);
+        }
+
+        public static List<FileViewModel> GetFiles(this HttpSessionStateBase session, int type)
+        {
+            List<FileViewModel> result = new List<FileViewModel>();
+            List<FileSession> sessionFiles = (List<FileSession>)session["files"];
+            if (sessionFiles != null)
+            {
+                sessionFiles.Where(d => d.Destination == type).ToList().ForEach(x => x.Files.ForEach(y => result.Add(y)));
+            }
+            
+            return result;
+        }
+
+        public static void CleanFiles(this HttpSessionStateBase session,int type)
+        {
+            List<FileSession> sessionFiles = (List<FileSession>)session["files"];
+            if (sessionFiles != null)
+            {
+                sessionFiles.RemoveAll(d => d.Destination == type);
+            }
+        }
+
+        #endregion
     }
 }

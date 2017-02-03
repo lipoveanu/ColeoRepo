@@ -22,8 +22,11 @@ namespace ColeoWeb.Controllers
             List<FileViewModel> result = new List<FileViewModel>();
             foreach (var file in fileUpload)
             {
-                string fileName = file.FileName;
-                string UploadPath = "F:/01 COLEO/Images/";
+                string fileName = string.Format("{0}{1}.{2}", 
+                                                Path.GetFileNameWithoutExtension(file.FileName), 
+                                                Guid.NewGuid().ToString(), 
+                                                file.FileName.Split('.').Last());
+                string UploadPath = "D:/01 COLEO/Images/";
 
                 if (file.ContentLength == 0)
                     continue;
@@ -35,7 +38,7 @@ namespace ColeoWeb.Controllers
 
                     try
                     {
-                        file.SaveAs(path); //TODO: save with unique name 
+                        file.SaveAs(path); 
                     }
                     catch (Exception)
                     {
@@ -46,7 +49,7 @@ namespace ColeoWeb.Controllers
                     result.Add(new FileViewModel
                     {
                         LocalName = file.FileName,
-                        Name = file.FileName,
+                        Name = fileName,
                         Extension = file.ContentType
                     });
                 }

@@ -53,9 +53,10 @@ namespace ColeoDataLayer.ModelColeo
                 var project = context.Projects
                     .Include(d => d.AspNetUser)
                     .Include(d => d.UserProjects)
-                    .Include(d => d.ProjectFiles)
+                    .Include(d => d.ProjectFiles.Select(x => x.File))
                     .Include(d => d.File)
                     .FirstOrDefault(d => d.Id == id);
+
 
                 project.UsersProject = project.UserProjects.ToList();
 
@@ -117,7 +118,7 @@ namespace ColeoDataLayer.ModelColeo
                 }
 
                 //File ????
-                List<int> dbProjectFile = project.ProjectFiles.Select(x => x.Id).ToList();
+                List<int> dbProjectFile = project.ProjectFiles.Select(x => x.IdFile).ToList();
                 List<int> modelProjectFile = entity.ProjectFiles.Select(x => x.IdFile).ToList();
 
                 modelProjectFile.ForEach(x =>

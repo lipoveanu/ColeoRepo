@@ -43,7 +43,7 @@ namespace ColeoWeb.Controllers
                     StatusName = x.ProjectStatus.Name,
                     ParentName = x.Project1 != null ? x.Project1.Name : string.Empty
                 })
-                .OrderBy(x=>x.Order)
+                .OrderBy(x => x.Order)
                 .ToList();
             var propertyInfo = typeof(ProjectViewModel).GetProperty(order);
 
@@ -81,7 +81,7 @@ namespace ColeoWeb.Controllers
             foreach (var item in test)
             {
                 vm.Reorder(item.Key, item.Value);
-           
+
             }
         }
 
@@ -115,15 +115,16 @@ namespace ColeoWeb.Controllers
         {
             if (ModelState.IsValid)
             {
-                //get files from session and save each file in file table 
-                List<FileViewModel> files = Session.GetFiles();
-                if (files != null)
+                List<FileViewModel> files = Session.GetFiles((int)ColeoWeb.ColeoHelper.FileType.Project);
+                if (files.Any())
                 {
                     foreach (var item in files)
                     {
                         item.SetDataToModel();
                         item.Save();
                     }
+                    // remove from session to prevent re-adding
+                    Session.CleanFiles((int)ColeoWeb.ColeoHelper.FileType.Project);
                 }
                 // set the list to model
                 model.Files = files;
@@ -160,7 +161,7 @@ namespace ColeoWeb.Controllers
             // save files in the desired location 
             List<FileViewModel> files = new FileController().Upload(fileUpload);
 
-            Session.SetFiles(files);
+            Session.SetFiles(files, (int)ColeoWeb.ColeoHelper.FileType.Project);
 
             // fie uploaded event assyncron true
             return Json("");

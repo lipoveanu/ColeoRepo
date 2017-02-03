@@ -20,6 +20,9 @@
             uploadAsync: false,
             maxFileCount: 10,
             overwriteInitial: false,
+            filedeleted: function (event, key) {
+                console.log('Key = ' + key);
+            }
             //maxFileSize: 100200
         });
             @*.fileinput({
@@ -30,5 +33,9 @@
             maxFilePreviewSize: 10240,
             allowedFileTypes: ['image', 'html', 'text', 'video', 'audio', 'flash', 'object']
         });*@
+    });
+
+    $('#select-file').on('fileclear', function (event, key) {
+        console.log('Key = ' + key);
     });
 </script>

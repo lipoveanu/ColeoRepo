@@ -131,6 +131,13 @@
         <div class="col-md-12">
             <div class="tile " style="background-color: #@Model.Color;">
                 @Html.Partial("SelectFile")
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div title="Save" type="submit" class="glyphicon-md pull-right add-tooltip" onclick="SaveItem();">
+                            <span class="glyphicon glyphicon-floppy-save"></span> Save
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
