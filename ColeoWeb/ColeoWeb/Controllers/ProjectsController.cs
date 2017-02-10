@@ -167,5 +167,13 @@ namespace ColeoWeb.Controllers
             return Json("");
         }
 
+        [HttpPost]
+        public JsonResult DeleteFile(int id)
+        {
+           
+            return Json("");
+        }
+
+
     }
 }

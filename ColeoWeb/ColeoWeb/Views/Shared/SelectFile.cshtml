@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Select file";
 }
 
@@ -17,15 +16,13 @@
             uploadUrl: '@Url.Action("UploadFile")',
             //maxFilePreviewSize: 100200,
             multiple: true,
-            uploadAsync: false,
+            uploadAsync: true,
             maxFileCount: 10,
             overwriteInitial: false,
-            filedeleted: function (event, key) {
-                console.log('Key = ' + key);
-            }
-            //maxFileSize: 100200
+            initialPreviewAsData: true,
+            showUploadedThumbs: false,
         });
-            @*.fileinput({
+        @*.fileinput({
             showCaption: true,
             showPreview: true,
             showUploadedThumbs: false,
@@ -35,7 +32,7 @@
         });*@
     });
 
-    $('#select-file').on('fileclear', function (event, key) {
+    $('#select-file').on('filesuccessremove', function (event, key) {
         console.log('Key = ' + key);
     });
 </script>
