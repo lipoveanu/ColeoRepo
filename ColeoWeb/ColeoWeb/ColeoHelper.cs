@@ -8,6 +8,12 @@ namespace ColeoWeb
 {
     public static class ColeoHelper
     {
+        public class OrderItem
+        {
+            public int Key { get; set; }
+            public int Value { get; set; }
+        }
+
         private class FileSession
         {
             public int Destination { get; set; }

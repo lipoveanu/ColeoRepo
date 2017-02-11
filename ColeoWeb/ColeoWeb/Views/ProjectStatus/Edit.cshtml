@@ -9,19 +9,7 @@
 @Styles.Render("~/Content/pick-a-color-1.2.3.min.css")
 
 
-
-
-<div class="row tile>
-
-    <div class="col-md-12">
-        <div class="form-group row">
-            <div class="col-md-12">
-                <h3 class="title"> Edit Project Status </h3>
-            </div>
-        </div>
-    </div>
-
-    @using (Ajax.BeginForm("Edit",
+@using (Ajax.BeginForm("Edit",
                         null,
                         new AjaxOptions
                         {
@@ -31,60 +19,66 @@
                             OnSuccess = "ShowList(divList); AlertSave();"
                         },
                         new { @id = "edit-project-status" }))
-    {
-        @Html.AntiForgeryToken()
+{
+    @Html.AntiForgeryToken()
 
-        <input type="hidden" id="Id" name="Id" value="@Model.Id" />
-        @Html.HiddenFor(m => m.Order);
+    @Html.HiddenFor(m => m.Id);
+    @*<input type="hidden" id="Id" name="Id" value="@Model.Id" />*@
+    @Html.HiddenFor(m => m.Order);
+    <div>
+        <div class="col-md-6">
+            <div class="tile " style="background-color: #@Model.Color;">
 
-        <div class="col-md-12">
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.Name)</h4>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <h4> @Html.DisplayNameFor(m => m.Name)</h4>
+                    </div>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.IsDefault)</h4>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <h4> @Html.DisplayNameFor(m => m.IsDefault)</h4>
+                    </div>
+                    <div class="col-md-7">
+                        @{
+                            @Html.CheckBoxFor(m => m.IsDefault, new { @id = "is-default" });
+                        }
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @{
-                        @Html.CheckBoxFor(m => m.IsDefault, new { @id = "is-default" });
-                    }
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-4">
-                    <h4> @Html.DisplayNameFor(m => m.Color)</h4>
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <h4> @Html.DisplayNameFor(m => m.Color)</h4>
+                    </div>
+                    <div class="col-md-7">
+                        @Html.TextBoxFor(m => m.Color, new { @class = "pick-a-color form-control", @name = "color-picker" })
+                    </div>
                 </div>
-                <div class="col-md-7">
-                    @Html.TextBoxFor(m => m.Color, new { @class = "pick-a-color form-control", @name = "color-picker" })
-                </div>
-            </div>
 
-            <div class="form-group row">
-                <div class="col-md-12">
-                    &nbsp;
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        &nbsp;
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-12">
-                    <div type="submit" class="glyphicon-md pull-right" onclick="SaveItem();">
-                        <span class="glyphicon glyphicon-floppy-save"></span> Save
+                <div class="form-group row">
+                    <div class="col-md-12">
+                        <div title="Save" type="submit" class="glyphicon-md pull-right add-tooltip" onclick="SaveItem();">
+                            <span class="glyphicon glyphicon-floppy-save"></span> Save
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <input id="item-save" type="submit" class="hidden">
-    }
 
-</div>
+        <input id="item-save" type="submit" class="hidden">
+
+    </div>
+}
+
 
 
 

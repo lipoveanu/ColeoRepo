@@ -81,6 +81,11 @@ namespace ColeoWeb.Models
             return ProjectStatus.Delete(id);
         }
 
+        public void Reorder(int id, int order)
+        {
+            ProjectStatus.Reorder(id, order);
+        }
+
         #endregion Methods
     }
 }

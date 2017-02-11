@@ -68,13 +68,8 @@ namespace ColeoWeb.Controllers
             return List("Order");
         }
 
-        public class Test
-        {
-            public int Key { get; set; }
-            public int Value { get; set; }
-        }
-
-        public void Reorder(List<Test> test)
+        
+        public void Reorder(List<ColeoWeb.ColeoHelper.OrderItem> test)
         {
             ProjectViewModel vm = new ProjectViewModel();
 

@@ -95,7 +95,6 @@ namespace ColeoDataLayer.ModelColeo
             }
         }
 
-
         public static void Update(ProjectStatus entity)
         {
             using (ColeoEntities context = new ColeoEntities())
@@ -157,9 +156,45 @@ namespace ColeoDataLayer.ModelColeo
             }
         }
 
+        public static void Reorder(int id, int order)
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                ProjectStatus project = context.ProjectStatuses.FirstOrDefault(x => x.Id == id);
+
+                if (project == null)
+                {
+                    return;
+                }
+
+                project.DisplayOrder = order;
+
+                context.SaveChanges();
+            }
+        }
+
+        public static int GetOrder()
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                int result = 1;
+
+                ProjectStatus project = context.ProjectStatuses.OrderByDescending(x => x.DisplayOrder).FirstOrDefault();
+
+                if (project != null)
+                {
+                    result = project.DisplayOrder + 1;
+                }
+
+                return result;
+            }
+        }
+
         public override string ToString()
         {
             return string.Format("{0};  {1};  {2};", Name, DisplayOrder.ToString(), IsDefault.ToString());
         }
+
+
     }
 }

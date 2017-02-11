@@ -4,47 +4,37 @@
     ViewBag.Title = "List";
 }
 
-@*<div class="row">
-    <div class="col-md-12">
-        <div class="form-group row">
-            <div class="col-md-12">
-                <h2> <span> Project Statuses </span> </h2>
-            </div>
-        </div>
-    </div>
-</div>*@
 
-<div class="row">
-    
+<div class="form-group">
     @using (Html.BeginForm("List", "ProjectStatus", FormMethod.Post))
     {
         @Html.AntiForgeryToken()
 
         <div class="col-md-12">
-            <div id="sortable" class="form-group row">
+            <div id="sortable" class="form-group row split-columns">
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
                     {
-                        <li class="sortable-item tile tile-push" style="background-color: #@Model[i].Color;">
-                            @Html.HiddenFor(m => m[i].Id)
-                            @Html.HiddenFor(m => m[i].Name)
-                            @Html.HiddenFor(m => m[i].Color)
-                            @Html.HiddenFor(m => m[i].IsDefault)
-                            @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
-                            <h3 class="title"> @Html.DisplayFor(m => m[i].Name) </h3>
+                    <li class="sortable-item tile" style="background-color: #@Model[i].Color;">
+                        @Html.HiddenFor(m => m[i].Id)
+                        @Html.HiddenFor(m => m[i].Name)
+                        @Html.HiddenFor(m => m[i].Color)
+                        @Html.HiddenFor(m => m[i].IsDefault)
+                        @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
 
-                            <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
-                                <span class="glyphicon glyphicon-edit"></span> &nbsp;
-                            </div>
-                            <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
-                                <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
-                            </div>
-                        </li>
+                        <h4 title="@Model[i].Name" class="title tile-describe add-tooltip"> @Html.DisplayFor(m => m[i].Name) </h4>
+
+                        <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
+                            <span class="glyphicon glyphicon-edit"></span> &nbsp;
+                        </div>
+                        <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
+                            <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
+                        </div>
+                    </li>
                     }
                 </ul>
             </div>
-        </div>
-        <div class="col-md-12">
+
             <div class="form-group row">
                 <ul class="sortable-list">
                     <li class="tile tile-push">
@@ -52,17 +42,17 @@
                             <span class="glyphicon glyphicon-plus"></span> &nbsp;
                         </div>
                     </li>
+                    <li id="return-to-list" class="tile tile-push" onclick="location.href='@Url.Action("Index", "ProjectStatus" )'">
+                        <div title="Return to projects list" class="glyphicon-lg add-tooltip">
+                            <span class="glyphicon glyphicon-menu-right"></span> &nbsp;
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
-        <div class="form-group row">
-            <div class="col-md-2">
-                <input type="submit" id="list-save" class="hidden" value="Save">
-            </div>
-        </div>
-
+        <input type="submit" id="list-save" class="hidden" value="Save">
     }
-    
+
 </div>
 
 

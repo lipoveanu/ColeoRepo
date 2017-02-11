@@ -56,6 +56,17 @@ namespace ColeoWeb.Controllers
             }
         }
 
+        public void Reorder(List<ColeoWeb.ColeoHelper.OrderItem> test)
+        {
+            ProjectStatusViewModel vm = new ProjectStatusViewModel();
+
+            foreach (var item in test)
+            {
+                vm.Reorder(item.Key, item.Value);
+
+            }
+        }
+
         public PartialViewResult Edit(int? id)
         {
             // creation of project status not allowed if not logged in 

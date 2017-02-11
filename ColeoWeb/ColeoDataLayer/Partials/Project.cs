@@ -229,11 +229,6 @@ namespace ColeoDataLayer.ModelColeo
             }
         }
 
-        public override string ToString()
-        {
-            return Name;
-        }
-
         public static int GetOrder()
         {
             using (ColeoEntities context = new ColeoEntities())
@@ -249,6 +244,11 @@ namespace ColeoDataLayer.ModelColeo
 
                 return result;
             }
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
