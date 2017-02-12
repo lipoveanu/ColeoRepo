@@ -1,0 +1,12 @@
+﻿@model ColeoWeb.Models.FileViewModel
+
+<li class="tile">
+    @using (Html.BeginCollectionItem("File"))
+    {
+        @Html.HiddenFor(m => Model.Id)
+        <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model.Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
+            <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
+        </div>
+        <h5 class="title"> @Html.DisplayFor(m => Model.LocalName) </h5>
+    }
+</li>
