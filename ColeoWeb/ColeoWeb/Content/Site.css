@@ -54,20 +54,19 @@ $display_font_family:*/
     padding: 15px;
     margin-bottom: 10px;
     margin-top: 10px;
-    
 }
 
-.tile-push{
+.tile-push {
     cursor: pointer;
 }
 
-.tile-push:hover {
-    -webkit-transform: scale(1.05);
-}
+    .tile-push:hover {
+        -webkit-transform: scale(1.05);
+    }
 
-.tile-push:active {
-    -webkit-transform: scale(1);
-}
+    .tile-push:active {
+        -webkit-transform: scale(1);
+    }
 
 .tile .title {
     margin-top: 0px;
@@ -78,7 +77,6 @@ $display_font_family:*/
     font-family: 'Open Sans', "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
     line-height: 1.5em;
     font-weight: 300;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -95,9 +93,9 @@ $display_font_family:*/
     padding: 2px;
 }
 
-.glyphicon-md:hover{
-    -webkit-transform: scale(1.05);
-}
+    .glyphicon-md:hover {
+        -webkit-transform: scale(1.05);
+    }
 
 .glyphicon-lg {
     font-size: 1.9em;
@@ -140,4 +138,156 @@ $display_font_family:*/
 
 .sortable-list {
     padding: 0px;
-}    
+}
+
+
+/*Hover Fall Effect*/
+.fall-item {
+    /*width: 100%;*/
+    height: auto;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    padding: 5px;
+}
+
+    .fall-item .mask, .fall-item .content {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+    }
+
+    .fall-item .fall-content { /*was img*/
+        display: block;
+        position: relative;
+        width: 100%;
+        height: auto;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .fall-item .mask h3 {
+        text-transform: uppercase;
+        color: #fff;
+        text-align: center;
+        position: relative;
+        padding: 10px;
+        background: rgba(0, 0, 0,0.8);
+        margin: 0 0 0 0;
+    }
+
+    .fall-item p {
+        font-style: italic;
+        position: relative;
+        color: #fff;
+        padding: 10px 20px 20px;
+        text-align: center;
+    }
+
+.fall-effect .mask {
+    background-color: rgba(255, 255, 255, 0.7);
+    top: -200px;
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    opacity: 0;
+    -webkit-transition: all 0.3s ease-out 0.5s;
+    -moz-transition: all 0.3s ease-out 0.5s;
+    -o-transition: all 0.3s ease-out 0.5s;
+    -ms-transition: all 0.3s ease-out 0.5s;
+    transition: all 0.3s ease-out 0.5s;
+}
+
+    .fall-effect .mask h3 {
+        -webkit-transform: translateY(-200px);
+        -moz-transform: translateY(-200px);
+        -o-transform: translateY(-200px);
+        -ms-transform: translateY(-200px);
+        transform: translateY(-200px);
+        -webkit-transition: all 0.2s ease-in-out 0.1s;
+        -moz-transition: all 0.2s ease-in-out 0.1s;
+        -o-transition: all 0.2s ease-in-out 0.1s;
+        -ms-transition: all 0.2s ease-in-out 0.1s;
+        transition: all 0.2s ease-in-out 0.1s;
+    }
+
+.fall-effect p {
+    color: #333;
+    -webkit-transform: translateY(-200px);
+    -moz-transform: translateY(-200px);
+    -o-transform: translateY(-200px);
+    -ms-transform: translateY(-200px);
+    transform: translateY(-200px);
+    -webkit-transition: all 0.2s ease-in-out 0.2s;
+    -moz-transition: all 0.2s ease-in-out 0.2s;
+    -o-transition: all 0.2s ease-in-out 0.2s;
+    -ms-transition: all 0.2s ease-in-out 0.2s;
+    transition: all 0.2s ease-in-out 0.2s;
+}
+
+/*.fall-effect div.glyphicon-md {
+    -webkit-transform: translateY(-200px);
+    -moz-transform: translateY(-200px);
+    -o-transform: translateY(-200px);
+    -ms-transform: translateY(-200px);
+    transform: translateY(-200px);
+    -webkit-transition: all 0.2s ease-in-out 0.3s;
+    -moz-transition: all 0.2s ease-in-out 0.3s;
+    -o-transition: all 0.2s ease-in-out 0.3s;
+    -ms-transition: all 0.2s ease-in-out 0.3s;
+    transition: all 0.2s ease-in-out 0.3s;
+}*/
+
+.fall-effect:hover .mask {
+    -ms-filter: "progid: DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    opacity: 1;
+    top: 0px;
+    -webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    transition-delay: 0s;
+}
+
+.fall-effect .mask:hover h3 {
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transition-delay: 0.4s;
+    -moz-transition-delay: 0.4s;
+    -o-transition-delay: 0.4s;
+    -ms-transition-delay: 0.4s;
+    transition-delay: 0.4s;
+}
+
+.fall-effect:hover p {
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transition-delay: 0.2s;
+    -moz-transition-delay: 0.2s;
+    -o-transition-delay: 0.2s;
+    -ms-transition-delay: 0.2s;
+    transition-delay: 0.2s;
+}
+
+/*.fall-effect:hover a.btn {
+    -webkit-transform: translateY(0px);
+    -moz-transform: translateY(0px);
+    -o-transform: translateY(0px);
+    -ms-transform: translateY(0px);
+    transform: translateY(0px);
+    -webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    transition-delay: 0s;
+}*/
