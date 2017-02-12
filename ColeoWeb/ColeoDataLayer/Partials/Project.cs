@@ -136,16 +136,16 @@ namespace ColeoDataLayer.ModelColeo
                         projectFile.AspNetUser = context.AspNetUsers.FirstOrDefault(y => y.Id == projectFile.IdUser);
                     }
                 });
-                dbProjectFile.ForEach(x =>
-                {
-                    // if deleted 
-                    if (!modelProjectFile.Contains(x))
-                    {
-                        var filesProject = context.ProjectFiles
-                                                    .FirstOrDefault(y => y.IdFile == x && y.IdProject == entity.Id);
-                        context.ProjectFiles.Remove(filesProject);
-                    }
-                });
+                //dbProjectFile.ForEach(x =>
+                //{
+                //    // if deleted 
+                //    if (!modelProjectFile.Contains(x))
+                //    {
+                //        var filesProject = context.ProjectFiles
+                //                                    .FirstOrDefault(y => y.IdFile == x && y.IdProject == entity.Id);
+                //        context.ProjectFiles.Remove(filesProject);
+                //    }
+                //});
 
                 //Project users
                 List<string> dbUserProject = project.UserProjects.Select(x => x.IdUser).ToList();

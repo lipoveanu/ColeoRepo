@@ -26,7 +26,7 @@ namespace ColeoWeb.Controllers
                                                 Path.GetFileNameWithoutExtension(file.FileName), 
                                                 Guid.NewGuid().ToString(), 
                                                 file.FileName.Split('.').Last());
-                string UploadPath = "D:/01 COLEO/Images/";
+                string UploadPath = "F:/01 COLEO/Images/";
 
                 if (file.ContentLength == 0)
                     continue;

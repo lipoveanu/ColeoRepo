@@ -297,11 +297,11 @@
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
     <Content Include="Views\Projects\ProjectFilters.cshtml" />
     <Content Include="Views\Shared\SelectFile.cshtml" />
-    <Content Include="Views\Shared\ListFile.cshtml" />
+    <Content Include="Views\Shared\LisFile.cshtml" />
+    <Content Include="Views\Shared\ItemFile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\File\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
