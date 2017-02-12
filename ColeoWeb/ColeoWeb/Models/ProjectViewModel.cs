@@ -140,7 +140,6 @@ namespace ColeoWeb.Models
                     }));
             }
 
-            //TODO: add table FilesProject  and set data to model
             Model.ProjectFiles = new List<ProjectFile>();
             if (Files != null)
             {
@@ -163,9 +162,11 @@ namespace ColeoWeb.Models
             Color = Model.Color;
             IdUserCreated = Model.IdUserCreated;
             IdStatus = Model.IdStatus;
-            NameUserCreated = Model.AspNetUser.UserName;
             Order = Model.DisplayOrder;
             IdParentProject = Model.IdParentProject;
+            NameUserCreated = Model.AspNetUser.UserName;
+            StatusName = Model.ProjectStatus.Name;
+            ParentName = Model.Project1 != null ? Model.Project1.Name : string.Empty;
 
             if (Model.UsersProject.Any())
             {

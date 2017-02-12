@@ -22,8 +22,12 @@ namespace ColeoDataLayer.ModelColeo
                 context.Configuration.LazyLoadingEnabled = false;
 
                 return context.Projects
-                    .Include(x => x.ProjectStatus)
-                    .Include(x => x.Project1)
+                    .Include(d => d.AspNetUser)
+                    .Include(d => d.UserProjects)
+                    .Include(d => d.ProjectStatus)
+                    .Include(d => d.Project1)
+                    .Include(d => d.ProjectFiles.Select(x => x.File))
+                    .Include(d => d.File)
                     .ToList();
             }
         }
@@ -53,6 +57,8 @@ namespace ColeoDataLayer.ModelColeo
                 var project = context.Projects
                     .Include(d => d.AspNetUser)
                     .Include(d => d.UserProjects)
+                    .Include(d => d.ProjectStatus)
+                    .Include(d => d.Project1)
                     .Include(d => d.ProjectFiles.Select(x => x.File))
                     .Include(d => d.File)
                     .FirstOrDefault(d => d.Id == id);

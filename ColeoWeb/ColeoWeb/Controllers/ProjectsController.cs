@@ -40,6 +40,7 @@ namespace ColeoWeb.Controllers
                     DateCreated = x.DateCreated,
                     IdUserCreated = x.IdUserCreated,
                     OrderStatus = x.ProjectStatus.DisplayOrder,
+                    NameUserCreated = x.AspNetUser.UserName,
                     StatusName = x.ProjectStatus.Name,
                     ParentName = x.Project1 != null ? x.Project1.Name : string.Empty
                 })
