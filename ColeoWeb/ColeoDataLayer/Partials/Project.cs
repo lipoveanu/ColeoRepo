@@ -109,6 +109,13 @@ namespace ColeoDataLayer.ModelColeo
                 project.DateCreated = entity.DateCreated;
                 project.Color = entity.Color;
 
+                //Status
+                ProjectStatus projectStatus = context.ProjectStatuses.FirstOrDefault(x => x.Id == entity.IdStatus);
+                if (projectStatus != null)
+                {
+                    project.ProjectStatus = projectStatus;
+                }
+
                 //Parent project
                 Project projectParent = context.Projects.FirstOrDefault(x => x.Id == entity.IdParentProject);
                 if (projectParent != null)
@@ -123,7 +130,7 @@ namespace ColeoDataLayer.ModelColeo
                     project.AspNetUser = userCreated;
                 }
 
-                //File ????
+                //File
                 List<int> dbProjectFile = project.ProjectFiles.Select(x => x.IdFile).ToList();
                 List<int> modelProjectFile = entity.ProjectFiles.Select(x => x.IdFile).ToList();
 

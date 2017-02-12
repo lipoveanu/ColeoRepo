@@ -106,6 +106,8 @@ namespace ColeoWeb.Models
 
             UsersProject.ForEach(x => x.InitializeData());
 
+            Files = new List<FileViewModel>();
+
             Order = Project.GetOrder();
         }
 

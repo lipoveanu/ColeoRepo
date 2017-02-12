@@ -15,21 +15,17 @@
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
                     {
-                        <div class="col-xs-6 col-sm-3 col-md-4 padding-3" >
+                        <div class="col-xs-6 col-sm-3 col-md-4 padding-3" onclick="MarkCurrent(this);">
                             <li class="sortable-item fall-item fall-effect" style="background-color: #@Model[i].Color;">
+
                                 @Html.HiddenFor(m => m[i].Id, new { @class = "id" })
                                 @Html.HiddenFor(m => m[i].Name)
-                                @*@Html.HiddenFor(m => m[i].Description)
-                                    @Html.HiddenFor(m => m[i].DateCreated)
-                                    @Html.HiddenFor(m => m[i].Color)
-                                    @Html.HiddenFor(m => m[i].UserCreated)
-                                    @Html.HiddenFor(m => m[i].IdStatus)
-                                    @Html.HiddenFor(m => m[i].OrderStatus)
-                                    @Html.HiddenFor(m => m[i].UsersProject)
-                                    @Html.HiddenFor(m => m[i].IdParentProject)
-                                    @Html.HiddenFor(m => m[i].OrderParent)*@
-
+                                @Html.HiddenFor(m => m[i].DateCreated)
+                                @Html.HiddenFor(m => m[i].NameUserCreated)
+                                @Html.HiddenFor(m => m[i].StatusName)
+                                @Html.HiddenFor(m => m[i].ParentName)
                                 @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
+
                                 <div class="fall-content">
                                     <h3 title="@Model[i].Name">
                                         @Html.DisplayFor(m => m[i].Name) <br /><br /><br /><br /><br /><br /><br />
@@ -60,7 +56,7 @@
                 </ul>
             </div>
             <div class="form-group row">
-                <ul class="sortable-list">
+                <ul class="padding-3">
                     <li class="tile tile-push">
                         <div title="Add" class="glyphicon-lg add-tooltip" onclick="ShowEdit(null, divEdit);">
                             <span class="glyphicon glyphicon-plus"></span> &nbsp;
@@ -86,7 +82,10 @@
         AddTooltip();
     });
 
-
+    function MarkCurrent(elem) {
+        $(".sortable-list").children().css("transform", "");
+        $(elem).css("transform", "scale(0.95,0.95)");
+    }
 
 </script>
 
