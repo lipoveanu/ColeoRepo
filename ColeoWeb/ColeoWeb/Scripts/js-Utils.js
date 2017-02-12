@@ -146,10 +146,11 @@ function SetUpSortable() {
             //console.log(ui);
         },
         start: function (event, ui) {
+            ui.item.find(".mask").hide();
         },
         stop: function (event, ui) {
             ui.item.addClass("animated flipInY");
-
+            ui.item.find(".mask").show();
         }
     });
 }

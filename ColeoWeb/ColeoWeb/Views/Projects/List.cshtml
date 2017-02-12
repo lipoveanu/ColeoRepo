@@ -15,7 +15,7 @@
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
                     {
-                        <div class="col-xs-6 col-sm-3 col-md-4" style="padding:3px;">
+                        <div class="col-xs-6 col-sm-3 col-md-4 padding-3" >
                             <li class="sortable-item fall-item fall-effect" style="background-color: #@Model[i].Color;">
                                 @Html.HiddenFor(m => m[i].Id, new { @class = "id" })
                                 @Html.HiddenFor(m => m[i].Name)
