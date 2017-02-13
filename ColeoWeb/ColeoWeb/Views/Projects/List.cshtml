@@ -41,7 +41,7 @@
                                         <h5>@Html.DisplayNameFor(m => m[i].StatusName): @Html.DisplayFor(m => m[i].StatusName)</h5>
                                         <h5>@Html.DisplayNameFor(m => m[i].ParentName): @Html.DisplayFor(m => m[i].ParentName)</h5>
                                     </p>
-                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="goToByScroll('edit-project');FadeToogle(); ShowEdit(@Model[i].Id, divEdit);">
+                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="goToByScroll('edit-project'); ShowFunctionals(); ShowEdit(@Model[i].Id, divEdit);">
                                         <span class="glyphicon glyphicon-edit"></span> &nbsp;
                                     </div>
                                     <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
@@ -68,19 +68,7 @@
         AddTooltip();
     });
 
-    function MarkCurrent(elem) {
-        $(".sortable-list").children().css("transform", "");
-        $(elem).css("transform", "scale(0.95,0.95)");
-    }
-
-    function goToByScroll(id){
-        // Remove "link" from the ID
-        id = id.replace("link", "");
-        // Scroll
-        $('html,body').animate({
-            scrollTop: $("#"+id).offset().top},
-            'slow');
-    }
+    
 
 
 </script>

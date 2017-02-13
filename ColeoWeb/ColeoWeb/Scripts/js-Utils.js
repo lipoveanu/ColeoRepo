@@ -237,3 +237,36 @@ function InitializeSortable2Lists() {
 }
 
 
+function ShowFunctionals() {
+    $("#functional-buttons").show();
+}
+
+function FadeToogle() {
+
+    if (divList.hasClass('slideInDown')) {
+        divList.removeClass("slideInDown").addClass("slideOutUp");
+        divEdit.removeClass("animated slideInUp slideInDown").addClass("animated slideInUp");
+    }
+    else {
+
+        divList.removeClass("slideOutUp").addClass("slideInDown");
+        divEdit.removeClass("animated slideInUp slideInDown").addClass("animated slideInDown");
+    }
+
+    divList.fadeToggle(500);
+}
+
+function MarkCurrent(elem) {
+    $(".sortable-list").children().css("transform", "");
+    $(elem).css("transform", "scale(0.95,0.95)");
+}
+
+function goToByScroll(id) {
+    // Remove "link" from the ID
+    id = id.replace("link", "");
+    // Scroll
+    $('html,body').animate({
+        scrollTop: $("#" + id).offset().top
+    },
+        'slow');
+}

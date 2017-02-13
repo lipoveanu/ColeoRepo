@@ -11,10 +11,10 @@
 
     <div class="row padding-3">
         <div id="functional-buttons" class="col-md-12" style="display:none;">
-            <div type="button" class="btn btn-lg btn-round" onclick="FadeToogle2();">
+            <div type="button" class="btn btn-lg btn-round" onclick="FadeToogle();">
                 <span class="glyphicon glyphicon-th-list"></span>
             </div>
-            <div type="button" class="btn btn-lg btn-round" href="#edit-project" onclick="goToByScroll('edit-project'); ShowEdit(null, divEdit); FadeToogle(); ">
+            <div type="button" class="btn btn-lg btn-round" href="#edit-project" onclick="goToByScroll('edit-project'); ShowEdit(null, divEdit); ShowFunctionals(); ">
                 <span class="glyphicon glyphicon-plus"></span>
             </div>
             <div type="button" class="btn btn-lg btn-round" onclick="location.href='@Url.Action("Index", "Projects" )'">
@@ -53,34 +53,7 @@
         alertDeleteSucces = 'Project deleted!';
         alertDeleteError = 'The project that you attempted to delete it is attached to an issue therefore it can not be deleted!';
 
-        //$("#functional-buttons").hide();
-
     });
 
-    function FadeToogle() {
-        //$("#list-project").removeClass('animated slideInRight slideInLeft');//.addClass("animated slideInRight");
-        //$("#list-project").hide();
-        //$("#edit-project").removeClass('animated slideInRight slideInLeft').addClass("animated slideInLeft");;//.addClass("animated slideInRight");
-        //if (!$("#edit-project").hasClass('col-md-offset-2')) {
-        //    $("#edit-project").addClass('col-md-offset-2');
-        //}
-        $("#functional-buttons").show();
-
-    }
-
-    function FadeToogle2() {
-
-        if ($("#list-project").hasClass('slideInDown')) {
-            $("#list-project").removeClass("slideInDown").addClass("slideOutUp");
-            $("#edit-project").removeClass("animated slideInUp slideInDown").addClass("animated slideInUp");
-        }
-        else {
-
-            $("#list-project").removeClass("slideOutUp").addClass("slideInDown");
-            $("#edit-project").removeClass("animated slideInUp slideInDown").addClass("animated slideInDown");
-        }
-
-        $("#list-project").fadeToggle(500);
-    }
-
+    
 </script>
