@@ -15,7 +15,7 @@
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
                     {
-                        <div class="col-xs-6 col-sm-3 col-md-4 padding-3" onclick="MarkCurrent(this);">
+                        <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 padding-3" onclick="MarkCurrent(this);">
                             <li class="sortable-item fall-item fall-effect" style="background-color: #@Model[i].Color;">
 
                                 @Html.HiddenFor(m => m[i].Id, new { @class = "id" })
@@ -41,7 +41,7 @@
                                         <h5>@Html.DisplayNameFor(m => m[i].StatusName): @Html.DisplayFor(m => m[i].StatusName)</h5>
                                         <h5>@Html.DisplayNameFor(m => m[i].ParentName): @Html.DisplayFor(m => m[i].ParentName)</h5>
                                     </p>
-                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="FadeToogle();ShowEdit(@Model[i].Id, divEdit);">
+                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="goToByScroll('edit-project');FadeToogle(); ShowEdit(@Model[i].Id, divEdit);">
                                         <span class="glyphicon glyphicon-edit"></span> &nbsp;
                                     </div>
                                     <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
@@ -73,7 +73,15 @@
         $(elem).css("transform", "scale(0.95,0.95)");
     }
 
-    
+    function goToByScroll(id){
+        // Remove "link" from the ID
+        id = id.replace("link", "");
+        // Scroll
+        $('html,body').animate({
+            scrollTop: $("#"+id).offset().top},
+            'slow');
+    }
+
 
 </script>
 

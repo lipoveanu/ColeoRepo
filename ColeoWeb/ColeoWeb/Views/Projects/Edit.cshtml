@@ -29,7 +29,7 @@
     @Html.HiddenFor(m => m.IdUserCreated);
     
     <div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="tile " style="background-color: #@Model.Color;">
                 <div class=" form-group row">
                     <div class="col-md-3">
@@ -113,7 +113,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             @Html.Partial("UsersProject")
             <div class="form-group row">
                 <div class="col-md-12">
@@ -124,12 +124,7 @@
             </div>
         </div>
 
-        <input id="item-save" type="submit" class="hidden">
-
-    </div>
-
-    <div>
-        <div class="col-md-12">
+        <div class="col-md-4">
             <div class="tile " style="background-color: #@Model.Color;">
                 @Html.Partial("SelectFile")
                 <div class="form-group row">
@@ -142,7 +137,11 @@
                 @Html.Partial("LisFile", @Model.Files)
             </div>
         </div>
+
+        <input id="item-save" type="submit" class="hidden">
+
     </div>
+
 }
 
 

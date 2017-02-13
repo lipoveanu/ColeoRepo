@@ -3,12 +3,18 @@
 }
 
 <div>
+    <div class="row">
+        <div id="list-project" class="col-md-8 col-md-offset-2 animated slideInDown">
+            @{Html.RenderAction("List");}
+        </div>
+    </div>
+
     <div class="row padding-3">
         <div id="functional-buttons" class="col-md-12" style="display:none;">
             <div type="button" class="btn btn-lg btn-round" onclick="FadeToogle2();">
                 <span class="glyphicon glyphicon-th-list"></span>
             </div>
-            <div type="button" class="btn btn-lg btn-round" onclick="FadeToogle(); ShowEdit(null, divEdit);">
+            <div type="button" class="btn btn-lg btn-round" href="#edit-project" onclick="goToByScroll('edit-project'); ShowEdit(null, divEdit); FadeToogle(); ">
                 <span class="glyphicon glyphicon-plus"></span>
             </div>
             <div type="button" class="btn btn-lg btn-round" onclick="location.href='@Url.Action("Index", "Projects" )'">
@@ -19,11 +25,9 @@
                 </div>*@
         </div>
     </div>
+    
     <div class="row">
-        <div id="list-project" class="col-md-8 col-md-offset-2">
-            @{Html.RenderAction("List");}
-        </div>
-        <div id="edit-project" class="col-md-8">
+        <div id="edit-project" name="edit-project" class="col-md-12">
 
         </div>
     </div>
@@ -54,30 +58,30 @@
     });
 
     function FadeToogle() {
+        $("#list-project").removeClass('animated slideInRight slideInLeft');//.addClass("animated slideInRight");
+        //$("#list-project").hide();
+        $("#edit-project").removeClass('animated slideInRight slideInLeft').addClass("animated slideInLeft");;//.addClass("animated slideInRight");
         //if (!$("#edit-project").hasClass('col-md-offset-2')) {
-            $("#edit-project").removeClass('animated slideInRight slideInLeft');//.addClass("animated slideInRight");
+        //    $("#edit-project").addClass('col-md-offset-2');
         //}
         $("#functional-buttons").show();
-        
+
     }
 
     function FadeToogle2() {
 
+        if ($("#list-project").hasClass('slideInDown')) {
 
-        if ($("#edit-project").hasClass('col-md-offset-2')) {
-            
-            $("#list-project").removeClass("slideOutLeft");
-            $("#list-project").addClass("slideInLeft");
+            $("#list-project").removeClass("slideInDown").addClass("slideOutUp");
 
-            $("#edit-project").removeClass('col-md-offset-2');
-            $("#edit-project").removeClass("animated slideInRight slideInLeft").addClass("animated slideInRight");
+            $("#edit-project").removeClass("col-md-offset-2 animated slideInRight slideInLeft");
+            $("#edit-project").addClass("animated slideInRight");
         }
         else {
-            
-            $("#list-project").removeClass("slideInLeft");
-            $("#list-project").addClass("slideOutLeft");
 
-            $("#edit-project").addClass('col-md-offset-2');
+            $("#list-project").removeClass("slideOutUp").addClass("slideInDown");
+
+            //$("#edit-project").addClass('col-md-offset-2');
             $("#edit-project").removeClass("animated slideInRight slideInLeft").addClass("animated slideInLeft");
         }
 
