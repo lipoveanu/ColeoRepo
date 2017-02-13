@@ -52,8 +52,8 @@ $display_font_family:*/
     box-sizing: border-box;
     background: #f5db80;
     padding: 15px;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin-bottom: 3px;
+    margin-top: 3px;
 }
 
 .tile-push {
@@ -117,7 +117,7 @@ $display_font_family:*/
     border: solid 1px #f5db80;
     padding: 15px;
     box-sizing: border-box;
-    margin-top: 10px;
+    margin-top: 3px;
     margin-left: 5px;
     margin-right: 5px;
 }
@@ -250,11 +250,11 @@ $display_font_family:*/
     -o-transform: translateY(0px);
     -ms-transform: translateY(0px);
     transform: translateY(0px);
-    -webkit-transition-delay: 0.2s;
-    -moz-transition-delay: 0.2s;
-    -o-transition-delay: 0.2s;
-    -ms-transition-delay: 0.2s;
-    transition-delay: 0.2s;
+    -webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    transition-delay: 0s;
 }
 
 .fall-effect:hover p {
@@ -263,9 +263,32 @@ $display_font_family:*/
     -o-transform: translateY(0px);
     -ms-transform: translateY(0px);
     transform: translateY(0px);
-    -webkit-transition-delay: 0.2s;
-    -moz-transition-delay: 0.2s;
-    -o-transition-delay: 0.2s;
-    -ms-transition-delay: 0.2s;
-    transition-delay: 0.2s;
+    -webkit-transition-delay: 0s;
+    -moz-transition-delay: 0s;
+    -o-transition-delay: 0s;
+    -ms-transition-delay: 0s;
+    transition-delay: 0s;
+}
+
+
+/*Round buttons*/
+.btn-round {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.btn-round.btn-lg {
+    width: 48px;
+    height: 48px;
+}
+
+.btn-round.btn-sm {
+    width: 34px;
+    height: 34px;
+}
+
+.btn-round.btn-xs {
+    width: 24px;
+    height: 24px;
 }

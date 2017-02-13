@@ -97,7 +97,7 @@ function ShowEdit(id, elem) {
         url: urlEdit,
         data: { 'id': id },
         success: function (response) {
-            divList.removeClass().addClass("col-md-4");
+            divList.removeClass().addClass("col-md-4 animated slideInLeft");
             elem.html(response);
             //divList.find('.sortable-list').find('.sortable-item').removeClass('animated flipInY');
         },

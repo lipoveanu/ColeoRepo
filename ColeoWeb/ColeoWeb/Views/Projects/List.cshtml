@@ -10,7 +10,7 @@
     {
         @Html.AntiForgeryToken()
 
-        <div class="">
+        <div class="col-md-12">
             <div id="sortable" class="form-group row">
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
@@ -41,11 +41,11 @@
                                         <h5>@Html.DisplayNameFor(m => m[i].StatusName): @Html.DisplayFor(m => m[i].StatusName)</h5>
                                         <h5>@Html.DisplayNameFor(m => m[i].ParentName): @Html.DisplayFor(m => m[i].ParentName)</h5>
                                     </p>
-                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
+                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);FadeToogle();">
                                         <span class="glyphicon glyphicon-edit"></span> &nbsp;
                                     </div>
                                     <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
-                                        <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
+                                        <span class="glyphicon glyphicon-trash"></span> &nbsp;
                                     </div>
                                 </div>
 
@@ -53,20 +53,6 @@
                         </div>
 
                     }
-                </ul>
-            </div>
-            <div class="form-group row">
-                <ul class="padding-3">
-                    <li class="tile tile-push">
-                        <div title="Add" class="glyphicon-lg add-tooltip" onclick="ShowEdit(null, divEdit);">
-                            <span class="glyphicon glyphicon-plus"></span> &nbsp;
-                        </div>
-                    </li>
-                    <li id="return-to-list" class="tile tile-push" onclick="location.href='@Url.Action("Index", "Projects" )'">
-                        <div title="Return to projects list" class="glyphicon-lg add-tooltip">
-                            <span class="glyphicon glyphicon-menu-right"></span> &nbsp;
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -85,6 +71,14 @@
     function MarkCurrent(elem) {
         $(".sortable-list").children().css("transform", "");
         $(elem).css("transform", "scale(0.95,0.95)");
+    }
+
+    function FadeToogle() {
+        $("#list-project").fadeToggle(100);
+        if (! $("#edit-project").hasClass('col-md-offset-2')) {
+            $("#edit-project").addClass('col-md-offset-2');
+        }
+        $("#functional-buttons").show();
     }
 
 </script>
