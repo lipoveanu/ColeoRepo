@@ -41,7 +41,7 @@
                                         <h5>@Html.DisplayNameFor(m => m[i].StatusName): @Html.DisplayFor(m => m[i].StatusName)</h5>
                                         <h5>@Html.DisplayNameFor(m => m[i].ParentName): @Html.DisplayFor(m => m[i].ParentName)</h5>
                                     </p>
-                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);FadeToogle();">
+                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="FadeToogle();ShowEdit(@Model[i].Id, divEdit);">
                                         <span class="glyphicon glyphicon-edit"></span> &nbsp;
                                     </div>
                                     <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
@@ -73,13 +73,7 @@
         $(elem).css("transform", "scale(0.95,0.95)");
     }
 
-    function FadeToogle() {
-        $("#list-project").fadeToggle(100);
-        if (! $("#edit-project").hasClass('col-md-offset-2')) {
-            $("#edit-project").addClass('col-md-offset-2');
-        }
-        $("#functional-buttons").show();
-    }
+    
 
 </script>
 

@@ -8,26 +8,26 @@
             <div type="button" class="btn btn-lg btn-round" onclick="FadeToogle2();">
                 <span class="glyphicon glyphicon-th-list"></span>
             </div>
-            <div type="button" class="btn btn-lg btn-round" onclick="ShowEdit(null, divEdit);">
+            <div type="button" class="btn btn-lg btn-round" onclick="FadeToogle(); ShowEdit(null, divEdit);">
                 <span class="glyphicon glyphicon-plus"></span>
             </div>
             <div type="button" class="btn btn-lg btn-round" onclick="location.href='@Url.Action("Index", "Projects" )'">
                 <span class="glyphicon glyphicon-th-large"></span>
             </div>
             @*<div type="button" class="btn btn-danger btn-lg btn-round pull-right" onclick="location.href='@Url.Action("Index", "Projects" )'">
-                <span class="glyphicon glyphicon-remove"></span>
-            </div>*@
+                    <span class="glyphicon glyphicon-remove"></span>
+                </div>*@
         </div>
     </div>
     <div class="row">
         <div id="list-project" class="col-md-8 col-md-offset-2">
             @{Html.RenderAction("List");}
         </div>
-        <div id="edit-project" class="col-md-8 col-md-offset-2">
+        <div id="edit-project" class="col-md-8">
 
         </div>
     </div>
-    
+
 </div>
 
 
@@ -53,19 +53,34 @@
 
     });
 
+    function FadeToogle() {
+        //if (!$("#edit-project").hasClass('col-md-offset-2')) {
+            $("#edit-project").removeClass('animated slideInRight slideInLeft');//.addClass("animated slideInRight");
+        //}
+        $("#functional-buttons").show();
+        
+    }
+
     function FadeToogle2() {
-        
-        
+
+
         if ($("#edit-project").hasClass('col-md-offset-2')) {
-            $("#edit-project").removeClass('col-md-offset-2');
+            
             $("#list-project").removeClass("slideOutLeft");
             $("#list-project").addClass("slideInLeft");
+
+            $("#edit-project").removeClass('col-md-offset-2');
+            $("#edit-project").removeClass("animated slideInRight slideInLeft").addClass("animated slideInRight");
         }
         else {
-            $("#edit-project").addClass('col-md-offset-2');
+            
             $("#list-project").removeClass("slideInLeft");
             $("#list-project").addClass("slideOutLeft");
+
+            $("#edit-project").addClass('col-md-offset-2');
+            $("#edit-project").removeClass("animated slideInRight slideInLeft").addClass("animated slideInLeft");
         }
+
         $("#list-project").fadeToggle(500);
     }
 
