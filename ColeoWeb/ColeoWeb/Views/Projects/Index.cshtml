@@ -58,9 +58,9 @@
     });
 
     function FadeToogle() {
-        $("#list-project").removeClass('animated slideInRight slideInLeft');//.addClass("animated slideInRight");
+        //$("#list-project").removeClass('animated slideInRight slideInLeft');//.addClass("animated slideInRight");
         //$("#list-project").hide();
-        $("#edit-project").removeClass('animated slideInRight slideInLeft').addClass("animated slideInLeft");;//.addClass("animated slideInRight");
+        //$("#edit-project").removeClass('animated slideInRight slideInLeft').addClass("animated slideInLeft");;//.addClass("animated slideInRight");
         //if (!$("#edit-project").hasClass('col-md-offset-2')) {
         //    $("#edit-project").addClass('col-md-offset-2');
         //}
@@ -71,18 +71,13 @@
     function FadeToogle2() {
 
         if ($("#list-project").hasClass('slideInDown')) {
-
             $("#list-project").removeClass("slideInDown").addClass("slideOutUp");
-
-            $("#edit-project").removeClass("col-md-offset-2 animated slideInRight slideInLeft");
-            $("#edit-project").addClass("animated slideInRight");
+            $("#edit-project").removeClass("animated slideInUp slideInDown").addClass("animated slideInUp");
         }
         else {
 
             $("#list-project").removeClass("slideOutUp").addClass("slideInDown");
-
-            //$("#edit-project").addClass('col-md-offset-2');
-            $("#edit-project").removeClass("animated slideInRight slideInLeft").addClass("animated slideInLeft");
+            $("#edit-project").removeClass("animated slideInUp slideInDown").addClass("animated slideInDown");
         }
 
         $("#list-project").fadeToggle(500);
