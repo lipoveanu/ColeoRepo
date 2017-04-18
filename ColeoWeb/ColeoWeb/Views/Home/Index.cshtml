@@ -10,23 +10,57 @@
 <div>
     <div class="form-group row">
         <div class="col-md-12">
-            <div class="form-group row split-columns">
+            <div class="form-group row">
                 <ul>
-                    <li class="tile">
-                        <h4 title="Projects" class="title tile-describe add-tooltip"> Projects </h4>
-                        <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="location.href='@Url.Action("Index","Projects")'">
-                            <span class="glyphicon glyphicon-edit"></span> &nbsp;
-                        </div>
-                    </li>
-                    <li class="tile">
-                        <h4 title="Project statuses" class="title tile-describe add-tooltip"> Project statuses </h4>
-                        <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="location.href='@Url.Action("Index","ProjectStatus")'">
-                            <span class="glyphicon glyphicon-edit"></span> &nbsp;
-                        </div>
-                    </li>
+                    <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 padding-3" onclick="MarkCurrent(this);">
+                        <li class="fall-item fall-effect" style="background-color: #f5db80;">
+                            <div class="fall-content">
+                                <h4 title="Projects" class="title tile-describe add-tooltip">
+                                    Projects <br /><br /><br /><br /><br /><br /><br>
+                                </h4>
+                            </div>
+
+                            <div class="mask">
+                                <h3>Projects</h3>
+                                <p>
+                                    <h5>Add and follow your projects </h5>
+                                </p>
+                                <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="location.href='@Url.Action("Index","Projects")'">
+                                    <span class="glyphicon glyphicon-edit"></span> &nbsp;
+                                </div>
+                            </div>
+                        </li>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 padding-3" onclick="MarkCurrent(this);">
+                        <li class="fall-item fall-effect" style="background-color: #f5db80;">
+                            <div class="fall-content">
+                                <h4 title="Project statuses" class="title tile-describe add-tooltip">
+                                    Project statuses <br /><br /><br /><br /><br /><br /><br>
+                                </h4>
+                            </div>
+
+                            <div class="mask">
+                                <h3>Projects</h3>
+                                <p>
+                                    <h5>Add and follow your project statuses </h5>
+                                </p>
+                                <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="location.href='@Url.Action("Index","ProjectStatus")'">
+                                    <span class="glyphicon glyphicon-edit"></span> &nbsp;
+                                </div>
+                            </div>
+                        </li>
+                    </div>
                 </ul>
-                
+
             </div>
         </div>
     </div>
 </div>
+
+<script>
+
+    $(document).ready(function () {
+        AddTooltip();
+    });
+
+</script>

@@ -10,24 +10,24 @@
     </div>
 
     <div class="row padding-3">
-        <div id="functional-buttons" class="col-md-12" style="display:none;">
+        <div id="functional-buttons" class="col-md-8 col-md-offset-2" style="display:none;">
             <div type="button" class="btn btn-lg btn-round" onclick="FadeToogle();">
                 <span class="glyphicon glyphicon-th-list"></span>
             </div>
-            <div type="button" class="btn btn-lg btn-round" href="#edit-project" onclick="goToByScroll('edit-project'); ShowEdit(null, divEdit); ShowFunctionals(); ">
+            <div type="button" class="btn btn-lg btn-round" href="#edit-project" onclick="goToByScroll('functional-buttons'); ShowEdit(null, divEdit); ShowFunctionals(); ">
                 <span class="glyphicon glyphicon-plus"></span>
             </div>
             <div type="button" class="btn btn-lg btn-round" onclick="location.href='@Url.Action("Index", "Projects" )'">
                 <span class="glyphicon glyphicon-th-large"></span>
             </div>
             @*<div type="button" class="btn btn-danger btn-lg btn-round pull-right" onclick="location.href='@Url.Action("Index", "Projects" )'">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </div>*@
+                <span class="glyphicon glyphicon-remove"></span>
+            </div>*@
         </div>
     </div>
     
     <div class="row">
-        <div id="edit-project" name="edit-project" class="col-md-12">
+        <div id="edit-project" name="edit-project" class="col-md-8 col-md-offset-2">
 
         </div>
     </div>
@@ -49,6 +49,7 @@
         urlOrder = '@Url.Action("Reorder", "Projects")';
         divList = $('#list-project');
         divEdit = $('#edit-project');
+        divFunc = $('#functional-buttons');
 
         alertDeleteSucces = 'Project deleted!';
         alertDeleteError = 'The project that you attempted to delete it is attached to an issue therefore it can not be deleted!';

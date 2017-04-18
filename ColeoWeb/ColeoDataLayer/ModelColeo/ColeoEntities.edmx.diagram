@@ -6,23 +6,23 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c977208658db4fc1b3bccd86c524391d" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="ColeoModel.AspNetRole" Width="1.5" PointX="1.5" PointY="2.75" />
-        <EntityTypeShape EntityType="ColeoModel.AspNetUserClaim" Width="1.5" PointX="6" PointY="28.625" />
-        <EntityTypeShape EntityType="ColeoModel.AspNetUserLogin" Width="1.5" PointX="6" PointY="2.125" />
+        <EntityTypeShape EntityType="ColeoModel.AspNetUserClaim" Width="1.5" PointX="6" PointY="1.25" />
+        <EntityTypeShape EntityType="ColeoModel.AspNetUserLogin" Width="1.5" PointX="6" PointY="29" />
         <EntityTypeShape EntityType="ColeoModel.AspNetUser" Width="1.5" PointX="3.75" PointY="0.75" />
         <EntityTypeShape EntityType="ColeoModel.File" Width="1.5" PointX="0.75" PointY="11.875" />
         <EntityTypeShape EntityType="ColeoModel.History" Width="1.5" PointX="10.5" PointY="11.875" />
-        <EntityTypeShape EntityType="ColeoModel.IssueFile" Width="1.5" PointX="6" PointY="11.625" />
-        <EntityTypeShape EntityType="ColeoModel.IssueLabel" Width="1.5" PointX="10.5" PointY="15.125" />
         <EntityTypeShape EntityType="ColeoModel.Issue" Width="1.5" PointX="8.25" PointY="9.625" />
+        <EntityTypeShape EntityType="ColeoModel.IssueFile" Width="1.5" PointX="6" PointY="11.625" />
+        <EntityTypeShape EntityType="ColeoModel.IssueLabel" Width="1.5" PointX="10.5" PointY="16.125" />
         <EntityTypeShape EntityType="ColeoModel.IssueStatus" Width="1.5" PointX="6" PointY="18" />
         <EntityTypeShape EntityType="ColeoModel.Label" Width="1.5" PointX="5.25" PointY="22.5" />
         <EntityTypeShape EntityType="ColeoModel.Note" Width="1.5" PointX="13.5" PointY="11.875" />
-        <EntityTypeShape EntityType="ColeoModel.Priority" Width="1.5" PointX="6" PointY="5" />
+        <EntityTypeShape EntityType="ColeoModel.Priority" Width="1.5" PointX="6" PointY="15.5" />
         <EntityTypeShape EntityType="ColeoModel.Project" Width="1.5" PointX="3" PointY="10.75" />
         <EntityTypeShape EntityType="ColeoModel.ProjectStatus" Width="1.5" PointX="0.75" PointY="8" />
-        <EntityTypeShape EntityType="ColeoModel.RelatedIssue" Width="1.5" PointX="10.5" PointY="18.75" />
-        <EntityTypeShape EntityType="ColeoModel.Reproducibility" Width="1.5" PointX="6" PointY="25.5" />
-        <EntityTypeShape EntityType="ColeoModel.Severity" Width="1.5" PointX="6" PointY="15.5" />
+        <EntityTypeShape EntityType="ColeoModel.RelatedIssue" Width="1.5" PointX="10.5" PointY="21.5" />
+        <EntityTypeShape EntityType="ColeoModel.Reproducibility" Width="1.5" PointX="6" PointY="5" />
+        <EntityTypeShape EntityType="ColeoModel.Severity" Width="1.5" PointX="6" PointY="25.5" />
         <EntityTypeShape EntityType="ColeoModel.UserProject" Width="1.5" PointX="5.25" PointY="8.125" />
         <AssociationConnector Association="ColeoModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="ColeoModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
@@ -36,18 +36,18 @@
         <AssociationConnector Association="ColeoModel.FK_IssueFile_IdFile" />
         <AssociationConnector Association="ColeoModel.FK_Project_IdFile" />
         <AssociationConnector Association="ColeoModel.FK_History_IdIssue" />
-        <AssociationConnector Association="ColeoModel.FK_IssueFile_IdIssue" />
-        <AssociationConnector Association="ColeoModel.FK_IssueFile_IdNote" />
-        <AssociationConnector Association="ColeoModel.FK_IssueLabel_IdIssue" />
-        <AssociationConnector Association="ColeoModel.FK_IssueLabel_IdLabel" />
         <AssociationConnector Association="ColeoModel.FK_Issue_IdPriority" />
         <AssociationConnector Association="ColeoModel.FK_Issue_IdProject" />
         <AssociationConnector Association="ColeoModel.FK_Issue_IdReproducibility" />
         <AssociationConnector Association="ColeoModel.FK_Issue_IdSeverity" />
         <AssociationConnector Association="ColeoModel.FK_Issue_IdStatus" />
+        <AssociationConnector Association="ColeoModel.FK_IssueFile_IdIssue" />
+        <AssociationConnector Association="ColeoModel.FK_IssueLabel_IdIssue" />
         <AssociationConnector Association="ColeoModel.FK_Note_IdIssue" />
         <AssociationConnector Association="ColeoModel.FK_RelatedIssue_IdIssue" />
         <AssociationConnector Association="ColeoModel.FK_RelatedIssue_IdIssueRelated" />
+        <AssociationConnector Association="ColeoModel.FK_IssueFile_IdNote" />
+        <AssociationConnector Association="ColeoModel.FK_IssueLabel_IdLabel" />
         <AssociationConnector Association="ColeoModel.FK_Label_IdProject" />
         <AssociationConnector Association="ColeoModel.FK_Project_IdParentProject" />
         <AssociationConnector Association="ColeoModel.FK_Project_IdStatus" />

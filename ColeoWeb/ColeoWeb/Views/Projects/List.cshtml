@@ -41,7 +41,7 @@
                                         <h5>@Html.DisplayNameFor(m => m[i].StatusName): @Html.DisplayFor(m => m[i].StatusName)</h5>
                                         <h5>@Html.DisplayNameFor(m => m[i].ParentName): @Html.DisplayFor(m => m[i].ParentName)</h5>
                                     </p>
-                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="goToByScroll('edit-project'); ShowFunctionals(); ShowEdit(@Model[i].Id, divEdit);">
+                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="goToByScroll('functional-buttons'); ShowFunctionals(); ShowEdit(@Model[i].Id, divEdit);">
                                         <span class="glyphicon glyphicon-edit"></span> &nbsp;
                                     </div>
                                     <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
@@ -67,9 +67,6 @@
         SetUpSortable();
         AddTooltip();
     });
-
-    
-
 
 </script>
 

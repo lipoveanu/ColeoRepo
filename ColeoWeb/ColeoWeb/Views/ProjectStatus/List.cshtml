@@ -11,44 +11,42 @@
         @Html.AntiForgeryToken()
 
         <div class="col-md-12">
-            <div id="sortable" class="form-group row split-columns">
+            <div id="sortable" class="form-group row">
                 <ul class="sortable-list">
                     @for (var i = 0; i < Model.Count; i++)
                     {
-                    <li class="sortable-item tile" style="background-color: #@Model[i].Color;">
-                        @Html.HiddenFor(m => m[i].Id)
-                        @Html.HiddenFor(m => m[i].Name)
-                        @Html.HiddenFor(m => m[i].Color)
-                        @Html.HiddenFor(m => m[i].IsDefault)
-                        @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
+                        <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 padding-3" onclick="MarkCurrent(this);">
+                            <li class="sortable-item fall-item fall-effect" style="background-color: #@Model[i].Color;">
+                                @Html.HiddenFor(m => m[i].Id)
+                                @Html.HiddenFor(m => m[i].Name)
+                                @Html.HiddenFor(m => m[i].Color)
+                                @Html.HiddenFor(m => m[i].IsDefault)
+                                @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
 
-                        <h4 title="@Model[i].Name" class="title tile-describe add-tooltip"> @Html.DisplayFor(m => m[i].Name) </h4>
+                                <div class="fall-content">
+                                    <h3 title="@Model[i].Name">
+                                        @Html.DisplayFor(m => m[i].Name) <br /><br /><br /><br /><br />
+                                    </h3>
+                                </div>
 
-                        <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="ShowEdit(@Model[i].Id, divEdit);">
-                            <span class="glyphicon glyphicon-edit"></span> &nbsp;
+                                <div class="mask">
+                                    <h3>@Html.DisplayFor(m => m[i].Name)</h3>
+                                    <p>
+                                        <h5>@Html.DisplayNameFor(m => m[i].IsDefault): @(Model[i].IsDefault == true ? "Yes" : "No")</h5>
+                                    </p>
+                                    <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="goToByScroll('functional-buttons'); ShowFunctionals(); ShowEdit(@Model[i].Id, divEdit);">
+                                        <span class="glyphicon glyphicon-edit"></span> &nbsp;
+                                    </div>
+                                    <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
+                                        <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
+                                    </div>
+                                </div>
+                            </li>
                         </div>
-                        <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
-                            <span class="glyphicon glyphicon-floppy-remove"></span> &nbsp;
-                        </div>
-                    </li>
                     }
                 </ul>
             </div>
 
-            <div class="form-group row">
-                <ul class="sortable-list">
-                    <li class="tile tile-push">
-                        <div title="Add" class="glyphicon-lg add-tooltip" onclick="ShowEdit(null, divEdit);">
-                            <span class="glyphicon glyphicon-plus"></span> &nbsp;
-                        </div>
-                    </li>
-                    <li id="return-to-list" class="tile tile-push" onclick="location.href='@Url.Action("Index", "ProjectStatus" )'">
-                        <div title="Return to projects list" class="glyphicon-lg add-tooltip">
-                            <span class="glyphicon glyphicon-menu-right"></span> &nbsp;
-                        </div>
-                    </li>
-                </ul>
-            </div>
         </div>
         <input type="submit" id="list-save" class="hidden" value="Save">
     }

@@ -97,7 +97,6 @@ function ShowEdit(id, elem) {
         url: urlEdit,
         data: { 'id': id },
         success: function (response) {
-            divList.removeClass("col-md-8 col-md-offset-2").addClass("col-md-12 animated");
             elem.html(response);
             //divList.find('.sortable-list').find('.sortable-item').removeClass('animated flipInY');
         },
@@ -246,11 +245,13 @@ function FadeToogle() {
     if (divList.hasClass('slideInDown')) {
         divList.removeClass("slideInDown").addClass("slideOutUp");
         divEdit.removeClass("animated slideInUp slideInDown").addClass("animated slideInUp");
+        divFunc.removeClass("animated slideInUp slideInDown").addClass("animated slideInUp");
     }
     else {
 
         divList.removeClass("slideOutUp").addClass("slideInDown");
-        divEdit.removeClass("animated slideInUp slideInDown").addClass("animated slideInDown");
+        divEdit.removeClass("animated slideInUp slideInDown").addClass("animated slideInUp");
+        divFunc.removeClass("animated slideInUp slideInDown").addClass("animated slideInUp");
     }
 
     divList.fadeToggle(500);

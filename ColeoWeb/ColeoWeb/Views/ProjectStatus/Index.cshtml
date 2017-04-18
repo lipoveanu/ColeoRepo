@@ -6,15 +6,38 @@
 
 @Scripts.Render("~/Scripts/js-ProjectStatus.js")
 
-<div id="list-projectstatus" class="col-md-8 col-md-offset-2">
-    @{Html.RenderAction("List");}
+
+<div>
+    <div class="row">
+        <div id="list-projectstatus" class="col-md-8 col-md-offset-2 animated slideInDown">
+            @{Html.RenderAction("List");}
+        </div>
+    </div>
+
+    <div class="row padding-3">
+        <div id="functional-buttons" class="col-md-8 col-md-offset-2" style="display:none;">
+            <div type="button" class="btn btn-lg btn-round" onclick="FadeToogle();">
+                <span class="glyphicon glyphicon-th-list"></span>
+            </div>
+            <div type="button" class="btn btn-lg btn-round" href="#edit-projectstatus" onclick="goToByScroll('functional-buttons'); ShowEdit(null, divEdit); ShowFunctionals(); ">
+                <span class="glyphicon glyphicon-plus"></span>
+            </div>
+            <div type="button" class="btn btn-lg btn-round" onclick="location.href='@Url.Action("Index", "ProjectStatus" )'">
+                <span class="glyphicon glyphicon-th-large"></span>
+            </div>
+            @*<div type="button" class="btn btn-danger btn-lg btn-round pull-right" onclick="location.href='@Url.Action("Index", "Projects" )'">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </div>*@
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="edit-projectstatus" name="edit-projectstatus" class="col-md-8 col-md-offset-2">
+
+        </div>
+    </div>
+
 </div>
-
-
-<div id="edit-projectstatus" class="col-md-8">
-
-</div>
-
 
 <script>
 
@@ -30,6 +53,7 @@
 
         divList = $('#list-projectstatus');
         divEdit = $('#edit-projectstatus');
+        divFunc = $('#functional-buttons');
 
         alertDeleteSucces = 'Project status deleted!';
         alertDeleteError = 'The project status that you attempted to delete it is attached to a project therefore it can not be deleted!';

@@ -21,7 +21,8 @@ namespace ColeoDataLayer.ModelColeo
                         Id = d.Id,
                         Name = d.Name,
                         Color = d.Color,
-                        DisplayOrder = d.DisplayOrder
+                        DisplayOrder = d.DisplayOrder,
+                        IsDefault = d.IsDefault
                     })
                     .OrderBy(x => x.DisplayOrder)
                     .ToList();

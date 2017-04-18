@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\01 COLEO\ColeoRepo.git\trunk\ColeoWeb\ColeoDataLayer\ModelColeo\ColeoEntities.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\01 COLEO\GitHub\trunk\ColeoWeb\ColeoDataLayer\ModelColeo\ColeoEntities.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.
