@@ -202,19 +202,32 @@ namespace ColeoDataLayer.ModelColeo
                     return false;
                 }
 
-                // do not delete project status if it is attached to any projects
-                var issue = context.Issues.FirstOrDefault(x => x.IdProject == id);
-
-                if (issue != null)
+                // do not delete project if it is attached as parent project to any other project
+                var parentProject = context.Projects.FirstOrDefault(x => x.IdParentProject == id);
+                if (parentProject != null)
                 {
                     return false;
                 }
 
+                // delete all users attached to project
                 var usersProject = context.UserProjects.Where(x => x.IdProject == id);
-
                 if (usersProject != null)
                 {
                     context.UserProjects.RemoveRange(usersProject);
+                }
+
+                // delete files attached to project
+                var filesProject = context.ProjectFiles.Where(x => x.IdProject == id);
+                if (filesProject.Any())
+                {
+                    foreach (var item in filesProject)
+                    {
+                        // if the file is deleted phisicaly
+                        if (File.Delete(item.IdFile, context))
+                        {
+                            context.ProjectFiles.Remove(item);
+                        }
+                    }
                 }
 
                 context.Projects.Remove(project);
@@ -222,6 +235,35 @@ namespace ColeoDataLayer.ModelColeo
                 context.SaveChanges();
 
                 return true;
+            }
+        }
+
+        public static bool DeleteFile(int id)
+        {
+            using (ColeoEntities context = new ColeoEntities())
+            {
+                // delete file attached to project
+                var fileProject = context.ProjectFiles.FirstOrDefault(x => x.IdFile == id);
+                if (fileProject == null)
+                {
+                    return false;
+                }
+
+                // if the file is deleted phisicaly then delete it from the DB
+                // send the context to delete the file from Files table before deleting it's reference in the ProjectFiles table
+                // make only one savechanges 
+                if (File.Delete(fileProject.IdFile, context))
+                {
+                    context.ProjectFiles.Remove(fileProject);
+                    context.SaveChanges();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
             }
         }
 

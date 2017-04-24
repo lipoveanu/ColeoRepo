@@ -151,6 +151,11 @@ namespace ColeoWeb.Controllers
 
         }
 
+        public bool DeleteFile(int id)
+        {
+            return Project.DeleteFile(id);
+        }
+
         [HttpPost]
         public JsonResult UploadFile(IEnumerable<HttpPostedFileBase> fileUpload)
         {
@@ -160,13 +165,6 @@ namespace ColeoWeb.Controllers
             Session.SetFiles(files, (int)ColeoWeb.ColeoHelper.FileType.Project);
 
             // fie uploaded event assyncron true
-            return Json("");
-        }
-
-        [HttpPost]
-        public JsonResult DeleteFile(int id)
-        {
-           
             return Json("");
         }
 

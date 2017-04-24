@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ColeoWeb.Models.FileViewModel>
+
+<div id="list-files">
+    <div class="col-md-12">
+        <div class="form-group row">
+            <ul>
+                @{
+                    foreach (var item in Model)
+                    {
+                        @Html.Partial("ItemFile", item);
+                    }
+                }
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        //set up notifications defaults
+        NotificationDefaults();
+
+        alertDeleteSucces = 'File deleted!';
+        alertDeleteError = 'The file was not deleted!';
+    });
+
+</script>

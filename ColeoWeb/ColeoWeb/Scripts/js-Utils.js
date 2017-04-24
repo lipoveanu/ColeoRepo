@@ -131,6 +131,26 @@ function DeleteItem(id, elemList, elemEdit, alertDeleteSucces, alertDeleteError)
     });
 }
 
+function DeleteFile(id, alertDeleteSucces, alertDeleteError) {
+    $.ajax({
+        type: "POST",
+        data: { id: id },
+        url: urlDeleteFile,
+        success: function (response) {
+
+            SaveItem();
+            if (response == 'True') {
+                NotificationAlert(alertDeleteSucces);
+            } else {
+                NotificationAlert(alertDeleteError, "danger", false, 2000);
+            }
+
+        },
+        error: function () {
+            alert("error occured");
+        }
+    });
+}
 
 function SetUpSortable() {
 

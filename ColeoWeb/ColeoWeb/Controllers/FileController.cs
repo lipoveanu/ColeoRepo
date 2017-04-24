@@ -5,11 +5,16 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using ColeoDataLayer.ModelColeo;
+using System.Configuration;
 
 namespace ColeoWeb.Controllers
 {
     public class FileController : Controller
     {
+        // get the file path from web config
+        private string UploadPath = ConfigurationManager.AppSettings["FilePath"].ToString();
+
         // GET: File
         public ActionResult Index()
         {
@@ -22,11 +27,10 @@ namespace ColeoWeb.Controllers
             List<FileViewModel> result = new List<FileViewModel>();
             foreach (var file in fileUpload)
             {
-                string fileName = string.Format("{0}{1}.{2}", 
-                                                Path.GetFileNameWithoutExtension(file.FileName), 
-                                                Guid.NewGuid().ToString(), 
+                string fileName = string.Format("{0}{1}.{2}",
+                                                Path.GetFileNameWithoutExtension(file.FileName),
+                                                Guid.NewGuid().ToString(),
                                                 file.FileName.Split('.').Last());
-                string UploadPath = "F:/01 COLEO/Images/";
 
                 if (file.ContentLength == 0)
                     continue;
@@ -38,11 +42,11 @@ namespace ColeoWeb.Controllers
 
                     try
                     {
-                        file.SaveAs(path); 
+                        file.SaveAs(path);
                     }
                     catch (Exception)
                     {
-                        
+
                         throw;
                     }
 
@@ -57,5 +61,6 @@ namespace ColeoWeb.Controllers
 
             return result;
         }
+
     }
 }
