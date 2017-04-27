@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/02/2016 14:42:48
--- Generated from EDMX file: C:\Users\glipoveanu.BELERSOFT\Documents\Visual Studio 2013\Projects\ColeoWeb\ColeoDataLayer\ModelColeo\ColeoEntities.edmx
+-- Date Created: 04/27/2017 14:34:58
+-- Generated from EDMX file: D:\01 COLEO\GitHub\trunk\ColeoWeb\ColeoDataLayer\ModelColeo\ColeoEntities.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -84,16 +84,25 @@ IF OBJECT_ID(N'[dbo].[FK_Note_IdUser]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Note] DROP CONSTRAINT [FK_Note_IdUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Project_IdFile]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Project] DROP CONSTRAINT [FK_Project_IdFile];
+    ALTER TABLE [dbo].[Projects] DROP CONSTRAINT [FK_Project_IdFile];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Project_IdParentProject]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Project] DROP CONSTRAINT [FK_Project_IdParentProject];
+    ALTER TABLE [dbo].[Projects] DROP CONSTRAINT [FK_Project_IdParentProject];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Project_IdStatus]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Project] DROP CONSTRAINT [FK_Project_IdStatus];
+    ALTER TABLE [dbo].[Projects] DROP CONSTRAINT [FK_Project_IdStatus];
 GO
 IF OBJECT_ID(N'[dbo].[FK_Project_IdUserCreated]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Project] DROP CONSTRAINT [FK_Project_IdUserCreated];
+    ALTER TABLE [dbo].[Projects] DROP CONSTRAINT [FK_Project_IdUserCreated];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProjectFile_IdFile]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProjectFiles] DROP CONSTRAINT [FK_ProjectFile_IdFile];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProjectFile_IdProject]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProjectFiles] DROP CONSTRAINT [FK_ProjectFile_IdProject];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ProjectFile_IdUser]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ProjectFiles] DROP CONSTRAINT [FK_ProjectFile_IdUser];
 GO
 IF OBJECT_ID(N'[dbo].[FK_RelatedIssue_IdIssue]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[RelatedIssue] DROP CONSTRAINT [FK_RelatedIssue_IdIssue];
@@ -112,9 +121,6 @@ GO
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[__MigrationHistory]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[__MigrationHistory];
-GO
 IF OBJECT_ID(N'[dbo].[AspNetRoles]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetRoles];
 GO
@@ -130,8 +136,8 @@ GO
 IF OBJECT_ID(N'[dbo].[AspNetUsers]', 'U') IS NOT NULL
     DROP TABLE [dbo].[AspNetUsers];
 GO
-IF OBJECT_ID(N'[dbo].[File]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[File];
+IF OBJECT_ID(N'[dbo].[Files]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Files];
 GO
 IF OBJECT_ID(N'[dbo].[History]', 'U') IS NOT NULL
     DROP TABLE [dbo].[History];
@@ -145,8 +151,8 @@ GO
 IF OBJECT_ID(N'[dbo].[IssueLabel]', 'U') IS NOT NULL
     DROP TABLE [dbo].[IssueLabel];
 GO
-IF OBJECT_ID(N'[dbo].[IssueStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[IssueStatus];
+IF OBJECT_ID(N'[dbo].[IssueStatuses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[IssueStatuses];
 GO
 IF OBJECT_ID(N'[dbo].[Label]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Label];
@@ -157,11 +163,14 @@ GO
 IF OBJECT_ID(N'[dbo].[Priority]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Priority];
 GO
-IF OBJECT_ID(N'[dbo].[Project]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Project];
+IF OBJECT_ID(N'[dbo].[ProjectFiles]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ProjectFiles];
 GO
-IF OBJECT_ID(N'[dbo].[ProjectStatus]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ProjectStatus];
+IF OBJECT_ID(N'[dbo].[Projects]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Projects];
+GO
+IF OBJECT_ID(N'[dbo].[ProjectStatuses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ProjectStatuses];
 GO
 IF OBJECT_ID(N'[dbo].[RelatedIssue]', 'U') IS NOT NULL
     DROP TABLE [dbo].[RelatedIssue];
@@ -180,12 +189,13 @@ GO
 -- Creating all tables
 -- --------------------------------------------------
 
--- Creating table 'C__MigrationHistory'
-CREATE TABLE [dbo].[C__MigrationHistory] (
-    [MigrationId] nvarchar(150)  NOT NULL,
-    [ContextKey] nvarchar(300)  NOT NULL,
-    [Model] varbinary(max)  NOT NULL,
-    [ProductVersion] nvarchar(32)  NOT NULL
+-- Creating table 'ProjectFiles'
+CREATE TABLE [dbo].[ProjectFiles] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [IdUser] nvarchar(128)  NOT NULL,
+    [DateCreated] datetime  NOT NULL,
+    [IdProject] int  NOT NULL,
+    [IdFile] int  NOT NULL
 );
 GO
 
@@ -293,8 +303,8 @@ CREATE TABLE [dbo].[IssueLabels] (
 );
 GO
 
--- Creating table 'IssueStatus'
-CREATE TABLE [dbo].[IssueStatus] (
+-- Creating table 'IssueStatuses'
+CREATE TABLE [dbo].[IssueStatuses] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(250)  NOT NULL,
     [Color] nvarchar(7)  NOT NULL
@@ -338,15 +348,18 @@ CREATE TABLE [dbo].[Projects] (
     [IdUserCreated] nvarchar(128)  NOT NULL,
     [IdParentProject] int  NULL,
     [IdStatus] int  NOT NULL,
-    [IdFile] int  NULL
+    [IdFile] int  NULL,
+    [DisplayOrder] int  NOT NULL
 );
 GO
 
--- Creating table 'ProjectStatus'
-CREATE TABLE [dbo].[ProjectStatus] (
+-- Creating table 'ProjectStatuses'
+CREATE TABLE [dbo].[ProjectStatuses] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(250)  NOT NULL,
-    [Color] nvarchar(7)  NOT NULL
+    [Color] nvarchar(7)  NOT NULL,
+    [IsDefault] bit  NOT NULL,
+    [DisplayOrder] int  NOT NULL
 );
 GO
 
@@ -393,10 +406,10 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [MigrationId], [ContextKey] in table 'C__MigrationHistory'
-ALTER TABLE [dbo].[C__MigrationHistory]
-ADD CONSTRAINT [PK_C__MigrationHistory]
-    PRIMARY KEY CLUSTERED ([MigrationId], [ContextKey] ASC);
+-- Creating primary key on [Id] in table 'ProjectFiles'
+ALTER TABLE [dbo].[ProjectFiles]
+ADD CONSTRAINT [PK_ProjectFiles]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- Creating primary key on [Id] in table 'AspNetRoles'
@@ -453,9 +466,9 @@ ADD CONSTRAINT [PK_IssueLabels]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'IssueStatus'
-ALTER TABLE [dbo].[IssueStatus]
-ADD CONSTRAINT [PK_IssueStatus]
+-- Creating primary key on [Id] in table 'IssueStatuses'
+ALTER TABLE [dbo].[IssueStatuses]
+ADD CONSTRAINT [PK_IssueStatuses]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -483,9 +496,9 @@ ADD CONSTRAINT [PK_Projects]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'ProjectStatus'
-ALTER TABLE [dbo].[ProjectStatus]
-ADD CONSTRAINT [PK_ProjectStatus]
+-- Creating primary key on [Id] in table 'ProjectStatuses'
+ALTER TABLE [dbo].[ProjectStatuses]
+ADD CONSTRAINT [PK_ProjectStatuses]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -643,6 +656,21 @@ ON [dbo].[Projects]
     ([IdUserCreated]);
 GO
 
+-- Creating foreign key on [IdUser] in table 'ProjectFiles'
+ALTER TABLE [dbo].[ProjectFiles]
+ADD CONSTRAINT [FK_ProjectFile_IdUser]
+    FOREIGN KEY ([IdUser])
+    REFERENCES [dbo].[AspNetUsers]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ProjectFile_IdUser'
+CREATE INDEX [IX_FK_ProjectFile_IdUser]
+ON [dbo].[ProjectFiles]
+    ([IdUser]);
+GO
+
 -- Creating foreign key on [IdUser] in table 'UserProjects'
 ALTER TABLE [dbo].[UserProjects]
 ADD CONSTRAINT [FK_UserProject_IdUser]
@@ -685,6 +713,21 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_Project_IdFile'
 CREATE INDEX [IX_FK_Project_IdFile]
 ON [dbo].[Projects]
+    ([IdFile]);
+GO
+
+-- Creating foreign key on [IdFile] in table 'ProjectFiles'
+ALTER TABLE [dbo].[ProjectFiles]
+ADD CONSTRAINT [FK_ProjectFile_IdFile]
+    FOREIGN KEY ([IdFile])
+    REFERENCES [dbo].[Files]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ProjectFile_IdFile'
+CREATE INDEX [IX_FK_ProjectFile_IdFile]
+ON [dbo].[ProjectFiles]
     ([IdFile]);
 GO
 
@@ -767,7 +810,7 @@ GO
 ALTER TABLE [dbo].[Issues]
 ADD CONSTRAINT [FK_Issue_IdStatus]
     FOREIGN KEY ([IdStatus])
-    REFERENCES [dbo].[IssueStatus]
+    REFERENCES [dbo].[IssueStatuses]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -898,6 +941,21 @@ ON [dbo].[Labels]
     ([IdProject]);
 GO
 
+-- Creating foreign key on [IdProject] in table 'ProjectFiles'
+ALTER TABLE [dbo].[ProjectFiles]
+ADD CONSTRAINT [FK_ProjectFile_IdProject]
+    FOREIGN KEY ([IdProject])
+    REFERENCES [dbo].[Projects]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ProjectFile_IdProject'
+CREATE INDEX [IX_FK_ProjectFile_IdProject]
+ON [dbo].[ProjectFiles]
+    ([IdProject]);
+GO
+
 -- Creating foreign key on [IdParentProject] in table 'Projects'
 ALTER TABLE [dbo].[Projects]
 ADD CONSTRAINT [FK_Project_IdParentProject]
@@ -917,7 +975,7 @@ GO
 ALTER TABLE [dbo].[Projects]
 ADD CONSTRAINT [FK_Project_IdStatus]
     FOREIGN KEY ([IdStatus])
-    REFERENCES [dbo].[ProjectStatus]
+    REFERENCES [dbo].[ProjectStatuses]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
@@ -945,7 +1003,7 @@ GO
 
 -- Creating foreign key on [AspNetRoles_Id] in table 'AspNetUserRoles'
 ALTER TABLE [dbo].[AspNetUserRoles]
-ADD CONSTRAINT [FK_AspNetUserRoles_AspNetRoles]
+ADD CONSTRAINT [FK_AspNetUserRoles_AspNetRole]
     FOREIGN KEY ([AspNetRoles_Id])
     REFERENCES [dbo].[AspNetRoles]
         ([Id])
@@ -954,15 +1012,15 @@ GO
 
 -- Creating foreign key on [AspNetUsers_Id] in table 'AspNetUserRoles'
 ALTER TABLE [dbo].[AspNetUserRoles]
-ADD CONSTRAINT [FK_AspNetUserRoles_AspNetUsers]
+ADD CONSTRAINT [FK_AspNetUserRoles_AspNetUser]
     FOREIGN KEY ([AspNetUsers_Id])
     REFERENCES [dbo].[AspNetUsers]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserRoles_AspNetUsers'
-CREATE INDEX [IX_FK_AspNetUserRoles_AspNetUsers]
+-- Creating non-clustered index for FOREIGN KEY 'FK_AspNetUserRoles_AspNetUser'
+CREATE INDEX [IX_FK_AspNetUserRoles_AspNetUser]
 ON [dbo].[AspNetUserRoles]
     ([AspNetUsers_Id]);
 GO
