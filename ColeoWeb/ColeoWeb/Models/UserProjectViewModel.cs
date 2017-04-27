@@ -20,17 +20,6 @@ namespace ColeoWeb.Models
 
         #region Methods
 
-        public void InitializeData()
-        {
-            AspNetUser user = AspNetUser.GetById(UserId);
-            User = new UserViewModel { 
-                UserName = user.UserName,
-                Id = user.Id,
-                Email = user.Email,
-                Image = user.Image
-            };
-        }
-
         #endregion Methods
     }
 }

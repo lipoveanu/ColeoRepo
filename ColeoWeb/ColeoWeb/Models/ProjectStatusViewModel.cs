@@ -1,4 +1,6 @@
-﻿using ColeoDataLayer.ModelColeo;
+﻿using AutoMapper;
+using ColeoDataLayer.ModelColeo;
+using ColeoDataLayer.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,7 +35,9 @@ namespace ColeoWeb.Models
         public bool IsDefault { get; set; }
 
         [DisplayName("Order")]
-        public int Order { get; set; }
+        public int DisplayOrder { get; set; }
+
+        public AlertMessage isValid { get; set; }
 
         #endregion Properties
 
@@ -41,27 +45,19 @@ namespace ColeoWeb.Models
 
         public void SetDataToModel()
         {
-            Model = new ProjectStatus();
+            Model = Mapper.Map<ProjectStatusViewModel, ProjectStatus>(this);
 
             if (Id != null)
             {
                 Model.Id = Id.Value;
             }
-
-            Model.Name = Name;
-            Model.Color = Color;
-            Model.IsDefault = IsDefault;
-            Model.DisplayOrder = Order;
         }
 
         public void SetDataFromModel()
         {
             Model = ProjectStatus.GetById(Id.Value);
 
-            Name = Model.Name;
-            Color = Model.Color;
-            IsDefault = Model.IsDefault;
-            Order = Model.DisplayOrder;
+            Mapper.Map<ProjectStatus, ProjectStatusViewModel>(Model, this); 
         }
 
         public void Save()
@@ -76,7 +72,7 @@ namespace ColeoWeb.Models
             }
         }
 
-        public bool Delete(int id)
+        public AlertMessage Delete(int id)
         {
             return ProjectStatus.Delete(id);
         }
@@ -87,5 +83,7 @@ namespace ColeoWeb.Models
         }
 
         #endregion Methods
+
+        
     }
 }

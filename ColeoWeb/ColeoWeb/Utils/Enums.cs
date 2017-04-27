@@ -12,4 +12,6 @@ namespace ColeoWeb.Utils
         Closed = 3,
         StandBy = 4
     }
+
+    
 }

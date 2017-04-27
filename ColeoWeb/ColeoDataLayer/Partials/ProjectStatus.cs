@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ColeoDataLayer.ModelColeo;
+using ColeoDataLayer.Utils;
 
 namespace ColeoDataLayer.ModelColeo
 {
@@ -119,7 +120,7 @@ namespace ColeoDataLayer.ModelColeo
             }
         }
 
-        public static bool Delete(int id)
+        public static AlertMessage Delete(int id)
         {
             using (ColeoEntities context = new ColeoEntities())
             {
@@ -127,7 +128,7 @@ namespace ColeoDataLayer.ModelColeo
 
                 if (projectStatus == null)
                 {
-                    return false;
+                    return new AlertMessage(Status.NotFound.Get(), AlertType.Danger.Get(), false, 3000);
                 }
 
                 // do not delete project status if it is attached to any projects
@@ -135,7 +136,7 @@ namespace ColeoDataLayer.ModelColeo
 
                 if (project != null)
                 {
-                    return false;
+                    return new AlertMessage(Status.ProjectStatusAttachedToProject.Get(), AlertType.Danger.Get(), false, 3000);
                 }
 
                 // if the default project status is deleted, assign first other
@@ -153,7 +154,7 @@ namespace ColeoDataLayer.ModelColeo
 
                 context.SaveChanges();
 
-                return true;
+                return new AlertMessage(Status.Deleted.Get(), AlertType.Success.Get()); 
             }
         }
 

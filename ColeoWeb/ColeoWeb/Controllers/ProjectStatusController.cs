@@ -1,4 +1,6 @@
-﻿using ColeoDataLayer.ModelColeo;
+﻿using AutoMapper;
+using ColeoDataLayer.ModelColeo;
+using ColeoDataLayer.Utils;
 using ColeoWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -21,16 +23,8 @@ namespace ColeoWeb.Controllers
         public PartialViewResult List()
         {
             List<ProjectStatusViewModel> projectStatusList = ProjectStatus.All()
-                .Select(x => new ProjectStatusViewModel()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Color = x.Color,
-                    IsDefault = x.IsDefault,
-                    Order = x.DisplayOrder
-
-                })
-                .OrderBy(x=>x.Order)
+                .Select(x => Mapper.Map<ProjectStatus, ProjectStatusViewModel>(x))
+                .OrderBy(x => x.DisplayOrder)
                 .ToList();
 
             return PartialView(projectStatusList);
@@ -58,15 +52,16 @@ namespace ColeoWeb.Controllers
 
         public void Reorder(List<ColeoWeb.ColeoHelper.OrderItem> test)
         {
-            ProjectStatusViewModel vm = new ProjectStatusViewModel();
+            ProjectStatusViewModel model = new ProjectStatusViewModel();
 
             foreach (var item in test)
             {
-                vm.Reorder(item.Key, item.Value);
+                model.Reorder(item.Key, item.Value);
 
             }
         }
 
+        [HttpGet]
         public PartialViewResult Edit(int? id)
         {
             // creation of project status not allowed if not logged in 
@@ -75,16 +70,25 @@ namespace ColeoWeb.Controllers
                 RedirectToAction("Index");
             }
 
-            ProjectStatusViewModel vm = new ProjectStatusViewModel();
+            ProjectStatusViewModel model = new ProjectStatusViewModel();
 
             // edit project status
             if (id != null)
             {
-                vm.Id = id.Value;
-                vm.SetDataFromModel();
+                model.Id = id.Value;
+                model.SetDataFromModel();
             }
 
-            return PartialView(vm);
+            if (!ModelState.IsValid)
+            {
+                model.isValid = new AlertMessage(Status.Invalid.Get(), AlertType.Danger.Get(), false, 3000);
+            }
+            else
+            {
+                model.isValid = new AlertMessage(Status.Saved.Get(), AlertType.Success.Get());
+            }
+
+            return PartialView(model);
 
         }
 
@@ -95,18 +99,19 @@ namespace ColeoWeb.Controllers
             {
                 model.SetDataToModel();
                 model.Save();
+
             }
-            ViewBag.IsValid = ModelState.IsValid;
 
-            return PartialView(model);
-
+            return Edit(model.Id);
         }
 
-        public bool Delete(int id)
+        [HttpPost]
+        public JsonResult Delete(int id)
         {
-            ProjectStatusViewModel vm = new ProjectStatusViewModel();
+            ProjectStatusViewModel model = new ProjectStatusViewModel();
+            AlertMessage result = model.Delete(id);
 
-            return vm.Delete(id);
+            return Json(result);
 
         }
     }

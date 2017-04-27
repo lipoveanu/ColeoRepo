@@ -24,7 +24,7 @@
                                 @Html.HiddenFor(m => m[i].NameUserCreated)
                                 @Html.HiddenFor(m => m[i].StatusName)
                                 @Html.HiddenFor(m => m[i].ParentName)
-                                @Html.HiddenFor(m => m[i].Order, new { @class = "position" })
+                                @Html.HiddenFor(m => m[i].DisplayOrder, new { @class = "position" })
 
                                 <div class="fall-content">
                                     <h3 title="@Model[i].Name">
@@ -44,7 +44,7 @@
                                     <div title="Edit" class="glyphicon-md pull-right add-tooltip" onclick="goToByScroll('functional-buttons'); ShowFunctionals(); ShowEdit(@Model[i].Id, divEdit);">
                                         <span class="glyphicon glyphicon-edit"></span> &nbsp;
                                     </div>
-                                    <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit, alertDeleteSucces, alertDeleteError)">
+                                    <div title="Delete" class="glyphicon-md pull-right add-tooltip" onclick="DeleteItem(@Model[i].Id, divList, divEdit)">
                                         <span class="glyphicon glyphicon-trash"></span> &nbsp;
                                     </div>
                                 </div>

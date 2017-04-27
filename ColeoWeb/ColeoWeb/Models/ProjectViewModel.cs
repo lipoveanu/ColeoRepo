@@ -8,6 +8,8 @@ using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Script.Serialization;
+using ColeoDataLayer.Utils;
+using AutoMapper;
 
 namespace ColeoWeb.Models
 {
@@ -46,8 +48,6 @@ namespace ColeoWeb.Models
 
         public string StatusName { get; set; }
 
-        public int OrderStatus { get; set; }
-
         [DisplayName("Color")]
         public string Color { get; set; }
 
@@ -64,13 +64,15 @@ namespace ColeoWeb.Models
         public string NameUserCreated { get; set; }
 
         [DisplayName("Order")]
-        public int Order { get; set; }
+        public int DisplayOrder { get; set; }
 
         public List<UserProjectViewModel> UsersProject { get; set; }
 
-        public bool isValid { get; set; }
+        public AlertMessage isValid { get; set; }
 
         public List<FileViewModel> Files { get; set; }
+
+        public int IdFile { get; set; }
 
         #endregion Properties
 
@@ -82,60 +84,48 @@ namespace ColeoWeb.Models
             IdUserCreated = HttpContext.Current.User.Identity.GetUserId();
             NameUserCreated = HttpContext.Current.User.Identity.Name;
             Color = "#E8A13F";
+
+            // set the status with the default one
             IdStatus = ProjectStatus.GetDefault().Id;
 
+            // fill in dropdown for statuses
             Status = ProjectStatus.All().Select(d => new SelectListItem()
                 {
                     Text = d.Name,
                     Value = d.Id.ToString()
                 }).ToList();
 
+            // fill in dropdown for parent project
             Parent = Project.All().Select(d => new SelectListItem()
             {
                 Text = d.Name,
                 Value = d.Id.ToString()
             }).ToList();
 
-            UsersProject = new List<UserProjectViewModel>();
-            UsersProject
-                .AddRange(AspNetUser.All().Select(y => new UserProjectViewModel()
-                    {
-                        UserId = y.Id,
-                        IsAssigned = false
-                    }).ToList());
-
-            UsersProject.ForEach(x => x.InitializeData());
+            // get all users 
+            UsersProject = Mapper.Map<List<AspNetUser>, List<UserProjectViewModel>>(AspNetUser.All());
 
             Files = new List<FileViewModel>();
 
-            Order = Project.GetOrder();
+            DisplayOrder = Project.GetOrder();
         }
 
         public void SetDataToModel()
         {
-            Model = new Project();
+            Model = Mapper.Map<ProjectViewModel, Project >(this);
 
             if (Id != null)
             {
                 Model.Id = Id.Value;
             }
 
-            Model.Name = Name;
-            Model.Description = Description;
-            Model.DateCreated = DateCreated;
-            Model.Color = Color;
-            Model.IdUserCreated = IdUserCreated;
-            Model.IdStatus = IdStatus;
-            Model.DisplayOrder = Order;
-            Model.IdParentProject = IdParentProject;
-
-            Model.UsersProject = new List<UserProject>();
+            Model.UserProjects = new List<UserProject>();
             if (UsersProject != null)
             {
                 UsersProject
                     .Where(x => x.IsAssigned == true)
                     .ToList()
-                    .ForEach(x => Model.UsersProject.Add(new UserProject()
+                    .ForEach(x => Model.UserProjects.Add(new UserProject()
                     {
                         IdUser = x.UserId
                         //IdProject = Id.Value
@@ -158,34 +148,20 @@ namespace ColeoWeb.Models
         {
             Model = Project.GetById(Id.Value);
 
-            Name = Model.Name;
-            Description = Model.Description;
-            DateCreated = Model.DateCreated;
-            Color = Model.Color;
-            IdUserCreated = Model.IdUserCreated;
-            IdStatus = Model.IdStatus;
-            Order = Model.DisplayOrder;
-            IdParentProject = Model.IdParentProject;
-            NameUserCreated = Model.AspNetUser.UserName;
-            StatusName = Model.ProjectStatus.Name;
-            ParentName = Model.Project1 != null ? Model.Project1.Name : string.Empty;
+            Mapper.Map<Project, ProjectViewModel>(Model, this);
 
-            if (Model.UsersProject.Any())
+            if (Model.UserProjects.Any())
             {
-                UsersProject.Where(x => Model.UsersProject.Select(y => y.IdUser).Contains(x.UserId))
+                UsersProject.Where(x => Model.UserProjects.Select(y => y.IdUser).Contains(x.UserId))
                 .ToList()
                 .ForEach(z => z.IsAssigned = true);
             }
 
             if (Model.ProjectFiles != null)
             {
-                Files = Model.ProjectFiles.Select(d => new FileViewModel()
-                {
-                    Id = d.IdFile,
-                    Name = d.File.Name,
-                    LocalName = d.File.LocalName,
-                    Extension = d.File.Extension
-                }).ToList();
+                Files = Model.ProjectFiles
+                    .Select(x => Mapper.Map<ProjectFile,FileViewModel>(x))
+                    .ToList();
             }
         }
 
@@ -202,9 +178,14 @@ namespace ColeoWeb.Models
             }
         }
 
-        public bool Delete(int id)
+        public AlertMessage Delete(int id)
         {
             return Project.Delete(id);
+        }
+
+        public AlertMessage DeleteFile(int id)
+        {
+            return Project.DeleteFile(id);
         }
 
         public void Reorder(int id, int order)

@@ -1,5 +1,8 @@
-﻿using ColeoDataLayer.ModelColeo;
+﻿using AutoMapper;
+using ColeoDataLayer.ModelColeo;
+using ColeoDataLayer.Utils;
 using ColeoWeb.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,36 +23,12 @@ namespace ColeoWeb.Controllers
         }
 
         [HttpGet]
-        public PartialViewResult List(string order)
+        public PartialViewResult List()
         {
-            if (order == null)
-            {
-                order = "Order";
-            }
-
             List<ProjectViewModel> projectList = Project.All()
-                .Select(x => new ProjectViewModel()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Description = x.Description,
-                    Color = x.Color,
-                    Order = x.DisplayOrder,
-                    IdStatus = x.IdStatus,
-                    IdParentProject = x.IdParentProject,
-                    DateCreated = x.DateCreated,
-                    IdUserCreated = x.IdUserCreated,
-                    OrderStatus = x.ProjectStatus.DisplayOrder,
-                    NameUserCreated = x.AspNetUser.UserName,
-                    StatusName = x.ProjectStatus.Name,
-                    ParentName = x.Project1 != null ? x.Project1.Name : string.Empty
-                })
-                .OrderBy(x => x.Order)
+                .Select(x => Mapper.Map<Project, ProjectViewModel>(x))
+                .OrderBy(x => x.DisplayOrder)
                 .ToList();
-            var propertyInfo = typeof(ProjectViewModel).GetProperty(order);
-
-
-            projectList = projectList.OrderBy(x => propertyInfo.GetValue(x, null)).ToList();
 
             return PartialView(projectList);
 
@@ -62,14 +41,14 @@ namespace ColeoWeb.Controllers
             {
                 foreach (var item in model)
                 {
-                    item.Reorder(item.Id.Value, item.Order);
+                    item.Reorder(item.Id.Value, item.DisplayOrder);
                 }
             }
 
-            return List("Order");
+            return List();
         }
 
-        
+
         public void Reorder(List<ColeoWeb.ColeoHelper.OrderItem> test)
         {
             ProjectViewModel vm = new ProjectViewModel();
@@ -77,32 +56,38 @@ namespace ColeoWeb.Controllers
             foreach (var item in test)
             {
                 vm.Reorder(item.Key, item.Value);
-
             }
         }
 
         [HttpGet]
         public PartialViewResult Edit(int? id)
         {
-            // creation of project status not allowed if not logged in 
+            // creation of project not allowed if not logged in 
             if (!User.Identity.IsAuthenticated)
             {
                 RedirectToAction("Index");
             }
 
-            ProjectViewModel vm = new ProjectViewModel();
+            ProjectViewModel model = new ProjectViewModel();
 
-            vm.InitializeData();
+            model.InitializeData();
 
-            // edit project status
             if (id != null)
             {
-                vm.Id = id.Value;
-                vm.SetDataFromModel();
-                vm.isValid = ModelState.IsValid;
+                model.Id = id.Value;
+                model.SetDataFromModel();
+            }
+            if (!ModelState.IsValid)
+            {
+                model.isValid = new AlertMessage(Status.Invalid.Get(), AlertType.Danger.Get(), false, 3000);
+            }
+            else
+            {
+                // set the saved alert 
+                model.isValid = new AlertMessage(Status.Saved.Get(), AlertType.Success.Get());
             }
 
-            return PartialView(vm);
+            return PartialView(model);
 
         }
 
@@ -111,6 +96,7 @@ namespace ColeoWeb.Controllers
         {
             if (ModelState.IsValid)
             {
+                // first get files from session (if they were added) and save them 
                 List<FileViewModel> files = Session.GetFiles((int)ColeoWeb.ColeoHelper.FileType.Project);
                 if (files.Any())
                 {
@@ -122,38 +108,34 @@ namespace ColeoWeb.Controllers
                     // remove from session to prevent re-adding
                     Session.CleanFiles((int)ColeoWeb.ColeoHelper.FileType.Project);
                 }
-                // set the list to model
+                // set the list to model so it will be saved when the project is saved
                 model.Files = files;
 
                 model.SetDataToModel();
                 model.Save();
             }
 
-            model.isValid = ModelState.IsValid;
-
-            model.InitializeData();
-
-            // edit project
-            if (model.Id != null)
-            {
-                model.SetDataFromModel();
-            }
-
-            return PartialView(model);
+            // if the model is invalid it will get the message from the get method
+            return Edit(model.Id);
 
         }
 
-        public bool Delete(int id)
+        [HttpPost]
+        public JsonResult Delete(int id)
         {
-            ProjectViewModel vm = new ProjectViewModel();
+            ProjectViewModel model = new ProjectViewModel();
+            AlertMessage result = model.Delete(id);
 
-            return vm.Delete(id);
-
+            return Json(result);
         }
 
-        public bool DeleteFile(int id)
+        [HttpPost]
+        public JsonResult DeleteFile(int id)
         {
-            return Project.DeleteFile(id);
+            ProjectViewModel model = new ProjectViewModel();
+            AlertMessage result = model.DeleteFile(id);
+
+            return Json(result);
         }
 
         [HttpPost]

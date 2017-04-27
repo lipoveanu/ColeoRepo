@@ -37,28 +37,17 @@ function NotificationDefaults() {
     });
 }
 
-function NotificationAlert(message, type, allowDismiss, delay) {
+function NotificationAlert(response) {
 
     var notifyDefault = $.notifyDefaults('');
 
-    if (type == null) {
-        type = notifyDefault.type;
-    }
-
-    if (allowDismiss == null) {
-        allowDismiss = notifyDefault.allow_dismiss;
-    }
-
-    if (delay == null) {
-        delay = notifyDefault.delay;
-    }
-
-    $.notify(message, {
-        type: type,
-        allow_dismiss: allowDismiss,
-        delay: delay
+    $.notify(response.Message, {
+        type: response.Type,
+        allow_dismiss: response.AllowDismiss,
+        delay: response.Delay
     });
 }
+
 
 function AddTooltip() {
     $(".add-tooltip").tooltip();
@@ -108,46 +97,39 @@ function ShowEdit(id, elem) {
 }
 
 
-function DeleteItem(id, elemList, elemEdit, alertDeleteSucces, alertDeleteError) {
+function DeleteItem(id, elemList, elemEdit) {
     $.ajax({
         type: "POST",
         data: { id: id },
         url: urlDelete,
+        dataType: "json",
         success: function (response) {
 
             elemEdit.empty();
             ShowList(elemList);
-
-            if (response == 'True') {
-                NotificationAlert(alertDeleteSucces);
-            } else {
-                NotificationAlert(alertDeleteError, "danger", false, 2000);
-            }
-
+            NotificationAlert(response);
+            
         },
-        error: function () {
-            alert("error occured");
+        error: function (data) {
+            console.log(data)
         }
     });
 }
 
-function DeleteFile(id, alertDeleteSucces, alertDeleteError) {
+function DeleteFile(id) {
     $.ajax({
         type: "POST",
         data: { id: id },
         url: urlDeleteFile,
+        dataType: "json",
         success: function (response) {
 
             SaveItem();
-            if (response == 'True') {
-                NotificationAlert(alertDeleteSucces);
-            } else {
-                NotificationAlert(alertDeleteError, "danger", false, 2000);
-            }
-
+            NotificationAlert(response);
+            
         },
-        error: function () {
-            alert("error occured");
+        error: function (data) {
+            console.log(data)
         }
     });
 }

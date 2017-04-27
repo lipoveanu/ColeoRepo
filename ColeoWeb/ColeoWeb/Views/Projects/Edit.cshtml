@@ -25,7 +25,7 @@
     @Html.AntiForgeryToken()
 
     @Html.HiddenFor(m => m.Id);
-    @Html.HiddenFor(m => m.Order);
+    @Html.HiddenFor(m => m.DisplayOrder);
     @Html.HiddenFor(m => m.IdUserCreated);
 
     <div>
@@ -158,17 +158,10 @@
         InitializeSortable2Lists();
     });
 
-
-
     function AlertSave() {
-        var isValid = "@Model.isValid.ToString()";
-
-        if (isValid == "True") {
-            NotificationAlert('Project saved!');
-        }
-        else {
-            NotificationAlert('Project is invalid!', "danger", false, 3000);
-        }
+        var isValid = @Html.Raw(Json.Encode(Model.isValid))
+        
+        NotificationAlert(isValid);
     }
 
 </script>

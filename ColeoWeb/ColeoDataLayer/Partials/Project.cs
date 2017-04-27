@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using ColeoDataLayer.Utils;
 
 namespace ColeoDataLayer.ModelColeo
 {
@@ -11,7 +12,7 @@ namespace ColeoDataLayer.ModelColeo
     {
         #region Properties
 
-        public List<UserProject> UsersProject { get; set; }
+        //public List<UserProject> UsersProject { get; set; }
 
         #endregion Properties
 
@@ -64,7 +65,7 @@ namespace ColeoDataLayer.ModelColeo
                     .FirstOrDefault(d => d.Id == id);
 
 
-                project.UsersProject = project.UserProjects.ToList();
+                project.UserProjects = project.UserProjects.ToList();
 
                 return project;
             }
@@ -162,7 +163,7 @@ namespace ColeoDataLayer.ModelColeo
 
                 //Project users
                 List<string> dbUserProject = project.UserProjects.Select(x => x.IdUser).ToList();
-                List<string> modelUserProject = entity.UsersProject.Select(x => x.IdUser).ToList();
+                List<string> modelUserProject = entity.UserProjects.Select(x => x.IdUser).ToList();
 
                 modelUserProject.ForEach(x =>
                     {
@@ -191,22 +192,31 @@ namespace ColeoDataLayer.ModelColeo
             }
         }
 
-        public static bool Delete(int id)
+        
+        public static AlertMessage Delete(int id)
         {
             using (ColeoEntities context = new ColeoEntities())
             {
                 Project project = context.Projects.FirstOrDefault(x => x.Id == id);
 
+                // if id project not found
                 if (project == null)
                 {
-                    return false;
+                    return new AlertMessage(Status.NotFound.Get(), AlertType.Danger.Get(), false, 3000);
                 }
 
                 // do not delete project if it is attached as parent project to any other project
                 var parentProject = context.Projects.FirstOrDefault(x => x.IdParentProject == id);
                 if (parentProject != null)
                 {
-                    return false;
+                    return new AlertMessage(Status.ProjectAttachedToProject.Get(), AlertType.Danger.Get(), false, 3000);
+                }
+
+                // do not delete project if attached to issue
+                var issueProject = context.Issues.FirstOrDefault(x => x.IdProject == id);
+                if (issueProject != null)
+                {
+                    return new AlertMessage(Status.ProjectAttatchedToIssue.Get(), AlertType.Danger.Get(), false, 3000);
                 }
 
                 // delete all users attached to project
@@ -234,19 +244,19 @@ namespace ColeoDataLayer.ModelColeo
 
                 context.SaveChanges();
 
-                return true;
+                return new AlertMessage(Status.Deleted.Get(), AlertType.Success.Get()); 
             }
         }
 
-        public static bool DeleteFile(int id)
+        public static AlertMessage DeleteFile(int id)
         {
             using (ColeoEntities context = new ColeoEntities())
             {
-                // delete file attached to project
+                // if file id not found
                 var fileProject = context.ProjectFiles.FirstOrDefault(x => x.IdFile == id);
                 if (fileProject == null)
                 {
-                    return false;
+                    return new AlertMessage(Status.NotFound.Get(), AlertType.Danger.Get(), false, 3000);
                 }
 
                 // if the file is deleted phisicaly then delete it from the DB
@@ -257,11 +267,11 @@ namespace ColeoDataLayer.ModelColeo
                     context.ProjectFiles.Remove(fileProject);
                     context.SaveChanges();
 
-                    return true;
+                    return new AlertMessage(Status.Deleted.Get(), AlertType.Success.Get()); 
                 }
                 else
                 {
-                    return false;
+                    return new AlertMessage(Status.FileNotOnDisk.Get(), AlertType.Danger.Get(), false, 3000);
                 }
                 
             }
